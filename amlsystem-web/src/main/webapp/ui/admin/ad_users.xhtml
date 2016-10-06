@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../resources/layout/template.xhtml"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:param name="titleOption" value="Gestión Usuarios" />
+
+    <ui:define name="head">
+        <script>
+
+            function readPicture(input, output) {
+                if (input.files)
+                {
+                    if (input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            output.attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                        console.log("cargo ok");
+                    }
+                }
+            }
+
+            function showWindowFile() {
+                $("[id='#{upload.clientId}']").trigger('click');
+            }
+
+            function uploadFile(input) {
+                readPicture(input, $(".form_image img"));
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+
+            function removeFile() {
+                var source = $("[id='#{altImage.clientId}']").attr('src');
+                $(".form_image img").attr('src', source);
+                $("[id='#{upload.clientId}']").val('');
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+        
+        
+
+        <h:form id="frmUsuarios" enctype="multipart/form-data" >
+
+
+            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Código: #{adUser.activeItem.id}"> 
+
+                <ui:define name="dataTable">
+                    <p:column headerText="Usuario" filterBy="#{row.name}" > 
+                        <h:outputText value="#{row.name}" />
+                    </p:column>
+                </ui:define>
+
+                <ui:define name="dataGrid">
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage rendered="#{row.image == null}"  value="#" library="images" name="placeholder.png"  class="data-grid_image"/>
+                        <o:graphicImage rendered="#{row.image != null}"  value="#{row.image}" dataURI="true" class="data-grid_image"/>   
+                    <h:outputText value="#{row.name}" />    
+                    </h:panelGrid>
+                    
+                </ui:define>
+
+                <ui:define name="dataRow">
+
+                    <h:selectBooleanCheckbox  id="imageModified" value="#{adUser.imageModified}" style="display: none;" />
+
+                    <p:graphicImage  value="#" library="images" name="placeholder.png"  binding="#{altImage}" style="display: none;" id="img_backup"/>
+                    <h:inputFile style="display:none;"   id="pictureUpload"  value="#{adUser.image}" binding="#{upload}" validator="#{adUser.validateImage}" onchange="uploadFile(this)"/>
+
+                    <h:panelGrid columns="2" >
+                        <h:panelGroup layout="block" >
+
+
+
+                            <div class="form_image">
+                                <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
+                                <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
+                                <div class="#{adUser.listaUsuarios.enabledSave ? 'form_image_buttons' : ''}" style="position: absolute; width: 100%;">
+                                    <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
+                                        <h:outputText styleClass="fa fa-pencil" />
+                                    </p:commandLink> 
+
+                                    <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
+                                        <h:outputText styleClass="fa fa-trash-o" />
+                                    </p:commandLink> 
+
+                                </div>
+                            </div>
+
+                        </h:panelGroup>
+
+                        <h:panelGrid columns="2" style="margin-left: 10px;margin-bottom: 5px;">
+
+                            <p:inputText value="#{adUser.activeItem.firstname}" placeholder="Nombre" readonly="#{not adUser.listaUsuarios.enabledSave}" /> 
+                            <p:inputText value="#{adUser.activeItem.lastname}" placeholder="Apellido" readonly="#{not adUser.listaUsuarios.enabledSave}"/>
+
+                        </h:panelGrid>
+
+
+
+
+                    </h:panelGrid>
+
+
+                    
+                        
+                    
+
+                    <h:panelGrid columns="4" width="100%" >
+
+                        <p:outputLabel for="itUser" value="Usuario" styleClass="form-label"></p:outputLabel>
+                        <p:inputText id="itUser" value="#{adUser.activeItem.username}" placeholder="Usuario" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth"/> 
+                        <p:outputLabel for="itPass" value="Contraseña" styleClass="form-label"></p:outputLabel>
+                        
+                        <p:inputText id="itPass" value="#{adUser.pass1}" placeholder="Contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        
+                        <p:spacer></p:spacer>
+                        <p:spacer></p:spacer>
+                        
+                        <p:spacer></p:spacer>
+                        <p:inputText id="itPass2" value="#{adUser.pass2}" placeholder="Confirmar contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        
+                        <!--
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="name"/>
+                            <p:outputLabel for="name" value="Name" />
+                        </h:panelGroup>-->
+                        
+
+                    </h:panelGrid>
+                    <br></br>
+                    
+                    <p:tabView id="tvDetalleRoles">
+                        <p:tab title="Roles">
+                            
+                            
+                            <ae:dataList id="dlTest" title="ok" value="#{adUser.listaUsuarioRoles}"  editableRow="#{adUser.listaUsuarios.enabledSave}">
+                                <ui:define name="dataTable">
+                                    <p:column headerText="Rol" filterBy="#{row.adRoleId.name}" > 
+                                        <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{row.adRoleId.name}" />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{row.adRoleId}" converter="#{adRoleConverter}" panelStyle="width:180px"
+                                                            effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" >
+                                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                                <f:selectItems value="#{adUser.roles}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                                <p:ajax event="change"></p:ajax>
+                                           </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                    </p:column>
+                                </ui:define>
+                            </ae:dataList>
+                            
+                            
+                        </p:tab>
+                        <p:tab title="Otra Info">
+                        </p:tab>
+                    </p:tabView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </ui:define>
+
+
+
+
+
+            </ae:dataView>
+
+
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

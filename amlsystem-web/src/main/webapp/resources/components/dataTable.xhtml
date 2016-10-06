@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                >
+
+
+    <!--
+        <style type="text/css">
+            .ui-paginator-left{
+                float: left;
+                line-height: 20px;
+                vertical-align: middle;
+            }
+    
+            .ui-paginator-left > span{
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 1em; /*set line height back to normal*/
+                margin-left: 2px;
+            }
+    
+        </style>
+    -->
+
+
+
+    <ae:default var="row" value="#{row}" />
+
+    <ae:default var="rows" value="10" />
+    <ae:default var="rowsPerPageTemplate" value="20,50,100" />
+    <ae:default var="emptyMessage"
+                value="No existen registros para la consulta." />
+
+    <ae:default var="selectionMode" value="#{null}" />	
+
+    <ae:default var="editable" value="#{false}" />
+
+    <ae:default var="rowSelectMode" value="new" />
+
+    <ae:default var="editingRow" value="#{false}" />
+
+    <ae:default var="auditable" value="#{false}" />
+
+    <ae:default var="renderedSelectionMode" value="true" />
+
+    <ae:default var="rendered" value="#{true}" />
+
+    <ae:default var="options" value="#{false}" />
+
+    <ae:default var="selection" value="#{null}" />
+    
+    <ae:default var="paginatorAlwaysVisible" value="#{true}" />
+    
+    <ae:default var="rowStyleClass" value="#{null}" />
+    
+    <ae:default var="rowIndexVar" value="#{null}" />
+
+
+
+
+
+    <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="#{widgetVar}"  
+                 rowKey="#{rowKey}" paginator="true"  
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                  paginatorAlwaysVisible="#{paginatorAlwaysVisible}" rows="#{rows}"  
+                 rowsPerPageTemplate="#{rowsPerPageTemplate}"
+                 emptyMessage="#{emptyMessage}" 
+                 editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
+                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}"> 
+
+        
+        <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
+
+        <ui:insert name="events">
+
+        </ui:insert>
+        
+          
+
+
+        <ae:context header="">
+            <ui:insert >
+
+            </ui:insert>
+        </ae:context>
+
+        
+        <p:column sortBy="#{row.created}"  headerText="Creación" rendered="#{auditable}" width="170">
+            <h:outputText value="#{row.created}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
+            </h:outputText>
+        </p:column>
+
+        <p:column sortBy="#{row.createdby}"  headerText="Creado por" rendered="#{auditable}" width="110">
+            <h:outputText value="#{row.createdby}" />
+        </p:column>
+
+        <p:column sortBy="#{row.updated}"  headerText="Actualización" rendered="#{auditable}" width="170">
+            <h:outputText value="#{row.updated}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
+            </h:outputText>
+        </p:column>
+
+        <p:column sortBy="#{row.updatedby}"  headerText="Actualizado por" rendered="#{auditable}" width="140">
+            <h:outputText value="#{row.updatedby}" />
+        </p:column> 
+
+        <p:column style="width:32px;text-align: center" rendered="#{options}">
+            <ui:insert name="options"/>
+        </p:column>
+
+
+        <!--
+        <f:facet name="footer">
+            <ui:insert name="footer"/>
+        </f:facet>
+        -->
+
+    </p:dataTable>
+
+
+</ui:composition>

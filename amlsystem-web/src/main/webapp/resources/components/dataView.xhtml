@@ -1,0 +1,193 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                >
+
+    <h:panelGroup id="pg_cmp_dv_#{id}">
+
+        
+        
+       <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
+            <div class="ui-toolbar-group-left">
+                
+                <p:commandButton process="@this" rendered="#{value.enabledCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" styleClass="red-button"/> 
+
+                <p:commandButton ajax="false" rendered="#{value.enabledSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" 
+                                 process="@form" update="@parent:@parent"> 
+                </p:commandButton>
+
+                <p:commandButton process="@this" rendered="#{value.enabledEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
+
+                <p:commandButton process="@this" rendered="#{value.enabledDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"> 
+                    <p:confirm header="Confirmación" message="¿Esta seguro que desea eliminar el registro?"
+                                   icon="ui-icon-alert"  />
+                </p:commandButton>
+
+                <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" 
+                                 icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
+
+            </div>
+            <div class="ui-toolbar-group-right">
+
+                <div class="searchLoader">
+                    <p:graphicImage  name="search-loader.gif" library="images"/>
+                </div>
+                
+                  
+                
+                  
+                
+                  
+                
+                <o:resolveComponent name="tableComponent" for="dt_#{id}" />
+                
+                <p:inputText rendered="#{value.viewTypeActive eq 'TABLE'}" id="seachDataTable_#{id}"  
+                             onkeyup="$(document.getElementById('#{tableComponent.clientId}:globalFilter')).val(this.value);PF('#{tableComponent.widgetVar}').filter();" 
+                             onkeypress="if(event.keyCode == 13) return false;"
+                             style="margin-right: 10px;" class="search" placeholder="Buscar"/>
+                
+                <p:inputText value="#{value.searchKey}" rendered="#{value.viewTypeActive eq 'GRID'}" id="seachDataGrid_#{id}"  style="margin-right: 10px;" class="search" placeholder="Buscar"
+                             onkeypress="if(event.keyCode == 13) return false;">
+                    <p:ajax  global="false" delay="500"  event="keyup" listener="#{value.searchByName}" process="@this" 
+                             update="@parent:@parent:@parent" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"  />                    
+                </p:inputText>
+                
+                <o:moveComponent for="dt_#{id}" destination="FACET" facet="header" id="mcDataTable">
+                    <h:inputHidden id="globalFilter" />
+                </o:moveComponent>
+
+                <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType" >
+
+                    <p:commandLink style="font-size: 17px !important;outline: none !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                                   update="@parent:@parent:pg_cmp_dv_#{id}" process="@this">
+                        <f:attribute name="viewType" value="#{viewType}"></f:attribute>
+                        <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
+                    </p:commandLink>
+                    <p:spacer width="5"></p:spacer>
+
+                </ui:repeat>
+
+
+
+            </div>
+
+
+
+        </p:outputPanel>
+        
+                
+                
+
+            
+
+                
+
+
+
+            
+
+        <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
+
+        <o:methodParam name="methodRowSelect" value="#{value.onRowSelect}" />
+
+        <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
+
+
+            <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}" widgetVar="wv_dt_#{id}" filteredValue="#{value.filteredValues}" auditable="true">  
+
+
+                <ui:insert name="dataTable"></ui:insert>
+
+                <ui:define name="events">
+                    <p:ajax event="rowSelect" listener="#{methodRowSelect}"  update="@parent:@parent:@parent #{pg_dataRow_id.clientId}"/>    
+                </ui:define>
+
+
+
+            </ae:dataTable>
+
+        </h:panelGroup>
+        
+      
+
+        <o:methodParam name="methodRowGridSelect" value="#{value.onRowGridSelect}" />
+
+        <h:panelGroup id="pg_dataGrid_#{id}" layout="block" style="#{value.viewTypeActive eq 'GRID' ? 'display : block;' : 'display : none;'}">
+
+            <ae:dataGrid   id="dg_#{id}"
+                           value="#{value.value}"
+                           >
+
+                <!--
+                <p:ajax event="page" oncomplete="updateGrid();"/>
+                -->
+                <ui:define name="dataGrid">
+
+                    <p:commandLink class="data-grid-link"  actionListener="#{methodRowGridSelect}" update="@parent:@parent:@parent" process="@this">
+                        <f:attribute name="rowGrid" value="#{row}"></f:attribute>
+                        <div class="data-grid">
+
+
+                            <ui:insert name="dataGrid"></ui:insert>
+
+
+                        </div>
+                    </p:commandLink>
+                </ui:define>
+
+
+
+
+
+
+
+
+
+            </ae:dataGrid>
+
+        </h:panelGroup>
+
+
+
+        <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
+            
+            <!--
+            <div class="ui-g-12">
+            <div class="card">
+                <h1 class="centerText">Linear Chart</h1>
+            </div>
+                card-row-item
+            </div>
+            -->
+            
+            
+            
+            <h:panelGroup id="pgcont_row_#{id}" layout="block" styleClass="form-body">
+            
+                <div class="card-row-item">
+                    <h1 style="font-size: 15px !important;height: 15px;font-weight: bolder">#{titleRow}</h1>
+                    <ui:insert name="dataRow"></ui:insert>        
+                </div> 
+                <!--
+            <p:panel header="#{titleRow}" >
+                <ui:insert name="dataRow"></ui:insert>        
+                
+            </p:panel>    -->
+                
+                </h:panelGroup>
+            
+        </h:panelGroup>
+
+
+
+
+
+    </h:panelGroup>
+
+</ui:composition>

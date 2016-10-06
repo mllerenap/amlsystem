@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui" 
+        xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    
+
+    <html>
+
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+            <title>AE Solutions Plataforms</title>     
+            
+            <h:outputStylesheet name="login/full.css" library="css" />
+            <h:outputStylesheet name="login/bootstrap.css" library="css" />
+            <h:outputStylesheet name="login/font-awesome.css" library="css" />
+            
+            <h:outputStylesheet name="login/web_login_style.css" library="css" />
+
+            
+
+            <h:outputScript>
+                $(document).bind('click', function(){
+                return false;
+                });
+
+                $( document ).ready(function() {
+                $( "input[id='frmLogin:username']" ).keypress(function() {
+                $( "input[id='frmLogin:username']" ).val($( "input[id='frmLogin:username']" ).val().toUpperCase());
+                });
+
+                $( "input[id='frmLogin:username']" ).change(function() {
+                $( "input[id='frmLogin:username']" ).val($( "input[id='frmLogin:username']" ).val().toUpperCase());
+                });
+                });
+
+
+
+            </h:outputScript>
+
+        </h:head>
+
+        <h:body >
+
+            <!--
+            <p:focus for="j_username" context="j_username"></p:focus>
+            -->
+
+            <p:growl autoUpdate="true" globalOnly="true" />
+
+
+
+
+            <div class="body_login">
+                <div id="background-wrapper" style="background-image: url('#{facesContext.externalContext.requestContextPath}/resources/images/background_login_#{login.timeZoneBackground()}.png');"></div>
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-11 o_database_list">
+                    <div class="text-center">
+                        <h:graphicImage name="/logo-aml.png" library="images" /> 
+                    </div>
+                    <br/>
+                    
+                    <h:form id="frmLogin">
+
+                        <c:if test="#{param['error']=='true'}">
+                            <h:panelGroup>
+                                <center>
+                                    <f:event type="preRenderView"
+                                             listener="#{login.errorInicioSesion()}" />
+                                </center>
+                            </h:panelGroup>
+                        </c:if>
+
+                        <div class="form-group field-login">
+                                                        
+                            <p:inputText id="username" value="#{login.username}" class="form-control" required="required" 
+                                         autocomplete="off" placeholder="Usuario ...">
+                                <p:ajax event="change"></p:ajax>
+                            </p:inputText>
+                            
+                            
+                        </div>
+
+                        <div class="form-group field-password">                            
+                            
+                            <p:inputText id="password" value="#{login.password}" class="form-control" required="required" 
+                                         autocomplete="off" placeholder="Clave ...">
+                                <p:ajax event="change"></p:ajax>
+                            </p:inputText>
+                            
+                        </div>
+
+
+
+
+                        
+                        <div class="clearfix oe_login_buttons">
+                            
+                            <p:commandButton value="Iniciar" styleClass="btn btn-primary" actionListener="#{login.doLogin()}" process="frmLogin">
+                            </p:commandButton>
+                            
+                        </div>
+                        
+                        </h:form>
+
+
+
+                </div>
+            </div>
+        
+
+
+
+
+
+        </h:body>
+    </html>
+</f:view>
