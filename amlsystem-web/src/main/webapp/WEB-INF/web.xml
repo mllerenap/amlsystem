@@ -43,33 +43,20 @@
         
     </servlet-mapping>
     
-     <!-- Apache Shiro -->
-    <listener>
-        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-    </listener>
-    <filter>
-        <filter-name>ShiroFilter</filter-name>
-        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>ShiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-    </filter-mapping>
-
-    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
     
+    <!--
     <welcome-file-list>
-        <welcome-file>home.jsf</welcome-file>
+        
+        <welcome-file>dasbo.jsf</welcome-file>
     </welcome-file-list>
+    -->
+    
     <!--
     <error-page>
         <error-code>401</error-code>
