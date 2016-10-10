@@ -194,7 +194,7 @@ public class AdUserRolesFacade extends AbstractFacade<AdUserRoles> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result.isEmpty() || result == null ? null : result;
+        return result;
     }
 
     public void validarExistencia(AdUserRoles adUserRoles) throws ExistException {

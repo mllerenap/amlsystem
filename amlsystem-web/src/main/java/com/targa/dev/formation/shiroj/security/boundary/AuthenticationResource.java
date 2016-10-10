@@ -27,6 +27,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 
 /**
  * Created by nebrass on 03/01/2016.
@@ -54,17 +57,22 @@ public class AuthenticationResource {
                           @NotNull @FormParam("j_password") String password,
                           @NotNull @FormParam("rememberMe") boolean rememberMe,
                           @Context HttpServletRequest request) {
+        
+        System.out.println("login rest services: "+username+" "+password);
+        
+        try {
 
         boolean justLogged = SecurityUtils.getSubject().isAuthenticated();
-
-        try {
-            SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password, rememberMe));
-        } catch (Exception e) {
-            throw new IncorrectCredentialsException("Unknown user, please try again");
-        }
+        
+        SecurityUtils.getSubject().login(new UsernamePasswordToken(username, password, rememberMe));
+            
+       
 
         SavedRequest savedRequest = WebUtils.getAndClearSavedRequest(request);
         //monitoring.fire(new AuthenticationEvent(username, AuthenticationEvent.Type.LOGIN));
+        
+        System.out.println("login OK");
+        
         if (savedRequest != null) {
             return this.getRedirectResponse(savedRequest.getRequestUrl(), request);
         } else {
@@ -73,6 +81,13 @@ public class AuthenticationResource {
             }
             return this.getRedirectResponse(WebPages.HOME_URL, request);
         }
+        
+        } catch (Exception e) {
+            e.printStackTrace();
+            return this.getRedirectResponse(WebPages.LOGIN_URL+"?error=true", request);
+            //throw new IncorrectCredentialsException("Unknown user, please try again");
+        }
+        
     }
 
     @GET

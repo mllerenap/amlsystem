@@ -50,12 +50,31 @@
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
     
-    <!--
+    
     <welcome-file-list>
-        
-        <welcome-file>dasbo.jsf</welcome-file>
+        <welcome-file>inicio</welcome-file>
     </welcome-file-list>
-    -->
+    
+     <error-page>
+        <error-code>401</error-code>
+        <location>/access-denied.jsf</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>403</error-code>
+        <location>/forbidden.jsf</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/not-found.jsf</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsf</location>
+    </error-page>
+    
     
     <!--
     <error-page>

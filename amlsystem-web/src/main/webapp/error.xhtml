@@ -12,27 +12,12 @@
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-            <title>Open Source AE Solutions Plataforms</title>          
-            <!--
-            <h:outputStylesheet name="css/core-layout.css" library="modena-layout" />
-            <h:outputStylesheet name="css/animate.css" library="modena-layout" />
-            <h:outputStylesheet name="css/modena-font.css" library="modena-layout" />
-            <h:outputStylesheet name="css/ripple-effect.css" library="modena-layout" />
-            <h:outputStylesheet name="css/perfect-scrollbar.css" library="modena-layout" />
-            <h:outputStylesheet name="css/font-awesome.css" library="modena-layout" />
-            <h:outputStylesheet name="css/modena-layout.css" library="modena-layout" />
+            <title>Open Source AE Solutions Plataforms</title>        
+            
+            <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+            
+            <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
 
-
-            <h:outputScript name="js/ripple-effect.js" library="modena-layout" />
-            <h:outputScript name="js/perfect-scrollbar.js" library="modena-layout" />
-            <h:outputScript name="js/layout.js" library="modena-layout" />
-            -->
-
-            <ui:insert name="head" />
-
-            <!-- <a:loadScript src="resource://jquery.js" /> -->
-            <script type="text/javascript"
-            src="#{facesContext.externalContext.requestContextPath}/resources/js/equalHeight.js"></script>
 
             <h:outputScript>
                 $(document).bind('click', function(){
@@ -43,45 +28,32 @@
 
         </h:head>
 
-        <h:body class="RedModena Geometry">
+        <h:body style="background-color: rgba(55, 71, 79, 0.9) !important;" styleClass="main-body">
 
             <h:form>
-                <script type="text/javascript">
-                    jQuery(function () {
-                        jQuery('.panels').equalHeights();
-                    });
-                </script>
-
-
-
-                <div class="Wid90 DispBlock MarAuto MarTopPerc10 TexAlCenter">
-                    <div class="Wid33 MarAuto WidAutoOnMobile">
-
-                        <div class="EmptyBox30"></div>
-
-                        <div class="Card ShadowEffect">
-                            <div class="EmptyBox40"></div>
-                            <i class="icon-error Fs100 Red"></i>
-                            <div class="Wid100 OvHidden Fs30 Red">Error Exception Occured!</div>
-                            <div class="Wid100 OvHidden Fs20 BoldGray">Please contact system administrator.</div>
-                            <div class="EmptyBox20"></div>
-                            <div class="Separator"></div>
-                            <div class="EmptyBox10"></div>
-                            <div class="Wid100" >
-                                <p:commandButton icon="ui-icon ui-c fa fa-dashboard" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left RedButton Wid60 Fs18 White RaisedButton" 
-                                                 value="Back To Dashboard"
+                
+                <p:spacer height="200"></p:spacer>
+                
+                <h:panelGroup  layout="block" styleClass="form-body" style="color: #d8d8d8;">
+            
+                    
+                         
+                    <h1 style="font-size: 50px;">Error interno del servidor!</h1>
+                     
+                    <p>
+                        Lo sentimos, ocurrió un error inesperado. Por favor contacte al administrador del sistema. 
+                    </p>
+                         
+                         
+                                <p:commandButton icon="fa fa-check" style="font-size: 17px;"
+                                                 value="Ir al Inicio"
                                                  action="/home?faces-redirect=true">
                                 </p:commandButton>  
                                 
-                            </div>
-                            <div class="EmptyBox20"></div>
-                        </div>
-                        <div class="Wid100 TexAlCenter MarTop20 Fs14 FontRobotoRegular Gray">
-                            <i class="fa fa-copyright"></i>  A&amp;E Solutions <br></br> All rights reserved.
-                        </div>
-                    </div>
-                </div>
+                         
+                     
 
+                 </h:panelGroup>
 
 
             </h:form>

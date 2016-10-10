@@ -4,17 +4,21 @@
  */
 package com.waytechs;
 
+import com.waytechs.model.ejb.facades.AdUserFacade;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
 
 /**
  *
  * @author martin
  */
-@Stateless
-@LocalBean
-public class NewSessionBean {
 
+public class NewSessionBean {
+    
+    
     public void businessMethod() {
     }
 

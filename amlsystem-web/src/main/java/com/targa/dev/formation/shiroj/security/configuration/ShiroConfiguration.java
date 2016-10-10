@@ -20,6 +20,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import javax.enterprise.inject.Produces;
+import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 
 
 /**
@@ -62,16 +63,18 @@ public class ShiroConfiguration {
             FormAuthenticationFilter authc = new FormAuthenticationFilter();
             AnonymousFilter anon = new AnonymousFilter();
             UserFilter user = new UserFilter();
+            RolesAuthorizationFilter roles = new RolesAuthorizationFilter();
 
-            authc.setLoginUrl("/login.jsf");
-            //authc.setSuccessUrl(successUrl);
-            user.setLoginUrl("/login.jsf");
+            authc.setLoginUrl(WebPages.LOGIN_URL);
+            authc.setSuccessUrl(WebPages.HOME_URL);
+            user.setLoginUrl(WebPages.LOGIN_URL);
             
 
             FilterChainManager fcMan = new DefaultFilterChainManager();
             fcMan.addFilter("authc", authc);
             fcMan.addFilter("anon", anon);
             fcMan.addFilter("user", user);
+            fcMan.addFilter("roles", roles);
             
             /*
             /javax.faces.resource/** = anon
@@ -81,14 +84,12 @@ public class ShiroConfiguration {
             */
 
             fcMan.createChain("/javax.faces.resource/**", "anon");
-            fcMan.createChain("/login.jsf", "authc");
+            fcMan.createChain("/api/auth/**", "anon");
+            fcMan.createChain("/resources/**", "anon");
             fcMan.createChain("/ui/admin/**", "authc, roles[ADMINISTRADOR]");
-            fcMan.createChain("/home*", "authc, roles[ADMINISTRADOR]");
-            fcMan.createChain("/api/**", "anon");
+            fcMan.createChain("/home/*", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
             
-            
-            //fcMan.createChain(WebPages.LOGIN_URL, "authc");
-            //fcMan.createChain("/**", "user");
+            fcMan.createChain("/**", "user");
 
             PathMatchingFilterChainResolver resolver = new PathMatchingFilterChainResolver();
             resolver.setFilterChainManager(fcMan);

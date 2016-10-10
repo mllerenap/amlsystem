@@ -70,18 +70,6 @@ public class LoginController implements Serializable {
             e.printStackTrace();
         }
     }
-
-    public void logout() {
-        System.out.println("logout...");
-        try {
-            HttpSession session = JsfUtils.getSession();
-            session.invalidate();
-            JsfUtils.getResponse().sendRedirect(JsfUtils.getRequest().getContextPath() + "/home.jsf?faces-redirect=true");
-        } catch (Exception ex) {
-            ex.getStackTrace();
-        }
-
-    }
     
     public void actualizarUsuario() {
         System.out.println("actualizarUsuario: "+getPass1()+" - "+getPass2());
@@ -190,46 +178,6 @@ public class LoginController implements Serializable {
     public void setRememberMe(Boolean rememberMe) {
         this.rememberMe = rememberMe;
     }
-     
-      /**
-     * Try and authenticate the user
-     */
-    public void doLogin() {
-        Subject subject = org.apache.shiro.SecurityUtils.getSubject();
-        
-        System.out.println("doLogin getUsername: "+getUsername());
-        System.out.println("doLogin getPassword: "+getPassword());
-        System.out.println("doLogin getRememberMe: "+getRememberMe());
-
-        UsernamePasswordToken token = new UsernamePasswordToken(getUsername(), getPassword(), getRememberMe());
-
-        try {
-            subject.login(token);
-
-            if (subject.hasRole("ADMINISTRADOR")) {
-                //FacesContext.getCurrentInstance().getExternalContext().redirect("admin/index.xhtml");
-            }
-            else {
-                //FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            }
-        }
-        catch (UnknownAccountException ex) {
-            ex.printStackTrace();
-        }
-        catch (IncorrectCredentialsException ex) {
-            ex.printStackTrace();
-        }
-        catch (LockedAccountException ex) {
-            ex.printStackTrace();
-        }
-        catch (AuthenticationException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            token.clear();
-        }
-    }
-
     
     
 

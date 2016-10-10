@@ -23,7 +23,7 @@ public class SecurityUtils {
 		
 		currentUser = session.getCallerPrincipal().getName();
 
-		System.out.println("audit: " + currentUser);
+		System.out.println("getCurrentUser: " + currentUser);
 
 		
 		return currentUser;

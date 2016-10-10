@@ -13,7 +13,7 @@ import javax.ws.rs.ext.Provider;
 /**
  * Created by nebrass on 18/11/2015.
  */
-@Provider
+//@Provider
 public class ShiroExceptionMapper implements ExceptionMapper<Exception> {
 
     private static final String CAUSE = "cause";
