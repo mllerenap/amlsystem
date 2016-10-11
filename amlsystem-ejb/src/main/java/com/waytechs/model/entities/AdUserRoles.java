@@ -109,58 +109,63 @@ public class AdUserRoles extends AbstractEntityModel implements Serializable {
         this.id = id;
     }
     
+    @Override
     public BigInteger getId() {
         return id;
     }
 
+    @Override
     public void setId(BigInteger id) {
         this.id = id;
     }
-
-    public BigInteger getAdUserRolesId() {
-        return id;
-    }
-
-    public void setAdUserRolesId(BigInteger id) {
-        this.id = id;
-    }
-
+    
+    
+    @Override
     public YesNo getIsactive() {
         return isactive;
     }
 
+    @Override
     public void setIsactive(YesNo isactive) {
         this.isactive = isactive;
     }
 
+    @Override
     public Date getCreated() {
         return created;
     }
 
+    @Override
     public void setCreated(Date created) {
         this.created = created;
     }
 
+    @Override
     public String getCreatedby() {
         return createdby;
     }
 
+    @Override
     public void setCreatedby(String createdby) {
         this.createdby = createdby;
     }
 
+    @Override
     public Date getUpdated() {
         return updated;
     }
 
+    @Override
     public void setUpdated(Date updated) {
         this.updated = updated;
     }
 
+    @Override
     public String getUpdatedby() {
         return updatedby;
     }
 
+    @Override
     public void setUpdatedby(String updatedby) {
         this.updatedby = updatedby;
     }

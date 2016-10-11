@@ -27,7 +27,7 @@ public class EntityModelListener {
         e.setUpdated(new Date());
         e.setUpdatedby(security.getCurrentUser());
         e.setIsactive(YesNo.SI);
-        System.out.println("prePersist..");
+        
     }
 
     @PreUpdate

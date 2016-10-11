@@ -58,6 +58,33 @@ public class AdUserFacade extends AbstractFacade<AdUser> {
     }
 
     /*
+    @Override
+    public List<AdUser> findAll() {
+        
+        List<AdUser> result = null;
+        
+        try {
+            
+            StringBuilder sql = new StringBuilder();
+            sql.append("SELECT * FROM Ad_User u ");
+            sql.append("WHERE ");
+            sql.append("u.isactive = ? ");
+
+            Query query = em.createNativeQuery(sql.toString(),AdUser.class); 
+            query.setParameter(1, "Y");   
+            
+            result = query.getResultList();
+            
+             } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }*/
+    
+    
+
+    /*
     public List<AdUser> find(AdUser filter) {
 
         System.out.println("filter: " + filter);

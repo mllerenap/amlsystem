@@ -76,9 +76,7 @@ public class AdUser extends AbstractEntityModel implements Serializable {
             sequenceName = "ad_user_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdUser_seq")
-    private BigInteger id;
-
-    
+    private BigInteger id;    
 
     @Basic(optional = false)
     @Column(name = "username")
@@ -157,6 +155,34 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @Lob
     @Column(name = "image")
     private byte[] image;
+    
+    @Basic(optional = false)
+    @Column(name = "isactive")
+    @Convert(converter = YesNoConverter.class)
+    @NotNull
+    private YesNo isactive;
+
+    @Basic(optional = false)
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date created;
+
+    @Basic(optional = false)
+    @Column(name = "createdby")
+    @NotNull
+    private String createdby;
+
+    @Basic(optional = false)
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
+    private Date updated;
+
+    @Basic(optional = false)
+    @Column(name = "updatedby")
+    @NotNull
+    private String updatedby;
 
     public AdUser() {
     }
@@ -173,6 +199,57 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @Override
     public void setId(BigInteger id) {
         this.id = id;
+    }
+    
+    
+    @Override
+    public YesNo getIsactive() {
+        return isactive;
+    }
+
+    @Override
+    public void setIsactive(YesNo isactive) {
+        this.isactive = isactive;
+    }
+
+    @Override
+    public Date getCreated() {
+        return created;
+    }
+
+    @Override
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    @Override
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    @Override
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+
+    @Override
+    public Date getUpdated() {
+        return updated;
+    }
+
+    @Override
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    @Override
+    public String getUpdatedby() {
+        return updatedby;
+    }
+
+    @Override
+    public void setUpdatedby(String updatedby) {
+        this.updatedby = updatedby;
     }
 
     public String getName() {

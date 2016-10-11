@@ -210,7 +210,7 @@ public class AdUserRolesFacade extends AbstractFacade<AdUserRoles> {
 
     public void validarExistenciaActualizar(AdUserRoles adUserRoles) throws ExistException {
         try {
-            AdUserRoles usuarioWithNotChange = find(adUserRoles.getAdUserRolesId());
+            AdUserRoles usuarioWithNotChange = find(adUserRoles.getId());
             if (usuarioWithNotChange.getAdRoleId().getId().equals(adUserRoles.getAdRoleId().getId())) {
                 validarExistencia(adUserRoles);
             }

@@ -1,5 +1,8 @@
 package com.targa.dev.formation.shiroj.security.configuration;
 
+import com.waytechs.model.ejb.facades.AdMenuRoleFacade;
+import com.waytechs.model.entities.AdMenuRole;
+import java.util.List;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -20,6 +23,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 
 
@@ -27,6 +31,9 @@ import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
  * Created by nebrass on 17/11/2015.
  */
 public class ShiroConfiguration {
+    
+    @Inject
+    private AdMenuRoleFacade adMenuRoleFacade;
 
     @Produces
     public WebSecurityManager getSecurityManager() {
@@ -86,8 +93,29 @@ public class ShiroConfiguration {
             fcMan.createChain("/javax.faces.resource/**", "anon");
             fcMan.createChain("/api/auth/**", "anon");
             fcMan.createChain("/resources/**", "anon");
-            fcMan.createChain("/ui/admin/**", "authc, roles[ADMINISTRADOR]");
-            fcMan.createChain("/home/*", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
+            
+            
+            //fcMan.createChain("/ui/admin/**", "authc, roles[ADMINISTRADOR]");
+            //fcMan.createChain("/home/*", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
+            
+            System.out.println("getFilterChainResolver adMenuRoleFacade: "+adMenuRoleFacade);
+            
+            
+            List<AdMenuRole> listaMenuRoles = adMenuRoleFacade.findAll();
+            
+            System.out.println("listaMenuRoles: "+listaMenuRoles);
+            
+            
+            if(  listaMenuRoles != null & !listaMenuRoles.isEmpty() ){
+                
+                for (AdMenuRole mr : listaMenuRoles) { 
+                    System.out.println("mr.getAdMenuId().getUrl(): "+mr.getAdMenuId().getUrl()+" mr.getAdRoleId().getName(): "+mr.getAdRoleId().getName());
+                    fcMan.createChain(mr.getAdMenuId().getUrl(), "authc, roles["+ mr.getAdRoleId().getName() +"]");     
+                }
+            }
+            
+            //fcMan.createChain("/ui/admin/ad_users.jsf", "authc, roles[ADMINISTRADOR]"); 
+            //fcMan.createChain("/home**", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
             
             fcMan.createChain("/**", "user");
 

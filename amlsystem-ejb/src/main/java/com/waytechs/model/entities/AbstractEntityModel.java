@@ -16,6 +16,8 @@ import com.waytechs.model.converters.YesNoConverter;
 
 import com.waytechs.model.enums.YesNo;
 import com.waytechs.model.listeners.EntityModelListener;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @MappedSuperclass
 @EntityListeners(value = EntityModelListener.class)
@@ -25,73 +27,27 @@ public abstract class AbstractEntityModel {
 
     public abstract void setId(BigInteger id);
 
-    @Basic(optional = false)
-    @Column(name = "isactive")
-    @Convert(converter = YesNoConverter.class)
-    @NotNull
-    private YesNo isactive;
+    
+    public abstract YesNo getIsactive();
 
-    @Basic(optional = false)
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date created;
+    public abstract void setIsactive(YesNo isactive);
 
-    @Basic(optional = false)
-    @Column(name = "createdby")
-    @NotNull
-    private String createdby;
+    public abstract Date getCreated();
 
-    @Basic(optional = false)
-    @Column(name = "updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    private Date updated;
+    public abstract void setCreated(Date created);
 
-    @Basic(optional = false)
-    @Column(name = "updatedby")
-    @NotNull
-    private String updatedby;
+    public abstract String getCreatedby();
 
-    public YesNo getIsactive() {
-        return isactive;
-    }
+    public abstract void setCreatedby(String createdby);
 
-    public void setIsactive(YesNo isactive) {
-        this.isactive = isactive;
-    }
+    public abstract Date getUpdated();
 
-    public Date getCreated() {
-        return created;
-    }
+    public abstract void setUpdated(Date updated);
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
+    public abstract String getUpdatedby();
 
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public String getUpdatedby() {
-        return updatedby;
-    }
-
-    public void setUpdatedby(String updatedby) {
-        this.updatedby = updatedby;
-    }
+    public abstract void setUpdatedby(String updatedby);
+    
     
     
 
