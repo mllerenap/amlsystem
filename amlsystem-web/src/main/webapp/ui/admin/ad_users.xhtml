@@ -63,6 +63,7 @@
                     <p:column headerText="Usuario" filterBy="#{row.name}" > 
                         <h:outputText value="#{row.name}" />
                     </p:column>
+                    
                 </ui:define>
 
                 <ui:define name="dataGrid">
@@ -103,10 +104,12 @@
 
                         </h:panelGroup>
 
-                        <h:panelGrid columns="2" style="margin-left: 10px;margin-bottom: 5px;">
+                        <h:panelGrid columns="3" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
 
                             <p:inputText value="#{adUser.activeItem.firstname}" placeholder="Nombre" readonly="#{not adUser.listaUsuarios.enabledSave}" /> 
                             <p:inputText value="#{adUser.activeItem.lastname}" placeholder="Apellido" readonly="#{not adUser.listaUsuarios.enabledSave}"/>
+                            
+                            <p:inputText id="itUser" value="#{adUser.activeItem.username}" placeholder="Usuario" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth"/> 
 
                         </h:panelGrid>
 
@@ -122,17 +125,19 @@
 
                     <h:panelGrid columns="4" width="100%" >
 
-                        <p:outputLabel for="itUser" value="Usuario" styleClass="form-label"></p:outputLabel>
-                        <p:inputText id="itUser" value="#{adUser.activeItem.username}" placeholder="Usuario" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth"/> 
+                        
+                        <!--
                         <p:outputLabel for="itPass" value="Contraseña" styleClass="form-label"></p:outputLabel>
                         
                         <p:inputText id="itPass" value="#{adUser.pass1}" placeholder="Contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        
                         
                         <p:spacer></p:spacer>
                         <p:spacer></p:spacer>
                         
                         <p:spacer></p:spacer>
                         <p:inputText id="itPass2" value="#{adUser.pass2}" placeholder="Confirmar contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
+                        -->
                         
                         <!--
                         <h:panelGroup styleClass="md-inputfield">

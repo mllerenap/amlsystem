@@ -65,6 +65,9 @@ public class AdUserControllers implements Serializable {
     @PostConstruct
     public void initialize() {
         listaUsuarios.load();
+        for(AdUser us : listaUsuarios.getValue()){
+            System.out.println("us creado por "+us.getCreatedby());
+        }
         roles = adRoleFacade.findAll();
     }
 
