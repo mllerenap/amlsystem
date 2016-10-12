@@ -38,4 +38,15 @@ public class ShiroListener extends EnvironmentLoaderListener {
         sce.getServletContext().setInitParameter(ENVIRONMENT_CLASS_PARAM, DefaultWebEnvironment.class.getName());
         super.contextInitialized(sce);
     }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        System.out.println("ShiroListener contextDestroyed");
+        super.contextDestroyed(sce); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+    
 }

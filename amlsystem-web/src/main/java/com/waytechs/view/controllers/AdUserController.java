@@ -40,8 +40,9 @@ import org.apache.commons.io.IOUtils;
  * @author Usuario
  */
 @ManagedBean(name = "adUser")
-@SessionScoped
-public class AdUserControllers implements Serializable {
+//@SessionScoped
+@ViewScoped
+public class AdUserController implements Serializable {
 
     @Inject
     private AdUserFacade adUserFacade;

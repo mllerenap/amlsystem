@@ -39,7 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AdMenuRole.findByCreatedby", query = "SELECT a FROM AdMenuRole a WHERE a.createdby = :createdby")
     , @NamedQuery(name = "AdMenuRole.findByUpdated", query = "SELECT a FROM AdMenuRole a WHERE a.updated = :updated")
     , @NamedQuery(name = "AdMenuRole.findByUpdatedby", query = "SELECT a FROM AdMenuRole a WHERE a.updatedby = :updatedby")
-    , @NamedQuery(name = "AdMenuRole.findByIsactive", query = "SELECT a FROM AdMenuRole a WHERE a.isactive = :isactive")})
+    , @NamedQuery(name = "AdMenuRole.findByIsactive", query = "SELECT a FROM AdMenuRole a WHERE a.isactive = :isactive")
+    , @NamedQuery(name = "AdMenuRole.findByAdRoleId", query = "SELECT a FROM AdMenuRole a WHERE a.adRoleId = :adRoleId and a.isactive = :isactive")    
+    , @NamedQuery(name = "AdMenuRole.findByAdMenuId", query = "SELECT a FROM AdMenuRole a WHERE a.adMenuId = :adMenuId and a.isactive = :isactive")        
+        
+}) 
 public class AdMenuRole implements Serializable {
 
     private static final long serialVersionUID = 1L;

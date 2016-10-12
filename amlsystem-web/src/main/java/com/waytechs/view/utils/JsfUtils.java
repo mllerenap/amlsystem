@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -88,6 +89,10 @@ public class JsfUtils {
     
     public static HttpServletResponse getResponse() {
         return (HttpServletResponse) getExternalContext().getResponse();
+    }
+    
+    public static ServletContext getServletContext() {
+        return (ServletContext) getExternalContext().getContext();
     }
 
     public static void removeViewScope(String view) throws Exception {

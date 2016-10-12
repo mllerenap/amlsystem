@@ -5,7 +5,9 @@
  */
 package com.waytechs.model.ejb.facades;
 
+import com.waytechs.model.entities.AdMenu;
 import com.waytechs.model.entities.AdMenuRole;
+import com.waytechs.model.entities.AdRole;
 import com.waytechs.model.enums.YesNo;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -32,6 +34,34 @@ public class AdMenuRoleFacade extends AbstractFacade<AdMenuRole> {
 
     public AdMenuRoleFacade() {
         super(AdMenuRole.class);
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED) 
+	public List<AdMenuRole> findByAdRoleId(AdRole adRole) {
+        List<AdMenuRole> result = null;
+        try {
+            Query query = em.createNamedQuery("AdMenuRole.findByAdRoleId");
+            query.setParameter("adRoleId", adRole);
+            query.setParameter("isactive", YesNo.SI);
+            result = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+        return result;
+    }
+        
+        @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED) 
+	public List<AdMenuRole> findByAdMenuId(AdMenu adMenu) {
+        List<AdMenuRole> result = null;
+        try {
+            Query query = em.createNamedQuery("AdMenuRole.findByAdMenuId");
+            query.setParameter("adMenuId", adMenu);
+            query.setParameter("isactive", YesNo.SI);
+            result = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+        return result;
     }
 
     

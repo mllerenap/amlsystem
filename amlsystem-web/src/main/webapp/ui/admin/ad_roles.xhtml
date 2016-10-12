@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../resources/layout/template.xhtml"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+    
+    <ui:param name="titleOption" value="Gestión Roles" />
+
+    <ui:define name="content">
+        
+        
+
+        <h:form id="frmRoles" >
+
+            <p:commandButton value="actualizar shiro config" actionListener="#{adRole.actionActualizar}" process="@this"></p:commandButton>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
