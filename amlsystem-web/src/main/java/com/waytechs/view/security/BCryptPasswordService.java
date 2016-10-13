@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.configuration;
+package com.waytechs.view.security;
 
 import org.apache.shiro.authc.credential.PasswordService;
 import org.mindrot.jbcrypt.BCrypt;

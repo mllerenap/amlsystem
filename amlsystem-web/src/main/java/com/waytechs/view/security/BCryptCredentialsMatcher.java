@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.control;
+package com.waytechs.view.security;
 
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationInfo;

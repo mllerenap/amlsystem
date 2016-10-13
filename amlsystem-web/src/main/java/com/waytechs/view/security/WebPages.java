@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.configuration;
+package com.waytechs.view.security;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

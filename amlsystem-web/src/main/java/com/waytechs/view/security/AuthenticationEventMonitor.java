@@ -1,6 +1,6 @@
-package com.targa.dev.formation.shiroj.security.control;
+package com.waytechs.view.security;
 
-import com.targa.dev.formation.shiroj.security.entity.AuthenticationEvent;
+import com.waytechs.view.security.AuthenticationEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.ConcurrencyManagement;

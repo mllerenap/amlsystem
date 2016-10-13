@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.entity;
+package com.waytechs.view.security;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

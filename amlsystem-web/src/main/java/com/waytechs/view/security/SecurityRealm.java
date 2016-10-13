@@ -1,7 +1,9 @@
-package com.targa.dev.formation.shiroj.security.configuration;
+package com.waytechs.view.security;
 
+import com.waytechs.model.ejb.facades.AdPermissionFacade;
 import com.waytechs.model.ejb.facades.AdUserFacade;
 import com.waytechs.model.ejb.facades.AdUserRolesFacade;
+import com.waytechs.model.entities.AdPermission;
 import com.waytechs.model.entities.AdUser;
 import com.waytechs.model.entities.AdUserRoles;
 import org.apache.shiro.authc.*;
@@ -28,8 +30,9 @@ public class SecurityRealm extends AuthorizingRealm {
     
     private AdUserFacade adUserFacade;
     
-    
     private AdUserRolesFacade adUserRolesFacade;
+    
+    private AdPermissionFacade adPermissionFacade;
 
     public SecurityRealm() {
         super();
@@ -42,6 +45,8 @@ public class SecurityRealm extends AuthorizingRealm {
             String moduleName = (String) ctx.lookup("java:module/ModuleName");
             this.adUserFacade = (AdUserFacade) ctx.lookup("java:global/amlsystem-ear/amlsystem-ejb-1.0-SNAPSHOT/AdUserFacade");
             this.adUserRolesFacade = (AdUserRolesFacade) ctx.lookup("java:global/amlsystem-ear/amlsystem-ejb-1.0-SNAPSHOT/AdUserRolesFacade");
+            
+            this.adPermissionFacade = (AdPermissionFacade) ctx.lookup("java:global/amlsystem-ear/amlsystem-ejb-1.0-SNAPSHOT/AdPermissionFacade");
             
         } catch (NamingException ex) {
             logger.warning("Cannot do the JNDI Lookup to instantiate the User service : " + ex);
@@ -86,14 +91,33 @@ public class SecurityRealm extends AuthorizingRealm {
         
         List<AdUserRoles> listaUsuarioRoles = this.adUserRolesFacade.findByAdUser(user);
         
+        Set<String> permissions = new HashSet<>();
+        
         if( listaUsuarioRoles != null && !listaUsuarioRoles.isEmpty() ){
             
             for(AdUserRoles us :  listaUsuarioRoles){
-                roleNames.add(us.getAdRoleId().getName());        
+                roleNames.add(us.getAdRoleId().getName());     
+                
+                List<AdPermission> permisos = this.adPermissionFacade.findByAdRoleId(us.getAdRoleId());
+                
+                if(  permisos != null && !permisos.isEmpty()){
+                    for (AdPermission p : permisos) {
+                        permissions.add(p.getAdMenuId().getName().toLowerCase()+":"+p.getAdActionId().getName().toLowerCase());
+                    }
+                }
+                
+                
             }
         }
+        
+        
 
         AuthorizationInfo info = new SimpleAuthorizationInfo(roleNames);
+        
+        System.out.println("doGetAuthorizationInfo permissions: "+permissions);
+        
+        ((SimpleAuthorizationInfo)info).setStringPermissions(permissions);
+        
         /**
          * If you want to do Permission Based authorization, you can grab the Permissions List associated to your user:
          * For example:

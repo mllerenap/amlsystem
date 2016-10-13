@@ -6,8 +6,8 @@
 package com.waytechs.view.controllers;
 
 import com.waytechs.view.beans.GlobalBean;
-import com.targa.dev.formation.shiroj.security.configuration.ShiroConfiguration;
-import com.targa.dev.formation.shiroj.security.configuration.ShiroListener;
+import com.waytechs.view.security.ShiroConfiguration;
+import com.waytechs.view.security.ShiroListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;

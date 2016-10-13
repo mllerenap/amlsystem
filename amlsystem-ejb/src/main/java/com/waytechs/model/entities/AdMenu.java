@@ -43,7 +43,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AdMenu.findByCreatedby", query = "SELECT a FROM AdMenu a WHERE a.createdby = :createdby")
     , @NamedQuery(name = "AdMenu.findByUpdated", query = "SELECT a FROM AdMenu a WHERE a.updated = :updated")
     , @NamedQuery(name = "AdMenu.findByUpdatedby", query = "SELECT a FROM AdMenu a WHERE a.updatedby = :updatedby")
-    , @NamedQuery(name = "AdMenu.findByIsactive", query = "SELECT a FROM AdMenu a WHERE a.isactive = :isactive")})
+    , @NamedQuery(name = "AdMenu.findByIsactive", query = "SELECT a FROM AdMenu a WHERE a.isactive = :isactive")
+    , @NamedQuery(name = "AdMenu.findByAdMenuParentId", query = "SELECT a FROM AdMenu a WHERE a.adMenuParentId = :adMenuParentId and a.isactive = :isactive")
+
+})
 public class AdMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,6 +89,10 @@ public class AdMenu implements Serializable {
     @Size(max = 500)
     @Column(name = "url")
     private String url;
+    
+    @Size(max = 500)
+    @Column(name = "icon")
+    private String icon;
 
     public AdMenu() {
     }
@@ -185,6 +192,15 @@ public class AdMenu implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+    
     
     
 

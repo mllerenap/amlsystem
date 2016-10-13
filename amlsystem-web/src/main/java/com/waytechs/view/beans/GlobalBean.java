@@ -5,7 +5,7 @@
  */
 package com.waytechs.view.beans;
 
-import com.targa.dev.formation.shiroj.security.configuration.ShiroConfiguration;
+import com.waytechs.view.security.ShiroConfiguration;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import org.apache.shiro.web.filter.mgt.FilterChainResolver;

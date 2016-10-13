@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj;
+package com.waytechs.view.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

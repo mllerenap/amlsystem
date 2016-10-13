@@ -34,13 +34,14 @@ import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 /**
  *
  * @author Usuario
  */
 @ManagedBean(name = "adUser")
-//@SessionScoped
 @ViewScoped
 public class AdUserController implements Serializable {
 
@@ -129,6 +130,17 @@ public class AdUserController implements Serializable {
          @Override
         protected void initialize() {
             System.out.println("initialize DataView AdUser");
+            /*
+             Subject currentUser = SecurityUtils.getSubject();
+             
+             if( currentUser.isPermitted("usuarios:crear") ){
+                setEnabledEdit(true);    
+             }else{
+                 setEnabledEdit(true);    
+             }*/
+             
+             
+            
         }
         
         @Override
@@ -187,6 +199,7 @@ public class AdUserController implements Serializable {
             System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
             try {
                 
+                /*
                 if( getPass1() == null || getPass2() == null){
                     JsfUtils.messageWarning(null, "Debe ingresar la contraseña.", null);        
                     return null;
@@ -198,6 +211,8 @@ public class AdUserController implements Serializable {
                 }
                 
                 item.setPassword(getPass1());
+                */
+                
                 adUserFacade.save(item);
                 setSelectedItem(item);
                 setPass1(item.getPassword());

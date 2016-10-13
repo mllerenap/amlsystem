@@ -1,9 +1,8 @@
-package com.targa.dev.formation.shiroj.security.boundary;
+package com.waytechs.view.rest;
 
-import com.targa.dev.formation.shiroj.security.configuration.WebPages;
-import com.targa.dev.formation.shiroj.security.control.AuthenticationEventMonitor;
-//import com.targa.dev.formation.shiroj.security.control.UserService;
-import com.targa.dev.formation.shiroj.security.entity.AuthenticationEvent;
+import com.waytechs.view.security.WebPages;
+import com.waytechs.view.security.AuthenticationEventMonitor;
+import com.waytechs.view.security.AuthenticationEvent;
 import com.waytechs.model.ejb.facades.AdUserFacade;
 import com.waytechs.model.entities.AdUser;
 //import com.targa.dev.formation.shiroj.security.entity.User;

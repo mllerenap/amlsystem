@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security;
+package com.waytechs.view.rest;
 
 import java.io.IOException;
 import java.util.logging.Logger;

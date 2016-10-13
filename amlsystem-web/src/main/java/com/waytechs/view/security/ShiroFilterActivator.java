@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.configuration;
+package com.waytechs.view.security;
 
 import com.waytechs.view.beans.GlobalBean;
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.boundary;
+package com.waytechs.view.rest;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;

@@ -39,19 +39,16 @@
 
            <h:form>
 
-               <p:menubar >
-                    <p:submenu label="Configuración" icon="fa fa-gear">
-                        <p:menuitem value="Usuarios" url="/ui/admin/ad_users.jsf"></p:menuitem>
-                        <p:menuitem value="Roles" url="/ui/admin/ad_roles.jsf"></p:menuitem>
-                    </p:submenu>
-                    <p:menuitem value="Inicio" url="/home.jsf" icon="fa fa-home"></p:menuitem>
-                    <f:facet name="options">
-                        <p:menuButton value="#{login.adUser.firstname.toUpperCase()} #{login.adUser.lastname.toUpperCase()}" >
+            
+               
+               <p:menubar model="#{template.model}">
+                   <f:facet name="options">
+                        <p:menuButton value="#{template.adUser.firstname.toUpperCase()} #{template.adUser.lastname.toUpperCase()}" >
                             <p:menuitem  value="Cerrar" icon="ui-icon-extlink" url="/api/auth/logout" style="width: 100px;"></p:menuitem>
                         </p:menuButton>
 
                     </f:facet>
-                </p:menubar>
+               </p:menubar>
 
             </h:form>
 
@@ -94,54 +91,6 @@
                             </p:confirmDialog>
                         </h:form>
                         
-                     <!--   
-            
-            
-                        <h:form id="fDialog">
-                            
-                            <p:remoteCommand name="initPerfilUsuario" process="@this" 
-                                             oncomplete="PF('wvPerfilUsuario').show();" update="dPerfilUsuario"></p:remoteCommand> 
-            
-                            <p:dialog id="dPerfilUsuario"
-                                      header="Perfil de usuario"
-                                      widgetVar="wvPerfilUsuario" minHeight="40" closeOnEscape="true"
-                                      modal="true">
-            
-                                <h:panelGrid columns="2" >
-            
-            
-                                    <p:outputLabel value="Usuario:" for="itUsuario" />
-                                    <h:outputText id="itUsuario" value="#{login.adUser.username}"/>
-            
-                                    <p:outputLabel value="Nueva Contraseña:" for="itPass1"/>
-            
-                                    <p:inputText id="itPass1" 
-                                                 required="true" requiredMessage="El campo Contraseña es requerido"
-                                                 type="password" value="#{login.pass1}" maxlength="25"/>
-            
-                                    <p:outputLabel value="Confirmación Contraseña:"  for="itPass2" id="olConfirm" />
-            
-                                    <p:inputText id="itPass2" 
-                                                 required="true"
-                                                 requiredMessage="El campo Confirmación Contraseña es requerido"
-                                                 type="password" value="#{login.pass2}" maxlength="25"/>
-            
-                                    <f:facet name="footer">
-                                        <div class="EmptyBox30"></div>
-                                        <div style="width: 45%;margin: auto;">
-                                            <h:panelGrid columns="2">
-                                            <p:commandButton value="Guardar" icon="fa fa-save"  />
-                                            <p:commandButton value="Salir" icon="fa fa-arrow-left" type="button" ajax="false" onclick="PF('wvPerfilUsuario').hide();" />
-                                            </h:panelGrid>
-                                        </div>
-                                    </f:facet>
-            
-            
-                                </h:panelGrid>
-            
-                            </p:dialog>
-                        </h:form>
-            -->
 
             <ui:include src="ajaxLoader.xhtml"/> 
 

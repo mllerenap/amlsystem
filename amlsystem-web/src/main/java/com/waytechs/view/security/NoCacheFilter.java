@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.boundary;
+package com.waytechs.view.security;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

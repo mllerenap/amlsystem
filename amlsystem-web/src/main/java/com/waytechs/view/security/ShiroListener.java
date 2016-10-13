@@ -1,4 +1,4 @@
-package com.targa.dev.formation.shiroj.security.configuration;
+package com.waytechs.view.security;
 
 import org.apache.shiro.web.env.DefaultWebEnvironment;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
