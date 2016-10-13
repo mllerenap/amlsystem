@@ -5,6 +5,7 @@
  */
 package com.waytechs.view.controllers;
 
+import com.waytechs.view.beans.GlobalBean;
 import com.targa.dev.formation.shiroj.security.configuration.ShiroConfiguration;
 import com.targa.dev.formation.shiroj.security.configuration.ShiroListener;
 import java.io.IOException;
@@ -53,11 +54,7 @@ import org.apache.shiro.web.util.WebUtils;
 @ViewScoped
 public class AdRoleController implements Serializable {
 
-    //@Inject WebSecurityManager securityManager;
-    
-    //@Inject FilterChainResolver filterChainResolver;
-    
-    @Inject ShiroConfiguration sc;
+    @Inject private GlobalBean appGlobal;
 
     @PostConstruct
     public void initialize() {
@@ -66,49 +63,8 @@ public class AdRoleController implements Serializable {
     public void actionActualizar(ActionEvent action){
         try {
             System.out.println("actionActualizar ...");
-            
-            JsfUtils.getServletContext().addListener(ShiroListener.class);
-            
-            /*
-            DefaultWebEnvironment webEnvironment = (DefaultWebEnvironment) WebUtils.getRequiredWebEnvironment(JsfUtils.getServletContext());
-            System.out.println("webEnvironment: "+webEnvironment);
-            
-            DefaultWebSecurityManager sm = (DefaultWebSecurityManager) webEnvironment.getSecurityManager();
-            //LifecycleUtils.destroy(sm);
-            System.out.println("getSecurityManager acc: "+sm);
-            LifecycleUtils.destroy(webEnvironment.getFilterChainResolver());
-            System.out.println("getFilterChainResolver destroy: "+webEnvironment.getFilterChainResolver());
-            */
-            
-            
-            /*
-            DefaultWebSecurityManager sm = (DefaultWebSecurityManager) webEnvironment.getSecurityManager();
-            EhCacheManager cm = (EhCacheManager) sm.getCacheManager();
-            cm.destroy();
-            
-            //System.out.println("EhCacheManager destroy: "+cm);
-            
-            //webEnvironment = (DefaultWebEnvironment) createEnvironment(JsfUtils.getServletContext());
-            
-            //webEnvironment.setSecurityManager(securityManager);
-            
-            //filterChainResolver
-            
-            //ShiroConfiguration sc = new ShiroConfiguration();
-            
-                */
-
-            
-            /*
-            System.out.println("ShiroConfiguration "+sc);
-            
-            webEnvironment.setFilterChainResolver(sc.getFilterChainResolver());
-            
-            LifecycleUtils.init(webEnvironment);
-            */
-            
-            System.out.println("webEnvironment init");
-            
+            appGlobal.loadFilterChainResolver();
+            System.out.println("actionActualizar ... fin");
         } catch (Exception ex) {
             Logger.getLogger(AdRoleController.class.getName()).log(Level.SEVERE, null, ex);
         }

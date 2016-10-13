@@ -75,6 +75,8 @@ public class ShiroConfiguration {
     @Produces
     public FilterChainResolver getFilterChainResolver() {
         
+        System.out.println("*********************** getFilterChainResolver LOAD INIT *************");
+        
         FilterChainResolver filterChainResolver = null;
         if (filterChainResolver == null) {
             FormAuthenticationFilter authc = new FormAuthenticationFilter();
@@ -112,7 +114,7 @@ public class ShiroConfiguration {
             //fcMan.createChain("/ui/admin/**", "authc, roles[ADMINISTRADOR]");
             //fcMan.createChain("/home/*", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
             
-            System.out.println("getFilterChainResolver --------------------------------***********************");
+            
             
             List<AdMenu> listaMenu = adMenuFacade.findAll();
             if(  listaMenu != null & !listaMenu.isEmpty() ){
@@ -146,9 +148,6 @@ public class ShiroConfiguration {
                 }
             }
             
-            
-            System.out.println("getFilterChainResolver --------------------------------***********************");
-            
             //fcMan.createChain("/ui/admin/ad_users.jsf", "authc, roles[ADMINISTRADOR]"); 
             //fcMan.createChain("/home**", "authc, roles[ADMINISTRADOR], roles[INVITADO]");
             
@@ -157,6 +156,8 @@ public class ShiroConfiguration {
             PathMatchingFilterChainResolver resolver = new PathMatchingFilterChainResolver();
             resolver.setFilterChainManager(fcMan);
             filterChainResolver = resolver;
+            
+            System.out.println("*********************** getFilterChainResolver LOAD END *************");
         }
         return filterChainResolver;
     }
