@@ -23,6 +23,9 @@ import com.waytechs.model.utils.DateUtils;
 import com.waytechs.model.utils.SecurityUtils;
 import com.waytechs.view.utils.JsfUtils;
 import java.util.List;
+import java.util.Map;
+import javax.faces.event.ActionEvent;
+import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -101,6 +104,8 @@ public class TemplateController implements Serializable {
             DefaultMenuItem item = new DefaultMenuItem(menu.getName());
             item.setUrl(menu.getUrl());
             item.setIcon(menu.getIcon());
+            item.setParam("item", menu);
+            item.setCommand("#{template.executeMenu}");
             System.out.println("childMenu item: "+menu.getName());
             model.addElement(item);
         }
@@ -121,18 +126,17 @@ public class TemplateController implements Serializable {
             DefaultMenuItem item = new DefaultMenuItem(itemChild.getName());
             item.setUrl(itemChild.getUrl());
             item.setIcon(itemChild.getIcon());
+            item.setParam("item", itemChild);
+            item.setCommand("#{template.executeMenu}");
+            
             System.out.println("childMenuParent item: "+itemChild.getName());
             parent.addElement(item);
         } 
          return parent;
     }
-
-    public void errorInicioSesion() {
-        try {
-            JsfUtils.messageError(null, "Usuario y/o Contraseña incorrectos", "");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    
+    public void executeMenu(ActionEvent ev){
+        System.out.println("executeMenu: "+ev);
     }
 
     public void actualizarUsuario() {
