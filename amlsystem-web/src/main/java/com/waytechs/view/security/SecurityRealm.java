@@ -102,7 +102,7 @@ public class SecurityRealm extends AuthorizingRealm {
                 
                 if(  permisos != null && !permisos.isEmpty()){
                     for (AdPermission p : permisos) {
-                        permissions.add(p.getAdMenuId().getName().toLowerCase()+":"+p.getAdActionId().getName().toLowerCase());
+                        permissions.add(p.getAdActionId().getAdModuleId().getId()+":"+p.getAdActionId().getId());
                     }
                 }
                 

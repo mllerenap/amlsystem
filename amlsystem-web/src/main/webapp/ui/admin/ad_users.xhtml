@@ -58,7 +58,7 @@
         <h:form id="frmUsuarios" enctype="multipart/form-data" >
 
 
-            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Código: #{adUser.activeItem.id}"> 
+            <ae:dataView id="#{adUser.listaUsuarios.id}" value="#{adUser.listaUsuarios}" titleRow="Código: #{adUser.activeItem.id}"> 
 
                 <ui:define name="dataTable">
                     <p:column headerText="Usuario" filterBy="#{row.name}" > 

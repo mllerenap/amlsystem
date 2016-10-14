@@ -138,12 +138,14 @@ public class TemplateController extends AbstractController implements Serializab
     }
     
     public void actionMenu(ActionEvent event){
-        
         MenuItem menuItem = ((MenuActionEvent) event).getMenuItem();
         Long idMenu = Long.parseLong(menuItem.getParams().get("item").get(0));
         System.out.println("executeMenu: "+idMenu);
         setCurrentMenu(adMenuFacade.find(idMenu));
         System.out.println("setCurrentMenu: "+getCurrentMenu());
+        
+        JsfUtils.sendRedirect(getCurrentMenu().getUrl());
+        
     }
 
     public void actualizarUsuario() {

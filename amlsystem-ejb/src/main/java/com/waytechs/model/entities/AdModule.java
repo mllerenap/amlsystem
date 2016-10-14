@@ -5,45 +5,41 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author mllerena
  */
 @Entity
-@Table(name = "ad_action")
+@Table(name = "ad_module")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdAction.findAll", query = "SELECT a FROM AdAction a")
-    , @NamedQuery(name = "AdAction.findById", query = "SELECT a FROM AdAction a WHERE a.id = :id")
-    , @NamedQuery(name = "AdAction.findByName", query = "SELECT a FROM AdAction a WHERE a.name = :name")
-    , @NamedQuery(name = "AdAction.findByCreated", query = "SELECT a FROM AdAction a WHERE a.created = :created")
-    , @NamedQuery(name = "AdAction.findByCreatedby", query = "SELECT a FROM AdAction a WHERE a.createdby = :createdby")
-    , @NamedQuery(name = "AdAction.findByUpdated", query = "SELECT a FROM AdAction a WHERE a.updated = :updated")
-    , @NamedQuery(name = "AdAction.findByUpdatedby", query = "SELECT a FROM AdAction a WHERE a.updatedby = :updatedby")
-    , @NamedQuery(name = "AdAction.findByIsactive", query = "SELECT a FROM AdAction a WHERE a.isactive = :isactive")
-    , @NamedQuery(name = "AdAction.findByAdModuleId", query = "SELECT a FROM AdAction a WHERE a.adModuleId = :adModuleId and a.isactive = :isactive")
-})
-public class AdAction implements Serializable {
+    @NamedQuery(name = "AdModule.findAll", query = "SELECT a FROM AdModule a")
+    , @NamedQuery(name = "AdModule.findById", query = "SELECT a FROM AdModule a WHERE a.id = :id")
+    , @NamedQuery(name = "AdModule.findByName", query = "SELECT a FROM AdModule a WHERE a.name = :name")
+    , @NamedQuery(name = "AdModule.findByCreated", query = "SELECT a FROM AdModule a WHERE a.created = :created")
+    , @NamedQuery(name = "AdModule.findByCreatedby", query = "SELECT a FROM AdModule a WHERE a.createdby = :createdby")
+    , @NamedQuery(name = "AdModule.findByUpdated", query = "SELECT a FROM AdModule a WHERE a.updated = :updated")
+    , @NamedQuery(name = "AdModule.findByUpdatedby", query = "SELECT a FROM AdModule a WHERE a.updatedby = :updatedby")
+    , @NamedQuery(name = "AdModule.findByIsactive", query = "SELECT a FROM AdModule a WHERE a.isactive = :isactive")})
+public class AdModule implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,20 +62,18 @@ public class AdAction implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    @Size(max = 255)
-    @Column(name = "isactive")
-    private String isactive;
-    @OneToMany(mappedBy = "adActionId")
-    private List<AdPermission> adPermissionList;
     
-    @JoinColumn(name = "ad_module_id", referencedColumnName = "id")
-    @ManyToOne
-    private AdModule adModuleId;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "isactive")
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
 
-    public AdAction() {
+    public AdModule() {
     }
 
-    public AdAction(Long id) {
+    public AdModule(Long id) {
         this.id = id;
     }
 
@@ -131,32 +125,15 @@ public class AdAction implements Serializable {
         this.updatedby = updatedby;
     }
 
-    public String getIsactive() {
+    public YesNo getIsactive() {
         return isactive;
     }
 
-    public void setIsactive(String isactive) {
+    public void setIsactive(YesNo isactive) {
         this.isactive = isactive;
     }
 
-    public AdModule getAdModuleId() {
-        return adModuleId;
-    }
-
-    public void setAdModuleId(AdModule adModuleId) {
-        this.adModuleId = adModuleId;
-    }
     
-    
-
-    @XmlTransient
-    public List<AdPermission> getAdPermissionList() {
-        return adPermissionList;
-    }
-
-    public void setAdPermissionList(List<AdPermission> adPermissionList) {
-        this.adPermissionList = adPermissionList;
-    }
 
     @Override
     public int hashCode() {
@@ -168,10 +145,10 @@ public class AdAction implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdAction)) {
+        if (!(object instanceof AdModule)) {
             return false;
         }
-        AdAction other = (AdAction) object;
+        AdModule other = (AdModule) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -180,7 +157,7 @@ public class AdAction implements Serializable {
 
     @Override
     public String toString() {
-        return "com.waytechs.model.entities.AdAction[ id=" + id + " ]";
+        return "com.waytechs.model.entities.AdModule[ id=" + id + " ]";
     }
     
 }

@@ -1,11 +1,13 @@
 package com.waytechs.view.utils;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
 
 import javax.el.ELContext;
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -24,9 +26,9 @@ public class JsfUtils {
         return getCurrentContext().getViewRoot().findComponent(id);
 
     }
-    
+
     public static UIComponent findComponentById(String id) {
-        return getUIComponentOfId( findComponent("bDocument"),id );
+        return getUIComponentOfId(findComponent("bDocument"), id);
     }
 
     public static UIComponent getUIComponentOfId(UIComponent root, String id) {
@@ -82,15 +84,15 @@ public class JsfUtils {
     public static HttpServletRequest getRequest() {
         return (HttpServletRequest) getExternalContext().getRequest();
     }
-    
+
     public static HttpSession getSession() {
         return (HttpSession) getExternalContext().getSession(true);
     }
-    
+
     public static HttpServletResponse getResponse() {
         return (HttpServletResponse) getExternalContext().getResponse();
     }
-    
+
     public static ServletContext getServletContext() {
         return (ServletContext) getExternalContext().getContext();
     }
@@ -157,6 +159,27 @@ public class JsfUtils {
     public static void messageFatal(String id, String main, String desc) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(id, new FacesMessage(FacesMessage.SEVERITY_FATAL, main, desc));
+    }
+    
+    public static String getContextPath() {
+        return getRequest().getContextPath();
+    }
+
+    public static void actionRedirect(String outcome) {
+        NavigationHandler nh = getCurrentContext().getApplication().getNavigationHandler();
+        nh.handleNavigation(getCurrentContext(), null, outcome);
+    }
+    
+    public static void sendRedirect(String url) {
+        try {
+            getCurrentContext().getExternalContext().redirect(getContextPath() + url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static Object getManagedBean(String beanName) {
+        return getCurrentContext().getApplication().getELResolver().getValue(getElContext(), null, beanName);
     }
 
 }

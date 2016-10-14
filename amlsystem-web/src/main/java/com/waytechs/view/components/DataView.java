@@ -14,6 +14,16 @@ public abstract class DataView<E extends AbstractEntityModel> {
      *
      */
     private static final long serialVersionUID = 1L;
+    
+    private String id;
+    
+    private boolean hasPermmissionCreate;
+    private boolean hasPermmissionEdit;
+    private boolean hasPermmissionDelete;
+    private boolean hasPermmissionSave;
+
+    
+    
 
     private boolean enabledRefresh;
 
@@ -53,6 +63,12 @@ public abstract class DataView<E extends AbstractEntityModel> {
         setEnabledSave(false);//
         setEnabledDelete(false);
         setEnabledCancel(false);
+        
+        setHasPermmissionCreate(false);
+        setHasPermmissionEdit(false);
+        setHasPermmissionDelete(false);
+        setHasPermmissionSave(false);
+                
         
         viewTypeActive = DataViewType.TABLE;
         
@@ -228,6 +244,49 @@ public abstract class DataView<E extends AbstractEntityModel> {
     public void setValue(List<E> value) {
         this.value = value;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isHasPermmissionCreate() {
+        return hasPermmissionCreate;
+    }
+
+    public void setHasPermmissionCreate(boolean hasPermmissionCreate) {
+        this.hasPermmissionCreate = hasPermmissionCreate;
+    }
+
+    public boolean isHasPermmissionEdit() {
+        return hasPermmissionEdit;
+    }
+
+    public void setHasPermmissionEdit(boolean hasPermmissionEdit) {
+        this.hasPermmissionEdit = hasPermmissionEdit;
+    }
+
+    public boolean isHasPermmissionDelete() {
+        return hasPermmissionDelete;
+    }
+
+    public void setHasPermmissionDelete(boolean hasPermmissionDelete) {
+        this.hasPermmissionDelete = hasPermmissionDelete;
+    }
+
+    public boolean isHasPermmissionSave() {
+        return hasPermmissionSave;
+    }
+
+    public void setHasPermmissionSave(boolean hasPermmissionSave) {
+        this.hasPermmissionSave = hasPermmissionSave;
+    }
+    
+    
+    
 
     public abstract List<E> findAll();
     

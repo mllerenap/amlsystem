@@ -33,6 +33,7 @@ import com.waytechs.view.components.DataTable;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
+import javax.faces.bean.ManagedProperty;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -63,6 +64,8 @@ public class AdUserController implements Serializable {
     private AdUserRolesFacade adUserRolesFacade;
     
     private List<AdRole> roles;
+    
+    private TemplateController template;
 
     @PostConstruct
     public void initialize() {
@@ -71,6 +74,15 @@ public class AdUserController implements Serializable {
             System.out.println("us creado por id "+us.getId());  
         }
         roles = adRoleFacade.findAll();
+        
+        
+        template = (TemplateController) JsfUtils.getManagedBean("template");
+        
+        
+        System.out.println(getClass().getSimpleName()+" - "+template.getCurrentMenu());  
+        
+        
+        
     }
 
     public Part getImage() {
@@ -129,17 +141,15 @@ public class AdUserController implements Serializable {
         
          @Override
         protected void initialize() {
-            System.out.println("initialize DataView AdUser");
-            /*
-             Subject currentUser = SecurityUtils.getSubject();
-             
-             if( currentUser.isPermitted("usuarios:crear") ){
-                setEnabledEdit(true);    
-             }else{
-                 setEnabledEdit(true);    
-             }*/
-             
-             
+            setId("dvUsuarios");
+            System.out.println("initialize DataView: "+getId());
+            
+            Subject s =  SecurityUtils.getSubject();
+            
+            setHasPermmissionCreate(s.isPermitted("1:1"));
+            setHasPermmissionEdit(s.isPermitted("1:2"));
+            setHasPermmissionDelete(s.isPermitted("1:3"));
+            setHasPermmissionSave(s.isPermitted("1:4"));
             
         }
         
