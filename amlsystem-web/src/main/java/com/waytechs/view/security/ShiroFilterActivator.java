@@ -26,10 +26,10 @@ public class ShiroFilterActivator extends ShiroFilter {
 
     @Override
     public FilterChainResolver getFilterChainResolver() {
-        System.out.println("ShiroFilterActivator.....getFilterChainResolver: "+appGlobal.getFilterChainResolver());
+        //System.out.println("ShiroFilterActivator.....getFilterChainResolver: "+appGlobal.getFilterChainResolver());
         
         if( appGlobal.getFilterChainResolver() == null){
-            System.out.println("ShiroFilterActivator.....getFilterChainResolver value super: "+super.getFilterChainResolver());
+            //System.out.println("ShiroFilterActivator.....getFilterChainResolver value super: "+super.getFilterChainResolver());
             return super.getFilterChainResolver();
         }
         

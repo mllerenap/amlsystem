@@ -29,6 +29,7 @@ import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuItem;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -37,7 +38,7 @@ import org.primefaces.model.menu.MenuModel;
  */
 @ManagedBean(name = "template")
 @SessionScoped
-public class TemplateController implements Serializable {
+public class TemplateController extends AbstractController implements Serializable {
 
     @Inject
     private AdUserFacade adUserFacade;
@@ -102,10 +103,11 @@ public class TemplateController implements Serializable {
             model.addElement(submenu);
         }else{
             DefaultMenuItem item = new DefaultMenuItem(menu.getName());
-            item.setUrl(menu.getUrl());
+            //item.setUrl(menu.getUrl());
             item.setIcon(menu.getIcon());
-            item.setParam("item", menu);
-            item.setCommand("#{template.executeMenu}");
+            item.setParam("item", menu.getId());
+            //item.setProcess("@this");
+            item.setCommand("#{template.actionMenu}");
             System.out.println("childMenu item: "+menu.getName());
             model.addElement(item);
         }
@@ -124,10 +126,10 @@ public class TemplateController implements Serializable {
             parent.addElement(submenu);
         }else{
             DefaultMenuItem item = new DefaultMenuItem(itemChild.getName());
-            item.setUrl(itemChild.getUrl());
+            //item.setUrl(itemChild.getUrl());
             item.setIcon(itemChild.getIcon());
-            item.setParam("item", itemChild);
-            item.setCommand("#{template.executeMenu}");
+            item.setParam("item", itemChild.getId());
+            item.setCommand("#{template.actionMenu}");
             
             System.out.println("childMenuParent item: "+itemChild.getName());
             parent.addElement(item);
@@ -135,8 +137,13 @@ public class TemplateController implements Serializable {
          return parent;
     }
     
-    public void executeMenu(ActionEvent ev){
-        System.out.println("executeMenu: "+ev);
+    public void actionMenu(ActionEvent event){
+        
+        MenuItem menuItem = ((MenuActionEvent) event).getMenuItem();
+        Long idMenu = Long.parseLong(menuItem.getParams().get("item").get(0));
+        System.out.println("executeMenu: "+idMenu);
+        setCurrentMenu(adMenuFacade.find(idMenu));
+        System.out.println("setCurrentMenu: "+getCurrentMenu());
     }
 
     public void actualizarUsuario() {
