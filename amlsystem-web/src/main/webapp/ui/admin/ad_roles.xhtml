@@ -18,7 +18,44 @@
 
         <h:form id="frmRoles" >
             
-            <p:commandButton value="actualizar shiro config" actionListener="#{adRole.actionActualizar}" process="@this"></p:commandButton>
+            <ae:dataView id="#{adRole.listaRoles.id}" value="#{adRole.listaRoles}" titleRow="Código: #{adRole.activeItem.id}"> 
+
+                <ui:define name="dataTable">
+                    <p:column headerText="Rol" filterBy="#{row.name}" > 
+                        <h:outputText value="#{row.name}" />
+                    </p:column>
+                    
+                </ui:define>
+
+                <ui:define name="dataRow">
+
+                    <h:panelGrid columns="2" >
+
+                        <h:panelGrid columns="3" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
+
+                            <p:inputText value="#{adRole.activeItem.name}" placeholder="Rol" readonly="#{not adRole.listaRoles.enabledSave}" /> 
+
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                        
+                    
+
+                    <h:panelGrid columns="4" width="100%" >
+
+                        
+
+                    </h:panelGrid>
+
+
+
+                </ui:define>
+
+
+
+
+
+            </ae:dataView>
             
 
         </h:form>

@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AdMenu.findByUpdated", query = "SELECT a FROM AdMenu a WHERE a.updated = :updated")
     , @NamedQuery(name = "AdMenu.findByUpdatedby", query = "SELECT a FROM AdMenu a WHERE a.updatedby = :updatedby")
     , @NamedQuery(name = "AdMenu.findByIsactive", query = "SELECT a FROM AdMenu a WHERE a.isactive = :isactive")
-    , @NamedQuery(name = "AdMenu.findByAdMenuParentId", query = "SELECT a FROM AdMenu a WHERE a.adMenuParentId = :adMenuParentId and a.isactive = :isactive")
+    , @NamedQuery(name = "AdMenu.findByAdMenuParentId", query = "SELECT a FROM AdMenu a WHERE a.adMenuParentId = :adMenuParentId and a.isactive = :isactive order by a.orden")
 
 })
 public class AdMenu implements Serializable {
@@ -93,6 +93,10 @@ public class AdMenu implements Serializable {
     @Size(max = 500)
     @Column(name = "icon")
     private String icon;
+    
+    
+    @Column(name = "orden")
+    private Long orden;
 
     public AdMenu() {
     }
@@ -157,7 +161,13 @@ public class AdMenu implements Serializable {
         this.isactive = isactive;
     }
 
-    
+    public Long getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Long orden) {
+        this.orden = orden;
+    }
 
     @XmlTransient
     public List<AdMenu> getAdMenuList() {
