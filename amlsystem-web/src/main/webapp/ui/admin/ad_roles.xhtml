@@ -9,22 +9,22 @@
 
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui">
-    
+
     <ui:param name="titleOption" value="Gestión Roles" />
 
     <ui:define name="content">
-        
-        
+
+
 
         <h:form id="frmRoles" >
-            
+
             <ae:dataView id="#{adRole.listaRoles.id}" value="#{adRole.listaRoles}" titleRow="Código: #{adRole.activeItem.id}"> 
 
                 <ui:define name="dataTable">
                     <p:column headerText="Rol" filterBy="#{row.name}" > 
                         <h:outputText value="#{row.name}" />
                     </p:column>
-                    
+
                 </ui:define>
 
                 <ui:define name="dataRow">
@@ -32,18 +32,36 @@
                     <h:panelGrid columns="2" >
 
                         <h:panelGrid columns="3" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
-
-                            <p:inputText value="#{adRole.activeItem.name}" placeholder="Rol" readonly="#{not adRole.listaRoles.enabledSave}" /> 
+                            <p:outputLabel value="Rol:" for="itRol"></p:outputLabel>
+                            <p:inputText id="itRol" value="#{adRole.activeItem.name}" placeholder="Rol" readonly="#{not adRole.listaRoles.enabledSave}" /> 
 
                         </h:panelGrid>
 
                     </h:panelGrid>
-                        
-                    
+
+
 
                     <h:panelGrid columns="4" width="100%" >
 
-                        
+                        <p:treeTable value="#{adRole.root}" var="rowmenu" >
+                            <p:column headerText="Menu">
+                                <h:outputText value="#{rowmenu.name}" />
+                            </p:column>
+                            <p:column headerText="Opción" width="150">
+                                <h:outputText value="#{rowmenu.url}" />
+                            </p:column>
+                            <p:column headerText="Roles asignados">
+                                <ui:repeat value="#{rowmenu.adMenuRoleList}" var="mr" >
+                                    <h:outputText value="#{mr.adRoleId.name}" style="font-size: 10px;"></h:outputText>
+                                    <p:spacer width="5"></p:spacer>
+                                </ui:repeat>
+                            </p:column>
+                            
+                            <p:column headerText="#{adRole.activeItem.name}" width="150">
+                                <p:selectBooleanCheckbox value="#{rowmenu.adMenuRole.active}" style="width:100%"></p:selectBooleanCheckbox>
+                            </p:column>
+                            
+                        </p:treeTable>
 
                     </h:panelGrid>
 
@@ -56,7 +74,7 @@
 
 
             </ae:dataView>
-            
+
 
         </h:form>
 

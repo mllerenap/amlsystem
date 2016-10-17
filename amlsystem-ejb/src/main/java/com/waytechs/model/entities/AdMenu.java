@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -85,6 +86,8 @@ public class AdMenu implements Serializable {
     @OneToMany(mappedBy = "adMenuId")
     private List<AdMenuRole> adMenuRoleList;
     
+    @Transient
+    private AdMenuRole adMenuRole;
     
     @Size(max = 500)
     @Column(name = "url")
@@ -209,6 +212,14 @@ public class AdMenu implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public AdMenuRole getAdMenuRole() {
+        return adMenuRole;
+    }
+
+    public void setAdMenuRole(AdMenuRole adMenuRole) {
+        this.adMenuRole = adMenuRole;
     }
     
     

@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -79,6 +80,9 @@ public class AdMenuRole implements Serializable {
     @JoinColumn(name = "ad_role_id", referencedColumnName = "id")
     @ManyToOne(fetch=javax.persistence.FetchType.EAGER,optional = false)
     private AdRole adRoleId; 
+    
+    @Transient
+    private boolean active;
 
     public AdMenuRole() {
     }
@@ -151,6 +155,14 @@ public class AdMenuRole implements Serializable {
 
     public void setAdRoleId(AdRole adRoleId) {
         this.adRoleId = adRoleId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
     
     
