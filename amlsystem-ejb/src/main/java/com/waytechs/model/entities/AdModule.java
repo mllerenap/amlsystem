@@ -8,6 +8,7 @@ package com.waytechs.model.entities;
 import com.waytechs.model.converters.YesNoConverter;
 import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -46,7 +47,8 @@ public class AdModule implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+    
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -73,17 +75,19 @@ public class AdModule implements Serializable {
     public AdModule() {
     }
 
-    public AdModule(Long id) {
+    public AdModule(BigInteger id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+   
 
     public String getName() {
         return name;

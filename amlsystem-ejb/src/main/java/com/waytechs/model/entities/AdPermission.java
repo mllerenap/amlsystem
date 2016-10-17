@@ -8,6 +8,7 @@ package com.waytechs.model.entities;
 import com.waytechs.model.converters.YesNoConverter;
 import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,7 +53,8 @@ public class AdPermission implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+    
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -84,21 +87,22 @@ public class AdPermission implements Serializable {
     @JoinColumn(name = "ad_role_id", referencedColumnName = "id")
     @ManyToOne(fetch=javax.persistence.FetchType.EAGER,optional = false)
     private AdRole adRoleId; 
+    
+    @Transient
+    private boolean nuevo;
 
     public AdPermission() {
     }
 
-    public AdPermission(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    
 
     public Date getCreated() {
         return created;
@@ -191,5 +195,15 @@ public class AdPermission implements Serializable {
     public String toString() {
         return "com.waytechs.model.entities.AdPermission[ id=" + id + " ]";
     }
+
+    public boolean isNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(boolean nuevo) {
+        this.nuevo = nuevo;
+    }
+    
+    
     
 }

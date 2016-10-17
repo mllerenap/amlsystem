@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AdMenu.findByAdMenuParentId", query = "SELECT a FROM AdMenu a WHERE a.adMenuParentId = :adMenuParentId and a.isactive = :isactive order by a.orden")
 
 })
-public class AdMenu implements Serializable {
+public class AdMenu implements Serializable, Comparable<AdMenu> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -248,6 +248,11 @@ public class AdMenu implements Serializable {
     @Override
     public String toString() {
         return "com.waytechs.model.entities.AdMenu[ id=" + id + " ]";
+    }
+
+    @Override
+    public int compareTo(AdMenu o) {
+        return this.getName().compareTo(o.getName());
     }
     
 }
