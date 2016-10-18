@@ -35,6 +35,8 @@
 
                 <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" 
                                  icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
+                
+                
 
             </div>
             <div class="ui-toolbar-group-right">
@@ -175,7 +177,16 @@
             <h:panelGroup id="pgcont_row_#{id}" layout="block" styleClass="form-body">
             
                 <div class="card-row-item">
+
                     <h1 style="font-size: 15px !important;height: 15px;font-weight: bolder">#{titleRow}</h1>
+                    
+                    <div style="position: absolute;top: 15px;right: 15px;">
+                    
+                            <p:commandLink process="@this" actionListener="#{value.actionCancel}" update="@parent:@parent"> 
+                                <h:outputText styleClass="fa fa-reply" />
+                            </p:commandLink>
+                    </div>    
+                    
                     <ui:insert name="dataRow"></ui:insert>        
                 </div> 
                 <!--

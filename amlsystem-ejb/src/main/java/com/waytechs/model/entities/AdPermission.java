@@ -14,11 +14,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,18 +46,22 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AdPermission.findByUpdatedby", query = "SELECT a FROM AdPermission a WHERE a.updatedby = :updatedby")
     , @NamedQuery(name = "AdPermission.findByIsactive", query = "SELECT a FROM AdPermission a WHERE a.isactive = :isactive")
     , @NamedQuery(name = "AdPermission.findByAdRoleId", query = "SELECT a FROM AdPermission a WHERE a.adRoleId = :adRoleId and a.isactive = :isactive")
+    , @NamedQuery(name = "AdPermission.findByAdActionIdAndAdRoleId", query = "SELECT a FROM AdPermission a WHERE a.adRoleId = :adRoleId and a.adActionId = :adActionId and a.isactive = :isactive")
 
-        
 })
-public class AdPermission implements Serializable {
+public class AdPermission extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
-    @NotNull
+    @SequenceGenerator(name = "AdPermission_seq",
+            sequenceName = "ad_adpermission_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdPermission_seq")
     @Column(name = "id")
     private BigInteger id;
-    
+
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -67,29 +74,24 @@ public class AdPermission implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "isactive")
     @Convert(converter = YesNoConverter.class)
     private YesNo isactive;
-    
-    
+
     @JoinColumn(name = "ad_action_id", referencedColumnName = "id")
     @ManyToOne
     private AdAction adActionId;
-    
+
     @JoinColumn(name = "ad_menu_id", referencedColumnName = "id")
     @ManyToOne
     private AdMenu adMenuId;
-    
+
     @JoinColumn(name = "ad_role_id", referencedColumnName = "id")
-    @ManyToOne(fetch=javax.persistence.FetchType.EAGER,optional = false)
-    private AdRole adRoleId; 
-    
-    @Transient
-    private boolean nuevo;
+    @ManyToOne(fetch = javax.persistence.FetchType.EAGER, optional = false)
+    private AdRole adRoleId;
 
     public AdPermission() {
     }
@@ -101,8 +103,6 @@ public class AdPermission implements Serializable {
     public void setId(BigInteger id) {
         this.id = id;
     }
-
-    
 
     public Date getCreated() {
         return created;
@@ -144,8 +144,6 @@ public class AdPermission implements Serializable {
         this.isactive = isactive;
     }
 
-    
-
     public AdAction getAdActionId() {
         return adActionId;
     }
@@ -153,7 +151,7 @@ public class AdPermission implements Serializable {
     public void setAdActionId(AdAction adActionId) {
         this.adActionId = adActionId;
     }
-    
+
     public AdMenu getAdMenuId() {
         return adMenuId;
     }
@@ -169,7 +167,6 @@ public class AdPermission implements Serializable {
     public void setAdRoleId(AdRole adRoleId) {
         this.adRoleId = adRoleId;
     }
-    
 
     @Override
     public int hashCode() {
@@ -196,14 +193,4 @@ public class AdPermission implements Serializable {
         return "com.waytechs.model.entities.AdPermission[ id=" + id + " ]";
     }
 
-    public boolean isNuevo() {
-        return nuevo;
-    }
-
-    public void setNuevo(boolean nuevo) {
-        this.nuevo = nuevo;
-    }
-    
-    
-    
 }

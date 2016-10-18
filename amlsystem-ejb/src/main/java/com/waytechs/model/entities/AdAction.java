@@ -8,6 +8,7 @@ package com.waytechs.model.entities;
 import com.waytechs.model.converters.YesNoConverter;
 import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -53,7 +55,8 @@ public class AdAction implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+    
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -83,21 +86,22 @@ public class AdAction implements Serializable {
     @JoinColumn(name = "ad_module_id", referencedColumnName = "id")
     @ManyToOne
     private AdModule adModuleId;
+    
+    @Transient
+    private boolean nuevo;
 
     public AdAction() {
     }
 
-    public AdAction(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    
 
     public String getName() {
         return name;
@@ -166,6 +170,14 @@ public class AdAction implements Serializable {
 
     public void setAdPermissionList(List<AdPermission> adPermissionList) {
         this.adPermissionList = adPermissionList;
+    }
+    
+    public boolean isNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(boolean nuevo) {
+        this.nuevo = nuevo;
     }
 
     @Override

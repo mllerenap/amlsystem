@@ -8,16 +8,20 @@ package com.waytechs.model.entities;
 import com.waytechs.model.converters.YesNoConverter;
 import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,17 +46,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AdMenuRole.findByUpdatedby", query = "SELECT a FROM AdMenuRole a WHERE a.updatedby = :updatedby")
     , @NamedQuery(name = "AdMenuRole.findByIsactive", query = "SELECT a FROM AdMenuRole a WHERE a.isactive = :isactive")
     , @NamedQuery(name = "AdMenuRole.findByAdRoleId", query = "SELECT a FROM AdMenuRole a WHERE a.adRoleId = :adRoleId and a.isactive = :isactive")    
-    , @NamedQuery(name = "AdMenuRole.findByAdMenuId", query = "SELECT a FROM AdMenuRole a WHERE a.adMenuId = :adMenuId and a.isactive = :isactive")        
+    , @NamedQuery(name = "AdMenuRole.findByAdMenuId", query = "SELECT a FROM AdMenuRole a WHERE a.adMenuId = :adMenuId and a.isactive = :isactive") 
+    , @NamedQuery(name = "AdMenuRole.findByAdMenuIdAndAdRoleId", query = "SELECT a FROM AdMenuRole a WHERE a.adRoleId = :adRoleId and a.adMenuId = :adMenuId and a.isactive = :isactive") 
+        
         
 }) 
-public class AdMenuRole implements Serializable {
+public class AdMenuRole extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
-    @NotNull
+    @SequenceGenerator(name = "AdMenuRole_seq",
+            sequenceName = "ad_menurole_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AdMenuRole_seq")
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+    
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -87,15 +98,11 @@ public class AdMenuRole implements Serializable {
     public AdMenuRole() {
     }
 
-    public AdMenuRole(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

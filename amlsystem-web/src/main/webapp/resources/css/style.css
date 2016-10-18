@@ -22,13 +22,23 @@ body {
 }
 
 .active-nav-button{
-
+    /*
     padding: 1px 5px !important;
     background-color: #999 !important;
     color: #fff  !important;
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset !important;
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset !important;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset !important;
+    */
+    font-size: 15px !important;
+    right: -5px !important;
+    top: -5px !important;
+    color: #ffffff !important;
+    padding: 2px 4px !important;
+    background-color: #ef6262 !important;
+    -moz-border-radius: 50% !important;
+    -webkit-border-radius: 50% !important;
+    border-radius: 50% !important;
 }
 
 .searchLoader{
@@ -442,6 +452,7 @@ button.ui-button.ui-state-default.gray-button {
     padding: 16px;
     margin-bottom: 16px;
     box-sizing: border-box;
+    position: relative;
 }
 
 
@@ -563,4 +574,19 @@ body .ui-selectonemenu {
 
 .ui-picklist .ui-picklist-list {
     height: 300px !important;;
+}
+
+.label-primary {
+    background-color: #337ab7;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
 }

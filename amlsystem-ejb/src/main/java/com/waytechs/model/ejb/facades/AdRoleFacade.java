@@ -18,6 +18,9 @@ import javax.persistence.Query;
 import com.waytechs.model.entities.AdRole;
 import com.waytechs.model.entities.AdUser;
 import com.waytechs.model.enums.YesNo;
+import com.waytechs.model.exceptions.ExecuteRollbackException;
+import com.waytechs.model.exceptions.ExistException;
+import com.waytechs.model.exceptions.ProcessOperationException;
 
 /**
  *
@@ -25,6 +28,7 @@ import com.waytechs.model.enums.YesNo;
  */
 @Stateless
 public class AdRoleFacade extends AbstractFacade<AdRole> {
+
     @PersistenceContext(unitName = "aml-ejbPU")
     private EntityManager em;
 
@@ -36,10 +40,9 @@ public class AdRoleFacade extends AbstractFacade<AdRole> {
     public AdRoleFacade() {
         super(AdRole.class);
     }
-    
-    
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED) 
-	public AdRole findByName(String name) {
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public AdRole findByName(String name) {
         List<AdRole> result = null;
         try {
             Query query = em.createNamedQuery("AdRole.findByName");
@@ -47,10 +50,65 @@ public class AdRoleFacade extends AbstractFacade<AdRole> {
             query.setParameter("isactive", YesNo.SI);
             result = query.getResultList();
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
         return result.isEmpty() || result == null ? null : result.get(0);
     }
-    
-    
+
+    public void validateExistence(AdRole item) throws ExistException {
+        AdRole temp = findByName(item.getName());
+
+        if (temp == null) {
+            return;
+        }
+
+        if (temp.getName().equals(item.getName())) {
+            return;
+        }
+
+        if (temp != null) {
+            throw new ExistException();
+        }
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void save(AdRole item) throws ExecuteRollbackException {
+        try {
+
+            validateExistence(item);
+
+            if (item.getId() == null) {
+                this.create(item);
+            } else {
+                this.edit(item);
+            }
+
+        } catch (ExistException e) {
+            throw new ExecuteRollbackException("El rol " + item.getName() + " ya existe.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExecuteRollbackException("Error al guardar el registro!");
+        }
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void delete(AdRole item) throws ExecuteRollbackException {
+        try {
+            if (item == null) {
+                throw new ProcessOperationException("El parámetro rol no puede ser null.");
+            }
+
+            item.setIsactive(YesNo.NO);
+
+            validateExistence(item);
+            this.edit(item);
+
+        } catch (ProcessOperationException e) {
+            throw new ExecuteRollbackException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExecuteRollbackException("Error al borrar el registro!");
+        }
+    }
+
 }

@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:jsf="http://xmlns.jcp.org/jsf" 
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:o="http://omnifaces.org/ui">
+                xmlns:o="http://omnifaces.org/ui" >
 
     <ui:param name="titleOption" value="Gestión Roles" />
 
@@ -50,14 +50,14 @@
                                 <p:column headerText="Opción" width="150">
                                     <h:outputText value="#{rowmenu.url}" />
                                 </p:column>
-                                <p:column headerText="Roles asignados">
-                                    <ui:repeat value="#{rowmenu.adMenuRoleList}" var="mr" >
-                                        <h:outputText value="#{mr.adRoleId.name}" style="font-size: 10px;"></h:outputText>
+                                <p:column headerText="Roles asignados" >
+                                    <ui:repeat value="#{rowmenu.adMenuRoleList}" var="mr" >                                        
+                                        <span class="label label-primary" style="font-size: 10px;">#{mr.adRoleId.name}</span>
                                         <p:spacer width="5"></p:spacer>
                                     </ui:repeat>
                                 </p:column>
                                 
-                                <p:column headerText="#{adRole.activeItem.name}" width="35">
+                                <p:column headerText="#{adRole.activeItem.name}" style="width:130px;text-align: center">
                                             <p:selectBooleanCheckbox value="#{rowmenu.adMenuRole.active}" style="width:100%" 
                                                                      rendered="#{not empty rowmenu.url}" 
                                                                      disabled="#{not adRole.listaRoles.enabledSave}">
@@ -72,29 +72,26 @@
 
                         <p:tab title="Permisos">
 
-
-                            <!--
-                            <p:pickList id="plPermisos" value="#{adRole.listaPermisos}" var="perm" 
-                                        itemValue="#{perm}" itemLabel="#{perm.adActionId.name} - #{perm.adActionId.adModuleId.name}" showCheckbox="true" responsive="true"
-                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="#{adPermissionConverter}" 
+                            <p:pickList id="plPermisos" value="#{adRole.listaAcciones}" var="action" 
+                                        itemValue="#{action}" itemLabel="#{action.name}#{action.adModuleId.name}" showCheckbox="true" responsive="true"
+                                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="#{adRole.adActionConverter}" 
                                         addAllLabel="Agregar todo" addLabel="Agregar" removeAllLabel="Remover todo" removeLabel="Remover" disabled="#{not adRole.listaRoles.enabledSave}">
-
+                                 
                                 <f:facet name="sourceCaption">Permisos habilitados</f:facet>
                                 <f:facet name="targetCaption">Permisos asignados</f:facet>
 
                                 <p:column style="width:60%;" >
-                                    <h:outputText value="#{perm.adActionId.name}" />
+                                    <h:outputText value="#{action.name}" />
                                 </p:column>
                                 <p:column style="width:35%;" >
-                                    <h:outputText value="#{perm.adActionId.adModuleId.name}" />
+                                    <h:outputText value="#{action.adModuleId.name}" />
                                 </p:column>
                                 <p:column style="width:5%" >
-                                    <div class="fa fa-fw fa-plus-circle" jsf:rendered="#{perm.nuevo}"></div>
+                                    <div class="fa fa-fw fa-plus-circle" jsf:rendered="#{action.nuevo}"></div>
                                 </p:column>
 
                             </p:pickList>
 
-                            -->
                         </p:tab>
 
                     </p:tabView>

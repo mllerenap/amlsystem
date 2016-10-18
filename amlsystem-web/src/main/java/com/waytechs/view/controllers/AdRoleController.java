@@ -27,9 +27,14 @@ import com.waytechs.model.entities.AdMenuRole;
 import com.waytechs.model.entities.AdModule;
 import com.waytechs.model.entities.AdPermission;
 import com.waytechs.model.entities.AdRole;
+import com.waytechs.model.enums.YesNo;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
+import java.math.BigInteger;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -70,10 +75,12 @@ public class AdRoleController implements Serializable {
     @Inject
     private AdPermissionFacade adPermissionFacade;
 
-    private DualListModel<AdPermission> listaPermisos;
+    private DualListModel<AdAction> listaAcciones;
 
     @Inject
     private AdActionFacade adActionFacade;
+    
+    List<AdAction> listaAccionesConverter = new ArrayList<>();
 
     @PostConstruct
     public void initialize() {
@@ -84,7 +91,7 @@ public class AdRoleController implements Serializable {
         listaModulos = adModuleFacade.findAll();
         
         
-        listaPermisos =  new DualListModel<AdPermission>(new ArrayList<AdPermission>(), new ArrayList<AdPermission>());
+        listaAcciones =  new DualListModel<AdAction>(new ArrayList<AdAction>(), new ArrayList<AdAction>());
 
     }
 
@@ -101,6 +108,14 @@ public class AdRoleController implements Serializable {
                     break;
                 }
             }
+        }
+        
+        if( menu.getAdMenuRole() == null ){
+            AdMenuRole mr = new AdMenuRole();
+            mr.setActive(false);
+            mr.setAdMenuId(menu);
+            mr.setAdRoleId(activeItem);
+            menu.setAdMenuRole(mr);
         }
 
         TreeNode sub = new DefaultTreeNode(menu, parentTree);
@@ -124,20 +139,16 @@ public class AdRoleController implements Serializable {
         }
     }
     
-    public void onTransfer(TransferEvent event) {
-        /*
-        StringBuilder builder = new StringBuilder();
-        for(Object item : event.getItems()) {
-            builder.append(((Theme) item).getName()).append("<br />");
+    public List<AdMenu> getDataMenuItem(TreeNode node) {
+        List<AdMenu> result = new ArrayList<>();
+        if(node.getChildCount() > 0){
+            for (TreeNode n : node.getChildren()) {
+              result.addAll(getDataMenuItem(n));
+            }
+        }{
+          result.add((AdMenu) node.getData());
         }
-         
-        FacesMessage msg = new FacesMessage();
-        msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        msg.setSummary("Items Transferred");
-        msg.setDetail(builder.toString());
-         
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        */
+        return result;
     } 
 
     public void actionActualizar(ActionEvent action) {
@@ -195,38 +206,45 @@ public class AdRoleController implements Serializable {
             private List<AdPermission> listaPermisosSource;
             private List<AdPermission> listaPermisosTarget;
              */
-            List<AdPermission> listaPermisosTarget = adPermissionFacade.findByAdRoleId(item);
+            List<AdPermission> listaPermisosAsignados = adPermissionFacade.findByAdRoleId(item);
+            
+            List<AdAction> listaAccionesTarget = new ArrayList<>();
+            List<AdAction> listaAccionesSource = new ArrayList<>();
 
-            List<AdPermission> listaPermisosSource = new ArrayList<AdPermission>();
+            List<AdAction> listaAccionesGlobal = adActionFacade.findAll();
 
-            List<AdAction> listaAcciones = adActionFacade.findAll();
-            //List<AdAction> listaAcciones = adActionFacade.findAll();
-
-            if (listaAcciones != null && !listaAcciones.isEmpty()) {
-                for (AdAction a : listaAcciones) {
+            if (listaAccionesGlobal != null && !listaAccionesGlobal.isEmpty()) {
+                for (AdAction a : listaAccionesGlobal) {
                     
                     boolean find = false;
                     
-                    if (listaPermisosTarget != null && !listaPermisosTarget.isEmpty()) {
-                        for (AdPermission p : listaPermisosTarget) {
+                    if (listaPermisosAsignados != null && !listaPermisosAsignados.isEmpty()) {
+                        for (AdPermission p : listaPermisosAsignados) {
                             if( p.getAdActionId().getId().intValue() == a.getId().intValue() ){
                                 find = true;
+                                listaAccionesTarget.add(a);
                             }
                         }
                     }
 
                     if (!find) {
+                            /*
                             AdPermission ps = new AdPermission();
                             ps.setAdRoleId(item);
                             ps.setAdActionId(a);
                             ps.setNuevo(true);
-                            listaPermisosSource.add(ps);
+                            */
+                            a.setNuevo(true);
+                            listaAccionesSource.add(a);
                     }
 
                 }
             }
 
-           listaPermisos =  new DualListModel<AdPermission>(listaPermisosSource, listaPermisosTarget);
+           listaAcciones =  new DualListModel<>(listaAccionesSource, listaAccionesTarget);
+           
+           listaAccionesConverter.addAll(listaAccionesSource);
+           listaAccionesConverter.addAll(listaAccionesTarget); 
 
         }
 
@@ -245,12 +263,81 @@ public class AdRoleController implements Serializable {
         @Override
         protected AdRole save(AdRole item) {
             try {
-                //adRoleFacade.save(item);
                 
-                System.out.println("getRootMenu().getData(): "+getRootMenu());
+                adRoleFacade.save(item);
                 
+                List<AdMenu> listaMenu = getDataMenuItem(getRootMenu());
+
+                for (AdMenu adMenu : listaMenu) {
+                    System.out.println("adMenu: "+adMenu.getName()+" - activar en rol "+item.getName()+" "+(adMenu.getAdMenuRole() != null ? adMenu.getAdMenuRole().isActive() : "n/a"));
+                    if( adMenu.getAdMenuRole() != null ){
+                        
+                        if(  adMenu.getAdMenuRole().getId()  == null){
+                            if( adMenu.getAdMenuRole().isActive() ){
+                            adMenuRoleFacade.save(adMenu.getAdMenuRole());    
+                            }
+                        }else{
+                            if(!adMenu.getAdMenuRole().isActive() ){
+                                adMenuRoleFacade.delete(adMenu.getAdMenuRole());    
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+                System.out.println("getListaAcciones(): "+getListaAcciones());
+                
+                List<AdAction> listaAccionesTarget = getListaAcciones().getTarget();
+                List<AdAction> listaAccionesSource = getListaAcciones().getSource();
+                
+                System.out.println("listaAccionesTarget: "+listaAccionesTarget);
+                System.out.println("listaAccionesSource: "+listaAccionesSource);
+                
+                for (AdAction adAction : listaAccionesTarget) {
+                    System.out.println("listaAccionesTarget perm: "+adAction.getName()+" es nuevo? "+adAction.isNuevo());
+                    
+                    if( adAction.isNuevo() ){
+                        
+                        AdPermission p = new AdPermission();
+                        p.setAdRoleId(item);
+                        p.setAdActionId(adAction);
+                        adPermissionFacade.save(p);
+                    }
+                    
+                }
+                System.out.println("\n");
+                for (AdAction adAction  : listaAccionesSource) {
+                    System.out.println("listaAccionesSource perm: "+adAction.getName()+" es nuevo? "+adAction.isNuevo());
+                    if( !adAction.isNuevo() ){
+                        AdPermission p = new AdPermission();
+                        p.setAdRoleId(item);
+                        p.setAdActionId(adAction);
+                        p = adPermissionFacade.findByAdActionIdAndAdRoleId(p);
+                        if( p != null ){
+                            adPermissionFacade.delete(p);
+                        }
+                        
+                    }
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                appGlobal.loadFilterChainResolver();
+                System.out.println("appGlobal.loadFilterChainResolver aplicado");
+                
+                
+                rowSelected(item);
                 setSelectedItem(item);
             } catch (Exception e) {
+                e.printStackTrace();
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return null;
             }
@@ -308,12 +395,51 @@ public class AdRoleController implements Serializable {
         this.listaModulos = listaModulos;
     }
 
-    public DualListModel<AdPermission> getListaPermisos() {
-        return listaPermisos;
+    public DualListModel<AdAction> getListaAcciones() {
+        return listaAcciones;
     }
 
-    public void setListaPermisos(DualListModel<AdPermission> listaPermisos) {
-        this.listaPermisos = listaPermisos;
+    public void setListaAcciones(DualListModel<AdAction> listaAcciones) {
+        this.listaAcciones = listaAcciones;
     }
+
+    public List<AdAction> getListaAccionesConverter() {
+        return listaAccionesConverter;
+    }
+
+    public void setListaAccionesConverter(List<AdAction> listaAccionesConverter) {
+        this.listaAccionesConverter = listaAccionesConverter;
+    }
+    
+    public Converter getAdActionConverter(){
+        return new Converter() {
+            @Override
+            public Object getAsObject(FacesContext context, UIComponent component, String value) {
+                AdAction objRes = null;
+            if (!value.trim().equals("") && value != null) {
+                BigInteger id = new BigInteger(value);
+                
+                if( getListaAccionesConverter() != null ){
+                    for (AdAction adAction : listaAccionesConverter) {
+                        if( adAction.getId().intValue() == id.intValue() ){
+                            objRes = adAction;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            return objRes;
+            }
+
+            @Override
+            public String getAsString(FacesContext context, UIComponent component, Object o) {
+                return (o == null || o.equals("")) ? "" : ((AdAction) o).getId() + "";
+            }
+        };
+    }
+    
+
+    
 
 }
