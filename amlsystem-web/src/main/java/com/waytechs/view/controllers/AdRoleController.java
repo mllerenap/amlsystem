@@ -79,7 +79,7 @@ public class AdRoleController implements Serializable {
 
     @Inject
     private AdActionFacade adActionFacade;
-    
+
     List<AdAction> listaAccionesConverter = new ArrayList<>();
 
     @PostConstruct
@@ -89,9 +89,8 @@ public class AdRoleController implements Serializable {
         this.rootMenu = new DefaultTreeNode(new AdMenu(), null);
 
         listaModulos = adModuleFacade.findAll();
-        
-        
-        listaAcciones =  new DualListModel<AdAction>(new ArrayList<AdAction>(), new ArrayList<AdAction>());
+
+        listaAcciones = new DualListModel<AdAction>(new ArrayList<AdAction>(), new ArrayList<AdAction>());
 
     }
 
@@ -102,19 +101,20 @@ public class AdRoleController implements Serializable {
 
         if (listaMenuRoles != null & !listaMenuRoles.isEmpty()) {
             for (AdMenuRole mr : listaMenuRoles) {
-                if (getListaRoles().getSelectedItem().getId().intValue() == mr.getAdRoleId().getId().intValue()) {
+                if( activeItem != null && activeItem.getId() != null)
+                if (activeItem.getId().intValue() == mr.getAdRoleId().getId().intValue()) {
                     mr.setActive(true);
                     menu.setAdMenuRole(mr);
                     break;
                 }
             }
         }
-        
-        if( menu.getAdMenuRole() == null ){
+
+        if (menu.getAdMenuRole() == null) {
             AdMenuRole mr = new AdMenuRole();
             mr.setActive(false);
             mr.setAdMenuId(menu);
-            mr.setAdRoleId(activeItem);
+            mr.setAdRoleId(activeItem != null ? activeItem : null);
             menu.setAdMenuRole(mr);
         }
 
@@ -138,27 +138,76 @@ public class AdRoleController implements Serializable {
             n.setSelected(false);
         }
     }
-    
+
     public List<AdMenu> getDataMenuItem(TreeNode node) {
         List<AdMenu> result = new ArrayList<>();
-        if(node.getChildCount() > 0){
+        if (node.getChildCount() > 0) {
             for (TreeNode n : node.getChildren()) {
-              result.addAll(getDataMenuItem(n));
+                result.addAll(getDataMenuItem(n));
             }
-        }{
-          result.add((AdMenu) node.getData());
+        }
+        {
+            result.add((AdMenu) node.getData());
         }
         return result;
-    } 
+    }
 
-    public void actionActualizar(ActionEvent action) {
-        try {
-            System.out.println("actionActualizar ...");
-            appGlobal.loadFilterChainResolver();
-            System.out.println("actionActualizar ... fin");
-        } catch (Exception ex) {
-            Logger.getLogger(AdRoleController.class.getName()).log(Level.SEVERE, null, ex);
+    public void cargarOpcionMenues() {
+        AdMenu rtMenu = adMenuFacade.find(1L);
+        rootMenu = new DefaultTreeNode(rtMenu, null);
+
+        List<AdMenu> hijos = adMenuFacade.findByAdMenuParentId(rtMenu);
+        if (hijos != null & !hijos.isEmpty()) {
+            for (AdMenu c : hijos) {
+                childMenuHasChildren(c, rootMenu);
+            }
         }
+
+        collapsingORexpanding(rootMenu, true);
+
+    }
+
+    public void cargarOpcionPermisos() {
+
+        List<AdPermission> listaPermisosAsignados = adPermissionFacade.findByAdRoleId(activeItem);
+
+        List<AdAction> listaAccionesTarget = new ArrayList<>();
+        List<AdAction> listaAccionesSource = new ArrayList<>();
+
+        List<AdAction> listaAccionesGlobal = adActionFacade.findAll();
+
+        if (listaAccionesGlobal != null && !listaAccionesGlobal.isEmpty()) {
+            for (AdAction a : listaAccionesGlobal) {
+
+                boolean find = false;
+
+                if (listaPermisosAsignados != null && !listaPermisosAsignados.isEmpty()) {
+                    for (AdPermission p : listaPermisosAsignados) {
+                        if (p.getAdActionId().getId().intValue() == a.getId().intValue()) {
+                            find = true;
+                            listaAccionesTarget.add(a);
+                        }
+                    }
+                }
+
+                if (!find) {
+                    /*
+                            AdPermission ps = new AdPermission();
+                            ps.setAdRoleId(item);
+                            ps.setAdActionId(a);
+                            ps.setNuevo(true);
+                     */
+                    a.setNuevo(true);
+                    listaAccionesSource.add(a);
+                }
+
+            }
+        }
+
+        listaAcciones = new DualListModel<>(listaAccionesSource, listaAccionesTarget);
+
+        listaAccionesConverter.addAll(listaAccionesSource);
+        listaAccionesConverter.addAll(listaAccionesTarget);
 
     }
 
@@ -170,8 +219,8 @@ public class AdRoleController implements Serializable {
 
             System.out.println("initialize DataView1 :  " + getId());
 
-            Subject s =  SecurityUtils.getSubject();
-            
+            Subject s = SecurityUtils.getSubject();
+
             setHasPermmissionCreate(s.isPermitted("1:7"));
             setHasPermmissionEdit(s.isPermitted("1:8"));
             setHasPermmissionDelete(s.isPermitted("1:9"));
@@ -189,63 +238,8 @@ public class AdRoleController implements Serializable {
         @Override
         protected void rowSelected(AdRole item) {
             setActiveItem(item);
-
-            AdMenu rtMenu = adMenuFacade.find(1L);
-            rootMenu = new DefaultTreeNode(rtMenu, null);
-
-            List<AdMenu> hijos = adMenuFacade.findByAdMenuParentId(rtMenu);
-            if (hijos != null & !hijos.isEmpty()) {
-                for (AdMenu c : hijos) {
-                    childMenuHasChildren(c, rootMenu);
-                }
-            }
-
-            collapsingORexpanding(rootMenu, true);
-
-            /*
-            private List<AdPermission> listaPermisosSource;
-            private List<AdPermission> listaPermisosTarget;
-             */
-            List<AdPermission> listaPermisosAsignados = adPermissionFacade.findByAdRoleId(item);
-            
-            List<AdAction> listaAccionesTarget = new ArrayList<>();
-            List<AdAction> listaAccionesSource = new ArrayList<>();
-
-            List<AdAction> listaAccionesGlobal = adActionFacade.findAll();
-
-            if (listaAccionesGlobal != null && !listaAccionesGlobal.isEmpty()) {
-                for (AdAction a : listaAccionesGlobal) {
-                    
-                    boolean find = false;
-                    
-                    if (listaPermisosAsignados != null && !listaPermisosAsignados.isEmpty()) {
-                        for (AdPermission p : listaPermisosAsignados) {
-                            if( p.getAdActionId().getId().intValue() == a.getId().intValue() ){
-                                find = true;
-                                listaAccionesTarget.add(a);
-                            }
-                        }
-                    }
-
-                    if (!find) {
-                            /*
-                            AdPermission ps = new AdPermission();
-                            ps.setAdRoleId(item);
-                            ps.setAdActionId(a);
-                            ps.setNuevo(true);
-                            */
-                            a.setNuevo(true);
-                            listaAccionesSource.add(a);
-                    }
-
-                }
-            }
-
-           listaAcciones =  new DualListModel<>(listaAccionesSource, listaAccionesTarget);
-           
-           listaAccionesConverter.addAll(listaAccionesSource);
-           listaAccionesConverter.addAll(listaAccionesTarget); 
-
+            cargarOpcionMenues();
+            cargarOpcionPermisos();
         }
 
         @Override
@@ -257,83 +251,74 @@ public class AdRoleController implements Serializable {
         protected AdRole create() {
             System.out.println("create role");
             setActiveItem(new AdRole());
+            cargarOpcionMenues();
+            cargarOpcionPermisos();
             return getActiveItem();
         }
 
         @Override
         protected AdRole save(AdRole item) {
             try {
-                
+                item = getActiveItem();
+                //item.setIsactive(YesNo.SI);
                 adRoleFacade.save(item);
-                
+
                 List<AdMenu> listaMenu = getDataMenuItem(getRootMenu());
 
                 for (AdMenu adMenu : listaMenu) {
-                    System.out.println("adMenu: "+adMenu.getName()+" - activar en rol "+item.getName()+" "+(adMenu.getAdMenuRole() != null ? adMenu.getAdMenuRole().isActive() : "n/a"));
-                    if( adMenu.getAdMenuRole() != null ){
-                        
-                        if(  adMenu.getAdMenuRole().getId()  == null){
-                            if( adMenu.getAdMenuRole().isActive() ){
-                            adMenuRoleFacade.save(adMenu.getAdMenuRole());    
+                    System.out.println("adMenu: " + adMenu.getName() + " - activar en rol " + item.getName() + " " + (adMenu.getAdMenuRole() != null ? adMenu.getAdMenuRole().isActive() : "n/a"));
+                    if (adMenu.getAdMenuRole() != null) {
+
+                        if (adMenu.getAdMenuRole().getId() == null) {
+                            if (adMenu.getAdMenuRole().isActive()) {
+                                adMenuRoleFacade.save(adMenu.getAdMenuRole());
                             }
-                        }else{
-                            if(!adMenu.getAdMenuRole().isActive() ){
-                                adMenuRoleFacade.delete(adMenu.getAdMenuRole());    
-                            }
-                            
+                        } else if (!adMenu.getAdMenuRole().isActive()) {
+                            adMenuRoleFacade.delete(adMenu.getAdMenuRole());
                         }
-                        
+
                     }
-                    
+
                 }
-                
-                System.out.println("getListaAcciones(): "+getListaAcciones());
-                
+
+                System.out.println("getListaAcciones(): " + getListaAcciones());
+
                 List<AdAction> listaAccionesTarget = getListaAcciones().getTarget();
                 List<AdAction> listaAccionesSource = getListaAcciones().getSource();
-                
-                System.out.println("listaAccionesTarget: "+listaAccionesTarget);
-                System.out.println("listaAccionesSource: "+listaAccionesSource);
-                
+
+                System.out.println("listaAccionesTarget: " + listaAccionesTarget);
+                System.out.println("listaAccionesSource: " + listaAccionesSource);
+
                 for (AdAction adAction : listaAccionesTarget) {
-                    System.out.println("listaAccionesTarget perm: "+adAction.getName()+" es nuevo? "+adAction.isNuevo());
-                    
-                    if( adAction.isNuevo() ){
-                        
+                    System.out.println("listaAccionesTarget perm: " + adAction.getName() + " es nuevo? " + adAction.isNuevo());
+
+                    if (adAction.isNuevo()) {
+
                         AdPermission p = new AdPermission();
                         p.setAdRoleId(item);
                         p.setAdActionId(adAction);
                         adPermissionFacade.save(p);
                     }
-                    
+
                 }
                 System.out.println("\n");
-                for (AdAction adAction  : listaAccionesSource) {
-                    System.out.println("listaAccionesSource perm: "+adAction.getName()+" es nuevo? "+adAction.isNuevo());
-                    if( !adAction.isNuevo() ){
+                for (AdAction adAction : listaAccionesSource) {
+                    System.out.println("listaAccionesSource perm: " + adAction.getName() + " es nuevo? " + adAction.isNuevo());
+                    if (!adAction.isNuevo()) {
                         AdPermission p = new AdPermission();
                         p.setAdRoleId(item);
                         p.setAdActionId(adAction);
                         p = adPermissionFacade.findByAdActionIdAndAdRoleId(p);
-                        if( p != null ){
+                        if (p != null) {
                             adPermissionFacade.delete(p);
                         }
-                        
+
                     }
                 }
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 appGlobal.loadFilterChainResolver();
                 System.out.println("appGlobal.loadFilterChainResolver aplicado");
-                
-                
+
                 rowSelected(item);
                 setSelectedItem(item);
             } catch (Exception e) {
@@ -382,10 +367,8 @@ public class AdRoleController implements Serializable {
     }
 
     public TreeNode getRootMenu() {
-        return rootMenu; 
+        return rootMenu;
     }
-
-    
 
     public List<AdModule> getListaModulos() {
         return listaModulos;
@@ -410,26 +393,26 @@ public class AdRoleController implements Serializable {
     public void setListaAccionesConverter(List<AdAction> listaAccionesConverter) {
         this.listaAccionesConverter = listaAccionesConverter;
     }
-    
-    public Converter getAdActionConverter(){
+
+    public Converter getAdActionConverter() {
         return new Converter() {
             @Override
             public Object getAsObject(FacesContext context, UIComponent component, String value) {
                 AdAction objRes = null;
-            if (!value.trim().equals("") && value != null) {
-                BigInteger id = new BigInteger(value);
-                
-                if( getListaAccionesConverter() != null ){
-                    for (AdAction adAction : listaAccionesConverter) {
-                        if( adAction.getId().intValue() == id.intValue() ){
-                            objRes = adAction;
-                            break;
+                if (!value.trim().equals("") && value != null) {
+                    BigInteger id = new BigInteger(value);
+
+                    if (getListaAccionesConverter() != null) {
+                        for (AdAction adAction : listaAccionesConverter) {
+                            if (adAction.getId().intValue() == id.intValue()) {
+                                objRes = adAction;
+                                break;
+                            }
                         }
                     }
+
                 }
-                
-            }
-            return objRes;
+                return objRes;
             }
 
             @Override
@@ -438,8 +421,5 @@ public class AdRoleController implements Serializable {
             }
         };
     }
-    
-
-    
 
 }

@@ -202,7 +202,9 @@ public class AdUserController implements Serializable {
         @Override
         protected AdUser save(AdUser item) {
             
-            item.setImage(getActiveItem().getImage());
+            item = getActiveItem();
+            
+            //item.setImage(getActiveItem().getImage());
             
             System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
             try {

@@ -83,6 +83,8 @@ public class ShiroConfiguration {
             AnonymousFilter anon = new AnonymousFilter();
             UserFilter user = new UserFilter();
             RolesAuthorizationFilter roles = new RolesAuthorizationFilter();
+            
+            MultipleRolesAuthorizationFilter multipleroles = new MultipleRolesAuthorizationFilter();
 
             authc.setLoginUrl(WebPages.LOGIN_URL);
             authc.setSuccessUrl(WebPages.HOME_URL);
@@ -96,6 +98,8 @@ public class ShiroConfiguration {
             fcMan.addFilter("anon", anon);
             fcMan.addFilter("user", user);
             fcMan.addFilter("roles", roles);
+            fcMan.addFilter("multipleroles", multipleroles); 
+            
             
             /*
             /javax.faces.resource/** = anon
@@ -124,7 +128,7 @@ public class ShiroConfiguration {
                     
                     System.out.println("listaMenuRoles: "+listaMenuRoles);
                     
-                    String rolePattern = "roles[#var]";
+                    String rolePattern = "multipleroles[#var]";
                     String rolePermitidos = "";
 
                     if(  listaMenuRoles != null & !listaMenuRoles.isEmpty() ){
@@ -136,13 +140,15 @@ public class ShiroConfiguration {
                             }
                             
                             System.out.println("url: "+mr.getAdMenuId().getUrl()+" role: "+mr.getAdRoleId().getName());
-                            String rolItem = rolePattern.replace("#var", mr.getAdRoleId().getName());
-                            rolePermitidos = rolePermitidos + rolItem;
+                            //String rolItem = rolePattern.replace("#var", mr.getAdRoleId().getName());
+                            rolePermitidos = rolePermitidos + "\"" + mr.getAdRoleId().getName()+ "\"";
                         }
+                        
+                        rolePermitidos = rolePattern.replace("#var", rolePermitidos);
                         
                         System.out.println("createChain url "+m.getUrl() +" rolePermitidos: "+rolePermitidos);
                         
-                        fcMan.createChain(m.getUrl()+"**", "authc, "+rolePermitidos);
+                        fcMan.createChain(m.getUrl(), "authc, "+rolePermitidos);
                         
                     }
                 }

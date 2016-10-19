@@ -30,7 +30,7 @@ body {
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset !important;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset !important;
     */
-    font-size: 15px !important;
+    font-size: 12px !important;
     right: -5px !important;
     top: -5px !important;
     color: #ffffff !important;
@@ -38,7 +38,7 @@ body {
     background-color: #ef6262 !important;
     -moz-border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
-    border-radius: 50% !important;
+    border-radius: 70% !important;
 }
 
 .searchLoader{

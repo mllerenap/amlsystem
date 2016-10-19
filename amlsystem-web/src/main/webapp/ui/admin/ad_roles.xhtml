@@ -43,7 +43,7 @@
 
                     <p:tabView id="tvDetalle">
                         <p:tab title="Menu">
-                            <p:treeTable value="#{adRole.rootMenu}" var="rowmenu" >
+                            <p:treeTable value="#{adRole.rootMenu}" var="rowmenu" emptyMessage="No existen datos">
                                 <p:column headerText="Menu">
                                     <h:outputText value="#{rowmenu.name}" />
                                 </p:column>

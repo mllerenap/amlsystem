@@ -74,61 +74,62 @@ public class AdRole extends AbstractEntityModel implements Serializable {
     private BigInteger id;
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "isactive")
     @Convert(converter = YesNoConverter.class)
     private YesNo isactive;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 32)
     @Column(name = "createdby")
     private String createdby;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 60)
     @Column(name = "name")
     private String name;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 32)
     @Column(name = "updatedby")
     private String updatedby;
+    
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 60)
     @Column(name = "userlevel")
     private String userlevel;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 2000)
     @Column(name = "clientlist")
     private String clientlist;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 2000)
     @Column(name = "orglist")
     private String orglist;
+    
     @Column(name = "amtapproval")
     private BigInteger amtapproval;
     @Column(name = "ismanual")
     private Character ismanual;
     @Column(name = "processing")
     private Character processing;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "is_client_admin")
     private Character isClientAdmin;
 
