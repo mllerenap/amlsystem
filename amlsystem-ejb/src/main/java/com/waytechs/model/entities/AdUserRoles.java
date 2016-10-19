@@ -64,28 +64,26 @@ public class AdUserRoles extends AbstractEntityModel implements Serializable {
     private BigInteger id;
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "isactive")
     @Convert(converter = YesNoConverter.class)
     private YesNo isactive;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 32)
     @Column(name = "createdby")
     private String createdby;
+    
     @Basic(optional = false)
-    @NotNull
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 32)
     @Column(name = "updatedby")
     private String updatedby;

@@ -70,7 +70,7 @@
 
                 <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType" >
 
-                    <p:commandLink style="font-size: 17px !important;outline: none !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                    <p:commandLink style="font-size: 17px;outline: none !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
                                    update="@parent:@parent:pg_cmp_dv_#{id}" process="@this">
                         <f:attribute name="viewType" value="#{viewType}"></f:attribute>
                         <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
@@ -182,7 +182,7 @@
                     
                     <div style="position: absolute;top: 15px;right: 15px;">
                     
-                            <p:commandLink process="@this" actionListener="#{value.actionCancel}" update="@parent:@parent"> 
+                            <p:commandLink process="@this" actionListener="#{value.actionCancel}" update="@parent:@parent" style="outline: none !important;"> 
                                 <h:outputText styleClass="fa fa-reply" />
                             </p:commandLink>
                     </div>    

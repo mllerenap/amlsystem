@@ -42,11 +42,11 @@ public class AdRoleFacade extends AbstractFacade<AdRole> {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public AdRole findByName(String name) {
+    public AdRole findByName(String mnemonic) {
         List<AdRole> result = null;
         try {
-            Query query = em.createNamedQuery("AdRole.findByName");
-            query.setParameter("name", name);
+            Query query = em.createNamedQuery("AdRole.findByMnemonic");
+            query.setParameter("mnemonic", mnemonic);
             query.setParameter("isactive", YesNo.SI);
             result = query.getResultList();
         } catch (Exception e) {
@@ -56,13 +56,13 @@ public class AdRoleFacade extends AbstractFacade<AdRole> {
     }
 
     public void validateExistence(AdRole item) throws ExistException {
-        AdRole temp = findByName(item.getName());
+        AdRole temp = findByName(item.getMnemonic());
 
         if (temp == null) {
             return;
         }
 
-        if (temp.getName().equals(item.getName())) {
+        if (temp.getMnemonic().equals(item.getMnemonic())) {
             return;
         }
 
@@ -84,7 +84,7 @@ public class AdRoleFacade extends AbstractFacade<AdRole> {
             }
 
         } catch (ExistException e) {
-            throw new ExecuteRollbackException("El rol " + item.getName() + " ya existe.");
+            throw new ExecuteRollbackException("El rol " + item.getMnemonic() + " ya existe.");
         } catch (Exception e) {
             e.printStackTrace();
             throw new ExecuteRollbackException("Error al guardar el registro!");

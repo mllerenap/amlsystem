@@ -139,9 +139,9 @@ public class ShiroConfiguration {
                                 rolePermitidos = rolePermitidos + ", ";
                             }
                             
-                            System.out.println("url: "+mr.getAdMenuId().getUrl()+" role: "+mr.getAdRoleId().getName());
+                            System.out.println("url: "+mr.getAdMenuId().getUrl()+" role: "+mr.getAdRoleId().getMnemonic());
                             //String rolItem = rolePattern.replace("#var", mr.getAdRoleId().getName());
-                            rolePermitidos = rolePermitidos + "\"" + mr.getAdRoleId().getName()+ "\"";
+                            rolePermitidos = rolePermitidos + "\"" + mr.getAdRoleId().getMnemonic()+ "\"";
                         }
                         
                         rolePermitidos = rolePattern.replace("#var", rolePermitidos);

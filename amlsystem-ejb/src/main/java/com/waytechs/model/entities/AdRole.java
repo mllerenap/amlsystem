@@ -59,7 +59,9 @@ import com.waytechs.model.enums.YesNo;
     @NamedQuery(name = "AdRole.findByAmtapproval", query = "SELECT a FROM AdRole a WHERE a.amtapproval = :amtapproval"),
     @NamedQuery(name = "AdRole.findByIsmanual", query = "SELECT a FROM AdRole a WHERE a.ismanual = :ismanual"),
     @NamedQuery(name = "AdRole.findByProcessing", query = "SELECT a FROM AdRole a WHERE a.processing = :processing"),
-    @NamedQuery(name = "AdRole.findByIsClientAdmin", query = "SELECT a FROM AdRole a WHERE a.isClientAdmin = :isClientAdmin")})
+    @NamedQuery(name = "AdRole.findByIsClientAdmin", query = "SELECT a FROM AdRole a WHERE a.isClientAdmin = :isClientAdmin"),
+    @NamedQuery(name = "AdRole.findByMnemonic", query = "SELECT a FROM AdRole a WHERE a.mnemonic = :mnemonic and a.isactive = :isactive"),
+})
 public class AdRole extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -135,6 +137,11 @@ public class AdRole extends AbstractEntityModel implements Serializable {
 
     @OneToMany(fetch = javax.persistence.FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "adRoleId")
     private List<AdUserRoles> adUserRolesList; 
+    
+    
+    
+    @Column(name = "mnemonic")
+    private String mnemonic;
 
     public AdRole() {
     }
@@ -284,6 +291,16 @@ public class AdRole extends AbstractEntityModel implements Serializable {
     public void setAdUserRolesList(List<AdUserRoles> adUserRolesList) {
         this.adUserRolesList = adUserRolesList;
     }
+
+    public String getMnemonic() {
+        return mnemonic;
+    }
+
+    public void setMnemonic(String mnemonic) {
+        this.mnemonic = mnemonic;
+    }
+    
+    
 
     @Override
     public int hashCode() {

@@ -204,29 +204,45 @@ public class AdUserController implements Serializable {
             
             item = getActiveItem();
             
-            //item.setImage(getActiveItem().getImage());
-            
             System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
             try {
-                
-                /*
-                if( getPass1() == null || getPass2() == null){
-                    JsfUtils.messageWarning(null, "Debe ingresar la contraseña.", null);        
-                    return null;
-                }
-                
-                if( !getPass1().trim().equals(getPass2().trim())){
-                    JsfUtils.messageWarning(null, "No coinciden las contraseñas.", null);        
-                    return null;
-                }
-                
-                item.setPassword(getPass1());
-                */
                 
                 adUserFacade.save(item);
                 setSelectedItem(item);
                 setPass1(item.getPassword());
                 setPass2(null);
+                
+                List<AdUserRoles> listaRolesActual = adUserRolesFacade.findByAdUser(item);
+                List<AdUserRoles> listaRolesFinal = getListaUsuarioRoles().getValue();
+                
+                
+                if(  listaRolesActual != null && !listaRolesActual.isEmpty()){
+                    for (AdUserRoles ur : listaRolesActual) {
+                        boolean find = false;
+                        
+                        //buscar en lista final
+                        if(  listaRolesFinal != null && !listaRolesFinal.isEmpty()){
+                            for (AdUserRoles f : listaRolesFinal) {
+                                if(f.getId() != null && (ur.getId().intValue() == f.getId().intValue()) ){
+                                    find = true;
+                                    break;
+                                }else{
+                                    f.setId(null);
+                                    adUserRolesFacade.save(f,getActiveItem());
+                                }
+                                        
+                            }
+                        }
+                        //si no se encontro se elimina
+                        if( !find ){
+                            adUserRolesFacade.delete(ur);
+                        }
+                        
+                    }
+                }
+                
+                
+                
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return null;

@@ -96,7 +96,7 @@ public class SecurityRealm extends AuthorizingRealm {
         if( listaUsuarioRoles != null && !listaUsuarioRoles.isEmpty() ){
             
             for(AdUserRoles us :  listaUsuarioRoles){
-                roleNames.add(us.getAdRoleId().getName());     
+                roleNames.add(us.getAdRoleId().getMnemonic());     
                 
                 List<AdPermission> permisos = this.adPermissionFacade.findByAdRoleId(us.getAdRoleId());
                 

@@ -31,10 +31,13 @@
 
                     <h:panelGrid columns="2" >
 
-                        <h:panelGrid columns="3" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
-                            <p:outputLabel value="Rol:" for="itRol"></p:outputLabel>
-                            <p:inputText id="itRol" value="#{adRole.activeItem.name}" placeholder="Rol" readonly="#{not adRole.listaRoles.enabledSave}" /> 
-
+                        <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
+                            <p:outputLabel value="Descripción:" for="itRol"></p:outputLabel>
+                            <p:inputText id="itRol" value="#{adRole.activeItem.name}" placeholder="Descripción del rol" readonly="#{not adRole.listaRoles.enabledSave}" /> 
+                            <p:outputLabel value="Nemónico:" for="itNemonico"></p:outputLabel>
+                            <p:inputText id="itNemonico" value="#{adRole.activeItem.mnemonic}" placeholder="Abreviado" readonly="#{not adRole.listaRoles.enabledSave}" > 
+                                <p:keyFilter mask="alpha"/>
+                            </p:inputText>
                         </h:panelGrid>
 
                     </h:panelGrid>
@@ -52,12 +55,12 @@
                                 </p:column>
                                 <p:column headerText="Roles asignados" >
                                     <ui:repeat value="#{rowmenu.adMenuRoleList}" var="mr" >                                        
-                                        <span class="label label-primary" style="font-size: 10px;">#{mr.adRoleId.name}</span>
+                                        <span class="label label-primary" style="font-size: 10px;">#{mr.adRoleId.mnemonic}</span>
                                         <p:spacer width="5"></p:spacer>
                                     </ui:repeat>
                                 </p:column>
                                 
-                                <p:column headerText="#{adRole.activeItem.name}" style="width:130px;text-align: center">
+                                <p:column headerText="#{adRole.activeItem.mnemonic}" style="width:130px;text-align: center">
                                             <p:selectBooleanCheckbox value="#{rowmenu.adMenuRole.active}" style="width:100%" 
                                                                      rendered="#{not empty rowmenu.url}" 
                                                                      disabled="#{not adRole.listaRoles.enabledSave}">
