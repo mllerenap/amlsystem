@@ -4,40 +4,69 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
+    <!--
     <p:ajaxStatus onstart="showStatusDialog();" onsuccess="hideStatusDialog();" />
+    -->
 
-        <p:dialog  style="background-color: transparent; box-shadow: none; border: none;" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-            <p:graphicImage name="ajax_loading.gif" style="background: none;" library="images"/><br></br>
-            <h:outputText value="Cargando" style="color:white;"/>     
-        </p:dialog>
+    <p:ajaxStatus >
+        <f:facet name="start">
+            
+            <div style="z-index: 1000;border: none;margin: 0px;padding: 0px;width: 100%;height: 100%;top: 0px;left: 0px;background-color: rgb(0, 0, 0);opacity: 0.6;cursor: wait;position: absolute;">
+                
+                <div style="z-index: 1011; position: absolute; padding: 0px; margin: 0px; width: 30%; top: 203px; left: 616.5px; text-align: center;cursor: wait;background: transparent;">
+                    <p:graphicImage name="ajax-loader.gif" style="background: transparent;" library="images"/>
+                    <br></br>
+                    <h1 style="color: white">Procesando...</h1> 
+                </div>
+                
+                
+                
+                
+            </div>
+            
+            
+               
+        </f:facet>
+        <f:facet name="complete">
+            <h:outputText value="" />
+        </f:facet>
 
-        <script>
-            var statusDlgTimer = null;
+    </p:ajaxStatus>
 
-            function showStatusDialog()
+
+
+    <p:dialog  style="background-color: transparent; box-shadow: none; border: none;" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        
+    </p:dialog>
+
+    <script>
+        var statusDlgTimer = null;
+
+        function showStatusDialog()
+        {
+            if (statusDlgTimer === null)
             {
-                if (statusDlgTimer === null)
-                {
-                    statusDlgTimer = setTimeout("PF('statusDialog').show()", 0);
-                }
+                statusDlgTimer = setTimeout("PF('statusDialog').show()", 0);
             }
+        }
 
-            function hideStatusDialog()
+        function hideStatusDialog()
+        {
+            if (statusDlgTimer !== null)
             {
-                if (statusDlgTimer !== null)
-                {
-                    clearTimeout(statusDlgTimer);
-                    PF('statusDialog').hide();
-                    statusDlgTimer = null;
-                }
+                clearTimeout(statusDlgTimer);
+                PF('statusDialog').hide();
+                statusDlgTimer = null;
             }
+        }
 
-            window.onpopstate = function () {
-                location.reload();
-            };
+        window.onpopstate = function () {
+            location.reload();
+        };
 
-        </script>
+    </script>
 
 </ui:composition>

@@ -47,10 +47,10 @@
                     <p:tabView id="tvDetalle">
                         <p:tab title="Menu">
                             <p:treeTable value="#{adRole.rootMenu}" var="rowmenu" emptyMessage="No existen datos">
-                                <p:column headerText="Menu">
+                                <p:column headerText="Menu" style="width:260px;">
                                     <h:outputText value="#{rowmenu.name}" />
                                 </p:column>
-                                <p:column headerText="Opción" width="150">
+                                <p:column headerText="Opción" style="width:260px;">
                                     <h:outputText value="#{rowmenu.url}" />
                                 </p:column>
                                 <p:column headerText="Roles asignados" >

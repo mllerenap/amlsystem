@@ -182,18 +182,13 @@
                     
                     <div style="position: absolute;top: 15px;right: 15px;">
                     
-                            <p:commandLink process="@this" actionListener="#{value.actionCancel}" update="@parent:@parent" style="outline: none !important;"> 
+                            <p:commandLink process="@this" actionListener="#{value.actionBack}" update="pg_cmp_dv_#{id}" style="outline: none !important;"> 
                                 <h:outputText styleClass="fa fa-reply" />
                             </p:commandLink>
                     </div>    
                     
                     <ui:insert name="dataRow"></ui:insert>        
                 </div> 
-                <!--
-            <p:panel header="#{titleRow}" >
-                <ui:insert name="dataRow"></ui:insert>        
-                
-            </p:panel>    -->
                 
                 </h:panelGroup>
             

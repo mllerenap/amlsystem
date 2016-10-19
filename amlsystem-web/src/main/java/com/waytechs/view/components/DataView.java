@@ -421,6 +421,23 @@ public abstract class DataView<E extends AbstractEntityModel> {
         }
         
     }
+    
+    public final void actionBack(ActionEvent action) {
+        
+        DataViewType type = getViewTypesAvailable().get(0);
+        System.out.println("actionBack type: "+type);
+        setViewTypeActive(type);
+        
+        setEnabledCreate(true);
+        setEnabledEdit(false);//
+        setEnabledSave(false);//
+        setEnabledDelete(false);
+        setEnabledCancel(false);
+        
+        load();
+        setSelectedItem(null);
+        
+    }
 
     protected void cancel() {
         throw new UnsupportedOperationException();
