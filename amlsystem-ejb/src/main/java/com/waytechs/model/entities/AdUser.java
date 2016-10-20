@@ -80,11 +80,9 @@ public class AdUser extends AbstractEntityModel implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "username")
-    @NotNull
     private String username;
 
     @Column(name = "password")
-    @NotNull
     private String password;
 
     @Basic(optional = false)
@@ -159,30 +157,30 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @Basic(optional = false)
     @Column(name = "isactive")
     @Convert(converter = YesNoConverter.class)
-    @NotNull
     private YesNo isactive;
 
     @Basic(optional = false)
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     private Date created;
 
     @Basic(optional = false)
     @Column(name = "createdby")
-    @NotNull
     private String createdby;
 
     @Basic(optional = false)
     @Column(name = "updated")
     @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     private Date updated;
 
     @Basic(optional = false)
     @Column(name = "updatedby")
-    @NotNull
     private String updatedby;
+    
+    
+    @JoinColumn(name = "gl_agency_id", referencedColumnName = "id")
+    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
+    private GlAgency glAgencyId;
 
     public AdUser() {
     }
@@ -427,6 +425,16 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+    public GlAgency getGlAgencyId() {
+        return glAgencyId;
+    }
+
+    public void setGlAgencyId(GlAgency glAgencyId) {
+        this.glAgencyId = glAgencyId;
+    }
+    
+    
     
     
 

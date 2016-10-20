@@ -25,15 +25,20 @@ import javax.servlet.http.Part;
 import com.waytechs.model.ejb.facades.AdRoleFacade;
 import com.waytechs.model.ejb.facades.AdUserFacade;
 import com.waytechs.model.ejb.facades.AdUserRolesFacade;
+import com.waytechs.model.ejb.facades.GlAgencyFacade;
+import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdRole;
 import com.waytechs.model.entities.AdUser;
 import com.waytechs.model.entities.AdUserRoles;
+import com.waytechs.model.entities.GlAgency;
+import com.waytechs.model.entities.GlCompany;
 import com.waytechs.view.components.DataList;
 import com.waytechs.view.components.DataTable;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.event.ActionEvent;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -63,9 +68,22 @@ public class AdUserController implements Serializable {
     @Inject
     private AdUserRolesFacade adUserRolesFacade;
     
+    
+    @Inject
+    private GlCompanyFacade alCompanyFacade;
+    
+    @Inject
+    private GlAgencyFacade glAgencyFacade;
+    
     private List<AdRole> roles;
     
     private TemplateController template;
+    
+    private List<GlCompany> companies;
+    
+    private GlCompany companySelected;
+    
+    private List<GlAgency> agencies;
 
     @PostConstruct
     public void initialize() {
@@ -79,7 +97,8 @@ public class AdUserController implements Serializable {
         
         System.out.println(getClass().getSimpleName()+" - "+template.getCurrentMenu());  
         
-        
+        companies = alCompanyFacade.findFull();
+        agencies = new ArrayList<>();
         
     }
 
@@ -178,6 +197,10 @@ public class AdUserController implements Serializable {
             setPass1(item.getPassword());    
             setActiveItem(item);
             getListaUsuarioRoles().load();
+            setCompanySelected(item.getGlAgencyId() != null ? item.getGlAgencyId().getGlCompanyId() : null);
+            agencies = glAgencyFacade.findByGlCompanyId(getCompanySelected());
+            
+            
         }
         
         
@@ -328,89 +351,6 @@ public class AdUserController implements Serializable {
     public void setListaUsuarioRoles(DataList<AdUserRoles> listaUsuarioRoles) {
         this.listaUsuarioRoles = listaUsuarioRoles;
     }
-    
-    
-    
-
-//    private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
-//        @Override
-//        protected void initialize() {
-//            System.out.println("initialize DataList AdUserRoles");
-//        }
-//
-//        @Override
-//        public List<AdUserRoles> loadDataList() {
-//            return adUserRolesFacade.findByAdUser(listaUsuarios.getActiveItem());
-//        }
-//
-//        @Override
-//        protected AdUserRoles create() {
-//            System.out.println("create AdUserRoles");
-//            return new AdUserRoles();
-//        }
-//
-//        @Override
-//        protected AdUserRoles edit(AdUserRoles item) {
-//            System.out.println("edit AdUserRoles: " + item);
-//            return item;
-//        }
-//
-//        @Override
-//        protected AdUserRoles save(AdUserRoles item) {
-//            System.out.println("save AdUserRoles: " + item);
-//            try {
-//                adUserRolesFacade.save(item, listaUsuarios.getActiveItem());
-//            } catch (Exception e) {
-//                JsfUtils.messageError(null, e.getMessage(), null);
-//                return null;
-//            }
-//
-//            JsfUtils.messageInfo(null, "Rol asignado correctamente.", null);
-//
-//            return item;
-//        }
-//
-//        @Override
-//        protected void delete(List<AdUserRoles> items) {
-//            System.out.println("delete AdUserRoles: " + items);
-//            try {
-//                adUserRolesFacade.delete(items);
-//            } catch (Exception e) {
-//                JsfUtils.messageError(null, e.getMessage(), null);
-//                return;
-//            }
-//
-//            JsfUtils.messageInfo(null, "Rol eliminado correctamente.", null);
-//        }
-//
-//        @Override
-//        protected void cancel() {
-//            System.out.println("cancel AdUserRoles");
-//        }
-//
-//    };
-//
-//    public DataList<AdUserRoles> getListaUsuarioRoles() {
-//        return listaUsuarioRoles;
-//    }
-    public List<AdRole> completeRol(String query) {
-
-        System.out.println("query: " + query);
-
-        List<AdRole> allRol = adRoleFacade.findAll();
-        List<AdRole> filteredRoles = new ArrayList<AdRole>();
-
-        if (allRol != null && !allRol.isEmpty()) {
-            for (int i = 0; i < allRol.size(); i++) {
-                AdRole rol = allRol.get(i);
-                if (rol.getName().toUpperCase().contains(query.toUpperCase())) {
-                    filteredRoles.add(rol);
-                }
-            }
-        }
-
-        return filteredRoles;
-    }
 
     public String getPass1() {
         return pass1;
@@ -434,6 +374,35 @@ public class AdUserController implements Serializable {
 
     public void setRoles(List<AdRole> roles) {
         this.roles = roles;
+    }
+
+    public List<GlCompany> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<GlCompany> companies) {
+        this.companies = companies;
+    }
+
+    public List<GlAgency> getAgencies() {
+        return agencies;
+    }
+
+    public void setAgencies(List<GlAgency> agencies) {
+        this.agencies = agencies;
+    }
+
+    public GlCompany getCompanySelected() {
+        return companySelected;
+    }
+
+    public void setCompanySelected(GlCompany companySelected) {
+        this.companySelected = companySelected;
+    }
+    
+    public void onCompany() {
+        System.out.println("onCompany: "+getCompanySelected());
+        agencies = glAgencyFacade.findByGlCompanyId(getCompanySelected());
     }
     
     

@@ -3,7 +3,9 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui"  contentType="text/html">
+        xmlns:p="http://primefaces.org/ui"  
+        xmlns:po="http://primefaces.org/omega"
+        contentType="text/html">
 
     <ui:insert name="metadata" />
 
@@ -15,10 +17,10 @@
             <title>AML Plataform</title>
 
             <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
-            
+
             <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
-            
-            
+
+
 
 
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
@@ -31,62 +33,92 @@
 
         <h:body id="bDocument" styleClass="main-body">
 
-            
+
 
             <p:growl autoUpdate="true" > </p:growl>
 
-           <h:form>
-               
-               <p:menubar model="#{template.model}" >
-                   <f:facet name="options">
+            <h:form>
+
+                <p:menubar model="#{template.model}" >
+                    <f:facet name="options">
                         <p:menuButton value="#{template.adUser.firstname.toUpperCase()} #{template.adUser.lastname.toUpperCase()}" >
                             <p:menuitem  value="Cerrar" icon="ui-icon-extlink" url="/api/auth/logout" style="width: 100px;"></p:menuitem>
                         </p:menuButton>
 
                     </f:facet>
-               </p:menubar>
+                </p:menubar>
+                
+                
 
             </h:form>
 
 
 
-            
-                <!--
-                <div class="ui-content-center">
-                    
-                </div>
-                -->
-                
-                <div class="wrapper sidebar-inactive-l">
-                
-                <div class="main"> 
-                <div class="container">
-                    <div class="ui-g">
-                <div class="ui-g-12">
-                    <div class="card">
-                        <h1 class="centerText">#{titleOption}</h1>
-                        <ui:insert name="content">
-                    </ui:insert> 
-                    </div>    
-                </div>
-                        </div></div></div>
+
+            <!--
+            <div class="ui-content-center">
+            <div class="wrapper sidebar-inactive-l"></div>    
+            </div>
+            -->
+
+            <div class="wrapper">
+
+
+                <div class="sidebar">
+                    <div class="nano has-scrollbar">
+                        <div class="nano-content sidebar-scroll-content" tabindex="0" style="margin-right: -19px;">
+                            <div class="logo">
+
+                            </div>
+
+                            <div class="profile">
+
+                                <a id="profile-button" href="#">
+                                    <span class="username">Peggy Olson</span>
+                                    <i class="fa fa-fw fa-cog"></i>
+                                </a>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-fw fa-sliders"></i><span>Account</span></a></li>
+                                    <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notifications</span><span class="menu-badge">2</span></a></li>
+                                    <li><a href="#"><i class="fa fa-fw fa-sign-out"></i><span>Logout</span></a></li>
+                                </ul>
+
+                            </div>
+
+                            
+
+                        </div><div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 650px; transform: translate(0px, 0px);"></div></div>
                     </div>
-                
-            
+                </div>
+
+                <div class="main"> 
+                    <div class="container">
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <div class="card">
+                                    <h1 class="centerText">#{titleOption}</h1>
+                                    <ui:insert name="content">
+                                    </ui:insert> 
+                                </div>    
+                            </div>
+                        </div></div></div>
+            </div>
 
 
 
-            
-                        <h:form id="fConfirm">
-                            <p:confirmDialog global="true" closeOnEscape="true" showEffect="fade"
-                                             hideEffect="fade" >
-                                <p:commandButton value="SI" type="button" process="@this"
-                                                 styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="No" type="button"
-                                                 styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>
-                        </h:form>
-                        
+
+
+
+            <h:form id="fConfirm">
+                <p:confirmDialog global="true" closeOnEscape="true" showEffect="fade"
+                                 hideEffect="fade" >
+                    <p:commandButton value="SI" type="button" process="@this"
+                                     styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button"
+                                     styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+
 
             <ui:include src="ajaxLoader.xhtml"/> 
 

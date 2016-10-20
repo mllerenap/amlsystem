@@ -164,6 +164,10 @@ public class GlPeople implements Serializable {
     @JoinColumn(name = "idref", referencedColumnName = "id")
     @ManyToOne
     private GlPeople idref;
+    
+    @JoinColumn(name = "gl_company_id", referencedColumnName = "id")
+    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
+    private GlCompany glCompanyId; 
 
     public GlPeople() {
     }
@@ -460,6 +464,16 @@ public class GlPeople implements Serializable {
     public void setIdref(GlPeople idref) {
         this.idref = idref;
     }
+
+    public GlCompany getGlCompanyId() {
+        return glCompanyId;
+    }
+
+    public void setGlCompanyId(GlCompany glCompanyId) {
+        this.glCompanyId = glCompanyId;
+    }
+    
+    
 
     @Override
     public int hashCode() {

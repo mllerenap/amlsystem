@@ -470,7 +470,7 @@ body .ui-inputfield {
     background: transparent;
     border-width: 0 0 1px 0;
     padding: 2px 2px 1px 2px;
-    font-size: 16px;
+    /*font-size: 16px;*/
     border-color: #bdbdbd;
     border-style: solid;
     -moz-transition: border-color 0.3s;
@@ -483,7 +483,7 @@ body .ui-inputfield {
 }    
 
 body .ui-inputfield.ui-state-focus {
-      border-width: 0 0 2px 0 !important;
+      border-width: 0 0 1px 0 !important;
       border-color: #03A9F4 !important;
       padding-bottom: 0px !important;}
     body .ui-inputfield.ui-state-disabled {
@@ -554,6 +554,35 @@ body .ui-selectonemenu {
     -webkit-border-radius: 0 !important;
     border-radius: 0 !important;
 }
+
+body .ui-selectonemenu.ui-state-hover{
+    background: #fff !important;
+}
+
+body .ui-selectonemenu.ui-state-focus{
+    background: #fff !important;
+}
+
+body .ui-selectonemenu:active{
+    background: #fff !important;
+}
+
+body .ui-selectonemenu-trigger.ui-state-hover {
+    background: #fff !important;
+}
+
+body .ui-selectonemenu-trigger.ui-state-focus {
+    background: #fff !important;
+}
+
+body .ui-selectonemenu-trigger:active{
+    background: #fff !important;
+}
+
+body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+    margin-top: 0px !important;
+}
+
 
 .ui-picklist.ui-picklist-responsive .ui-picklist-list-wrapper {
     width: 45% !important;

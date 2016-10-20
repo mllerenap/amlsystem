@@ -6,6 +6,7 @@
 package com.waytechs.model.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -54,7 +55,8 @@ public class GlCompany implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;  
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -99,22 +101,15 @@ public class GlCompany implements Serializable {
     public GlCompany() {
     }
 
-    public GlCompany(Long id) {
-        this.id = id;
-    }
-
-    public GlCompany(Long id, String ide) {
-        this.id = id;
-        this.ide = ide;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    
 
     public String getIde() {
         return ide;

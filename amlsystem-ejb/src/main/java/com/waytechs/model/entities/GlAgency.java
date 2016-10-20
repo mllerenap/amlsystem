@@ -5,12 +5,16 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -43,7 +47,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlAgency.findByCreatedby", query = "SELECT g FROM GlAgency g WHERE g.createdby = :createdby")
     , @NamedQuery(name = "GlAgency.findByUpdated", query = "SELECT g FROM GlAgency g WHERE g.updated = :updated")
     , @NamedQuery(name = "GlAgency.findByUpdatedby", query = "SELECT g FROM GlAgency g WHERE g.updatedby = :updatedby")
-    , @NamedQuery(name = "GlAgency.findByIsactive", query = "SELECT g FROM GlAgency g WHERE g.isactive = :isactive")})
+    , @NamedQuery(name = "GlAgency.findByIsactive", query = "SELECT g FROM GlAgency g WHERE g.isactive = :isactive")
+    , @NamedQuery(name = "GlAgency.findByGlCompanyId", query = "SELECT g FROM GlAgency g WHERE g.glCompanyId = :glCompanyId and g.isactive = :isactive")
+})
 public class GlAgency implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +57,8 @@ public class GlAgency implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;  
+    
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -73,9 +80,14 @@ public class GlAgency implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    @Size(max = 255)
+    
+    
+    @Basic(optional = false)
     @Column(name = "isactive")
-    private String isactive;
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
+    
+    
     @JoinColumn(name = "ad_type_office_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdTypeOffice adTypeOfficeId;
@@ -88,17 +100,15 @@ public class GlAgency implements Serializable {
     public GlAgency() {
     }
 
-    public GlAgency(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    
 
     public String getName() {
         return name;
@@ -156,11 +166,11 @@ public class GlAgency implements Serializable {
         this.updatedby = updatedby;
     }
 
-    public String getIsactive() {
+    public YesNo getIsactive() {
         return isactive;
     }
 
-    public void setIsactive(String isactive) {
+    public void setIsactive(YesNo isactive) {
         this.isactive = isactive;
     }
 
