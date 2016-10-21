@@ -4,7 +4,7 @@
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"  
-        xmlns:po="http://primefaces.org/omega"
+        xmlns:ae="http://primefaces.org/aeopensolutions"
         contentType="text/html">
 
     <ui:insert name="metadata" />
@@ -19,11 +19,14 @@
             <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
 
             <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
-
-
-
-
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
+            
+            <h:outputStylesheet name="nanoscroller.css" library="css"></h:outputStylesheet>
+            <h:outputScript name="nanoscroller.js" library="js"></h:outputScript>
+            
+            <h:outputScript>
+                Omega.restoreMenuState();
+            </h:outputScript>
 
             <ui:insert name="head" />
 
@@ -37,20 +40,7 @@
 
             <p:growl autoUpdate="true" > </p:growl>
 
-            <h:form>
-
-                <p:menubar model="#{template.model}" >
-                    <f:facet name="options">
-                        <p:menuButton value="#{template.adUser.firstname.toUpperCase()} #{template.adUser.lastname.toUpperCase()}" >
-                            <p:menuitem  value="Cerrar" icon="ui-icon-extlink" url="/api/auth/logout" style="width: 100px;"></p:menuitem>
-                        </p:menuButton>
-
-                    </f:facet>
-                </p:menubar>
-                
-                
-
-            </h:form>
+            
 
 
 
@@ -74,18 +64,22 @@
                             <div class="profile">
 
                                 <a id="profile-button" href="#">
-                                    <span class="username">Peggy Olson</span>
-                                    <i class="fa fa-fw fa-cog"></i>
+                                    <span class="username">#{template.adUser.firstname} #{template.adUser.lastname}</span>
+                                    <i class="fa fa-fw material-icons"></i>
                                 </a>
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-fw fa-sliders"></i><span>Account</span></a></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notifications</span><span class="menu-badge">2</span></a></li>
-                                    <li><a href="#"><i class="fa fa-fw fa-sign-out"></i><span>Logout</span></a></li>
+                                    <li><a href="#"><i class="fa fa-fw fa-sliders"></i><span>Perfil</span></a></li>
+                                    <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notificaciones</span><span class="menu-badge">2</span></a></li>
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/api/auth/logout"><i class="fa fa-fw fa-sign-out"></i><span>Cerrar</span></a></li>
                                 </ul>
 
                             </div>
-
                             
+                            <h:form>
+                                <div class="menu">
+                                    <ae:menu model="#{template.model}"></ae:menu>
+                                </div>
+                            </h:form>
 
                         </div><div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 650px; transform: translate(0px, 0px);"></div></div>
                     </div>

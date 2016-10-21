@@ -4,19 +4,32 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <!--
- <application>
-       <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
-   </application>
-   -->
-   <application>
+  <application>
+        <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+    </application>
+    -->
+    <application>
        
-    <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
+        <resource-handler>org.omnifaces.resourcehandler.UnmappedResourceHandler</resource-handler>
     
-      <factory>
+        <factory>
             <exception-handler-factory>org.omnifaces.exceptionhandler.FullAjaxExceptionHandlerFactory</exception-handler-factory> 
         </factory>
         
-</application>
+    </application>
+    
+     <component>
+        <component-type>org.primefaces.component.OmegaMenu</component-type>
+        <component-class>com.waytechs.view.components.OmegaMenu</component-class>
+    </component>
+    
+    <render-kit>
+        <renderer>
+            <component-family>org.primefaces.component</component-family>
+            <renderer-type>org.primefaces.component.OmegaMenuRenderer</renderer-type>
+            <renderer-class>com.waytechs.view.components.OmegaMenuRenderer</renderer-class>
+        </renderer>
+    </render-kit>
 
 
 

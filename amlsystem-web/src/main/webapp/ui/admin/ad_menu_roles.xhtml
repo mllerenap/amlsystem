@@ -9,158 +9,58 @@
 
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui">
-    
+
     <ui:param name="titleOption" value="Asignación de roles al menu" />
 
     <ui:define name="content">
-        
-        
+
+
 
         <h:form id="frmMenuRoles" >
 
 
-            <ae:dataView id="dvUsuarios" value="#{adUser.listaUsuarios}" titleRow="Código: #{adUser.activeItem.id}"> 
+            <div class="menu">
+                <ul id="j_idt18" class="menu-container">
 
-                <ui:define name="dataTable">
-                    <p:column headerText="Usuario" filterBy="#{row.name}" > 
-                        <h:outputText value="#{row.name}" />
-                    </p:column>
-                    
-                </ui:define>
-
-                <ui:define name="dataGrid">
-                    <h:panelGrid columns="2" >
-                        <p:graphicImage rendered="#{row.image == null}"  value="#" library="images" name="placeholder.png"  class="data-grid_image"/>
-                        <o:graphicImage rendered="#{row.image != null}"  value="#{row.image}" dataURI="true" class="data-grid_image"/>   
-                    <h:outputText value="#{row.name}" />    
-                    </h:panelGrid>
-                    
-                </ui:define>
-
-                <ui:define name="dataRow">
-
-                    <h:selectBooleanCheckbox  id="imageModified" value="#{adUser.imageModified}" style="display: none;" />
-
-                    <p:graphicImage  value="#" library="images" name="placeholder.png"  binding="#{altImage}" style="display: none;" id="img_backup"/>
-                    <h:inputFile style="display:none;"   id="pictureUpload"  value="#{adUser.image}" binding="#{upload}" validator="#{adUser.validateImage}" onchange="uploadFile(this)"/>
-
-                    <h:panelGrid columns="2" >
-                        <h:panelGroup layout="block" >
+                    <li id="om_default" role="menuitem" class="active-menuitem">
+                        <a href="#"><i class="fa fa-life-saver fa-fw"></i><span>Template Pages</span><i class="fa fa-fw fa-angle-down"></i></a>
+                        <ul role="menu" style="display: block;">
+                            <li id="om_empty" role="menuitem"><a href="/omega/empty.xhtml"><i class="fa fa-square-o fa-fw"></i><span>Empty Page</span></a></li>
+                            <li id="om_login" role="menuitem"><a href="/omega/login.xhtml"><i class="fa fa-sign-in fa-fw"></i><span>Login Page</span></a></li>
+                            <li id="om_error" role="menuitem"><a href="/omega/error.xhtml"><i class="fa fa-exclamation-circle fa-fw"></i><span>Error Page</span></a></li>
+                            <li id="om_404" role="menuitem"><a href="/omega/404.xhtml"><i class="fa fa-times fa-fw"></i><span>404 Page</span></a></li>
+                            <li id="om_access" role="menuitem"><a href="/omega/access.xhtml"><i class="fa fa-exclamation-triangle fa-fw"></i><span>Access Denied Page</span></a></li>
+                        </ul>
+                    </li>
 
 
+                    <li id="om_hierarchy" role="menuitem" class="">
+                        <a href="#"><i class="fa fa-gg fa-fw"></i><span>Menu Hierarchy</span><i class="fa fa-fw fa-angle-down"></i></a>
+                        <ul role="menu" style="display: none;">
+                            <li id="om_sm1" role="menuitem" class="">
+                                <a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Submenu 1</span><i class="fa fa-fw fa-angle-down"></i></a>
+                                <ul role="menu" style="display: none;">
+                                    <li id="om_sm11" role="menuitem">
+                                        <a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Submenu 1.1</span><i class="fa fa-fw fa-angle-down"></i></a>
+                                        <ul role="menu">
+                                            <li id="om_lnk111" role="menuitem"><a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Link 1.1.1</span></a></li>
+                                            <li id="om_lnk112" role="menuitem"><a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Link 1.1.2</span></a></li>
+                                            <li id="om_lnk113" role="menuitem"><a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Link 1.1.3</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li id="om_sm12" role="menuitem">
+                                        <a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Submenu 1.2</span><i class="fa fa-fw fa-angle-down"></i></a>
+                                        <ul role="menu">
+                                            <li id="om_lnk121" role="menuitem"><a href="#"><i class="fa fa-sign-in fa-fw"></i><span>Link 1.2.1</span></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
 
-                            <div class="form_image">
-                                <o:graphicImage rendered="#{adUser.activeItem.image != null}"  value="#{adUser.activeItem.image}" dataURI="true" />   
-                                <p:graphicImage rendered="#{adUser.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
-                                <div class="#{adUser.listaUsuarios.enabledSave ? 'form_image_buttons' : ''}" style="position: absolute; width: 100%;">
-                                    <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
-                                        <h:outputText styleClass="fa fa-pencil" />
-                                    </p:commandLink> 
-
-                                    <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
-                                        <h:outputText styleClass="fa fa-trash-o" />
-                                    </p:commandLink> 
-
-                                </div>
-                            </div>
-
-                        </h:panelGroup>
-
-                        <h:panelGrid columns="3" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
-
-                            <p:inputText value="#{adUser.activeItem.firstname}" placeholder="Nombre" readonly="#{not adUser.listaUsuarios.enabledSave}" /> 
-                            <p:inputText value="#{adUser.activeItem.lastname}" placeholder="Apellido" readonly="#{not adUser.listaUsuarios.enabledSave}"/>
-                            
-                            <p:inputText id="itUser" value="#{adUser.activeItem.username}" placeholder="Usuario" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth"/> 
-
-                        </h:panelGrid>
-
-
-
-
-                    </h:panelGrid>
-
-
-                    
-                        
-                    
-
-                    <h:panelGrid columns="4" width="100%" >
-
-                        
-                        <!--
-                        <p:outputLabel for="itPass" value="Contraseña" styleClass="form-label"></p:outputLabel>
-                        
-                        <p:inputText id="itPass" value="#{adUser.pass1}" placeholder="Contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
-                        
-                        
-                        <p:spacer></p:spacer>
-                        <p:spacer></p:spacer>
-                        
-                        <p:spacer></p:spacer>
-                        <p:inputText id="itPass2" value="#{adUser.pass2}" placeholder="Confirmar contraseña" readonly="#{not adUser.listaUsuarios.enabledSave}" styleClass="fullWidth" type="password"/>
-                        -->
-                        
-                        <!--
-                        <h:panelGroup styleClass="md-inputfield">
-                            <p:inputText id="name"/>
-                            <p:outputLabel for="name" value="Name" />
-                        </h:panelGroup>-->
-                        
-
-                    </h:panelGrid>
-                    <br></br>
-                    
-                    <p:tabView id="tvDetalleRoles">
-                        <p:tab title="Roles">
-                            
-                            
-                            <ae:dataList id="dlTest" title="ok" value="#{adUser.listaUsuarioRoles}"  editableRow="#{adUser.listaUsuarios.enabledSave}">
-                                <ui:define name="dataTable">
-                                    <p:column headerText="Rol" filterBy="#{row.adRoleId.name}" > 
-                                        <p:cellEditor>
-                                        <f:facet name="output">
-                                            <h:outputText value="#{row.adRoleId.name}" />
-                                        </f:facet>
-                                        <f:facet name="input">
-                                            <p:selectOneMenu value="#{row.adRoleId}" converter="#{adRoleConverter}" panelStyle="width:180px"
-                                                            effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" >
-                                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                                                <f:selectItems value="#{adUser.roles}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
-                                                <p:ajax event="change"></p:ajax>
-                                           </p:selectOneMenu>
-                                        </f:facet>
-                                    </p:cellEditor>
-                                    </p:column>
-                                </ui:define>
-                            </ae:dataList>
-                            
-                            
-                        </p:tab>
-                        <p:tab title="Otra Info">
-                        </p:tab>
-                    </p:tabView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </ui:define>
-
-
-
-
-
-            </ae:dataView>
-
+                </ul>
+            </div>
 
 
 
