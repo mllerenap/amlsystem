@@ -24,8 +24,8 @@ body {
 .active-nav-button{
     font-size: 17px !important;
     color: #ffffff !important;
-    padding: 2px 4px !important;
-    background-color: #2399e5 !important;
+    padding: 1px 5px !important;
+    background-color: #007be5 !important;
     border: 1px solid #1f89ce;
     -moz-border-radius: 70% !important;
     -webkit-border-radius: 70% !important;

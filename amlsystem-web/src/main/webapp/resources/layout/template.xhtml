@@ -5,6 +5,8 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"  
         xmlns:ae="http://primefaces.org/aeopensolutions"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:o="http://omnifaces.org/ui"
         contentType="text/html">
 
     <ui:insert name="metadata" />
@@ -20,13 +22,11 @@
 
             <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
-            
+
             <h:outputStylesheet name="nanoscroller.css" library="css"></h:outputStylesheet>
             <h:outputScript name="nanoscroller.js" library="js"></h:outputScript>
-            
-            <h:outputScript>
-                Omega.restoreMenuState();
-            </h:outputScript>
+
+            <h:outputStylesheet name="animate.css" library="css"></h:outputStylesheet>
 
             <ui:insert name="head" />
 
@@ -39,58 +39,116 @@
 
 
             <p:growl autoUpdate="true" > </p:growl>
-
+            
             
 
-
-
-
-            <!--
-            <div class="ui-content-center">
-            <div class="wrapper sidebar-inactive-l"></div>    
-            </div>
-            -->
-
             <div class="wrapper">
+                
+               
 
+                <div class="topbar clearfix">
+                    <div class="topbar-left">            
+                        <div class="logo">
+                            <h:graphicImage name="/logo-aml-ext.png" library="images" width="248" height="37"/> 
+                        </div>
+                    </div>
+
+                    <div class="topbar-right">
+                        <a id="menu-button" href="#">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+
+                        <a id="topbar-menu-button" href="#">
+                            <i class="material-icons"></i>
+                        </a>
+                        
+                        <ul class="topbar-items fadeInDown animated">
+                            <li >
+                                <a href="#">
+                                    <i class="topbar-icon fa fa-gear"></i>
+                                    <span class="topbar-item-name">Settings</span>
+                                </a>
+                                <ul class="ultima-menu animated fadeInDown">
+                                    
+                                    <li role="menuitem"><a href="#{facesContext.externalContext.requestContextPath}/api/auth/logout"><i class="fa fa-fw fa-sign-out"></i><span>Cerrar</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="topbar-icon animated swing fa fa-envelope-o"></i>
+                                    <span class="topbar-badge animated rubberBand">5</span>
+                                    <span class="topbar-item-name">Messages</span>
+                                </a>
+                                <ul class="ultima-menu animated">
+                                    <li role="menuitem">
+                                        <a href="#" class="topbar-message">
+                                            <span>Give me a call</span>
+                                        </a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a href="#" class="topbar-message">
+                                            <span>Sales reports attached</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="topbar-icon fa fa-bell-o"></i>
+                                    <span class="topbar-badge animated rubberBand">4</span>
+                                    <span class="topbar-item-name">Notifications</span>
+                                </a>
+                                <ul class="ultima-menu animated">
+                                    <li role="menuitem">
+                                        <a href="#">
+                                            <i class="material-icons"></i>
+                                            <span>Pending tasks</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
 
                 <div class="sidebar">
                     <div class="nano has-scrollbar">
                         <div class="nano-content sidebar-scroll-content" tabindex="0" style="margin-right: -19px;">
-                            <div class="logo">
-
-                            </div>
-
                             <div class="profile">
-
+                                <div class="#{template.adUser.adGenderId.codgender eq 'M' ? 'profile-image-male' : 'profile-image-female'}" jsf:rendered="#{template.adUser.image == null}"></div>
+                                <o:graphicImage rendered="#{template.adUser.image != null}"  value="#{template.adUser.image}" dataURI="true" width="90" height="90"/>  
                                 <a id="profile-button" href="#">
                                     <span class="username">#{template.adUser.firstname} #{template.adUser.lastname}</span>
-                                    <i class="fa fa-fw material-icons"></i>
+                                    <i class="fa fa-fw fa-angle-down"></i>
                                 </a>
-                                <ul>
+                                <ul style="border-bottom: 1px solid #d6d5d5;">
                                     <li><a href="#"><i class="fa fa-fw fa-sliders"></i><span>Perfil</span></a></li>
                                     <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notificaciones</span><span class="menu-badge">2</span></a></li>
                                     <li><a href="#{facesContext.externalContext.requestContextPath}/api/auth/logout"><i class="fa fa-fw fa-sign-out"></i><span>Cerrar</span></a></li>
                                 </ul>
-
                             </div>
-                            
-                            <h:form>
-                                <div class="menu">
+
+                             <h:form>
+                                <div class="menu" style="margin-top: 14px;">
                                     <ae:menu model="#{template.model}"></ae:menu>
                                 </div>
-                            </h:form>
+                                    </h:form>
+                           
 
-                        </div><div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 650px; transform: translate(0px, 0px);"></div></div>
+                        </div>
+
                     </div>
                 </div>
 
+                  
+                
                 <div class="main"> 
                     <div class="container">
                         <div class="ui-g">
                             <div class="ui-g-12">
                                 <div class="card">
-                                    <h1 class="centerText">#{titleOption}</h1>
+                                    <h1 style="font-size: 16px !important;height: 17px;font-weight: bolder">#{titleOption}</h1>
                                     <ui:insert name="content">
                                     </ui:insert> 
                                 </div>    

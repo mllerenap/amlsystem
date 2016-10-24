@@ -181,6 +181,11 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     @JoinColumn(name = "gl_agency_id", referencedColumnName = "id")
     @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
     private GlAgency glAgencyId;
+    
+    
+    @JoinColumn(name = "ad_gender_id", referencedColumnName = "id")
+    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
+    private AdGender adGenderId;
 
     public AdUser() {
     }
@@ -433,7 +438,16 @@ public class AdUser extends AbstractEntityModel implements Serializable {
     public void setGlAgencyId(GlAgency glAgencyId) {
         this.glAgencyId = glAgencyId;
     }
-    
+
+    public AdGender getAdGenderId() {
+        return adGenderId;
+    }
+
+    public void setAdGenderId(AdGender adGenderId) {
+        this.adGenderId = adGenderId;
+    }
+
+   
     
     
     

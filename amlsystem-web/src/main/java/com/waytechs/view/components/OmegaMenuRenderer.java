@@ -267,14 +267,14 @@ public class OmegaMenuRenderer extends BaseMenuRenderer {
         wb.init("Omega", widgetVar, clientId);
         wb.finish();
         
-        /*
         
+        /*
         ResponseWriter writer = context.getResponseWriter();
         writer.startElement("script", null);
         writer.writeAttribute("type", "text/javascript", null);
         writer.write("Omega.restoreMenuState();");
         writer.endElement("script");
-        */
+            */
         
         
         

@@ -16,11 +16,15 @@ PrimeFaces.widget.Omega = PrimeFaces.widget.BaseWidget.extend({
         this.menu = this.sidebar.find('div.menu');
         console.log("Omega execute widget this.menu: "+this.menu);
         this.menulinks = this.menu.find('a');
-        this.menuButton = $('#omega-menu-button');
+        this.menuButton = $('#menu-button');
         this.optionsMenuButton = $('#options-menu-button');
         this.profileButton = $('#profile-button');
         this.topbarIcons = $('#topbar-icons');
+        this.topbar = $('body > .wrapper > .topbar');
+        this.topbarItems = this.topbar.find('.topbar-items');
+        this.topbarLinks = this.topbarItems.find('> li > a');
         this.expandedMenuitems = this.expandedMenuitems||[];
+        this.topbarLinkClick = false;
 
         $('.nano').nanoScroller({flash: true});
         this.bindEvents();        
@@ -59,7 +63,11 @@ PrimeFaces.widget.Omega = PrimeFaces.widget.BaseWidget.extend({
         });
                 
         this.menuButton.off('click').on('click', function(e) {
-            $(this).toggleClass('active');
+            
+            console.log("menuButton ok clic")
+            
+            //$(this).toggleClass('active');
+            $(this).toggleClass('menu-button-rotate');
             
             if($this.isDesktop()) {
                 $this.wrapper.toggleClass('sidebar-inactive-l');
@@ -76,11 +84,12 @@ PrimeFaces.widget.Omega = PrimeFaces.widget.BaseWidget.extend({
                 }
             }
             
-            $this.topbarIcons.removeClass('topbar-icons-visible');
+            //$this.topbarIcons.removeClass('topbar-icons-visible');
             e.preventDefault();
         });
         
         this.profileButton.off('click').on('click', function(e) {
+             
             var profileMenu = $(this).next('ul');
             if(profileMenu.is(':visible')) {
                 profileMenu.slideUp();
@@ -91,8 +100,63 @@ PrimeFaces.widget.Omega = PrimeFaces.widget.BaseWidget.extend({
                 $this.saveProfileMenuState();
             }
             
+            setTimeout(function() {
+                $(".nano").nanoScroller();
+            }, 500);
+            
+            $(this).toggleClass('profile-expanded');
+            
             e.preventDefault();
         });
+        
+        this.topbarLinks.on('click', function(e) {
+            var link = $(this),
+            item = link.parent(),
+            submenu = link.next();
+            
+            $this.topbarLinkClick = true;
+
+            item.siblings('.active-top-menu').removeClass('active-top-menu');
+            if($this.wrapper.hasClass('layout-menu-overlay-active')) {
+                $this.menuButton.removeClass('menu-button-rotate');
+                $this.wrapper.removeClass('layout-menu-overlay-active');
+                $this.disableModal();
+            }
+
+            if($this.isDesktop()) {
+                if(submenu.length) {
+                    if(item.hasClass('active-top-menu')) {
+                        submenu.addClass('fadeOutUp');
+                        
+                        setTimeout(function() {
+                            item.removeClass('active-top-menu'),
+                            submenu.removeClass('fadeOutUp');
+                        },500);
+                    }
+                    else {
+                        item.addClass('active-top-menu');
+                        submenu.addClass('fadeInDown');
+                    }
+                }
+            }
+            else {
+                item.children('ul').removeClass('fadeInDown fadeOutUp');
+                item.toggleClass('active-top-menu');
+            }   
+            
+            e.preventDefault();         
+        });
+        
+        $(document.body).on('click', function() {
+            if(!$this.topbarLinkClick) {
+               $this.topbarItems.find('.active-top-menu').removeClass('active-top-menu');
+            }
+            
+            $this.topbarLinkClick = false;
+            
+        });
+        
+        
         
         this.optionsMenuButton.off('click').on('click', function(e) {
             if(!$this.animatingOptionsMenu) {
