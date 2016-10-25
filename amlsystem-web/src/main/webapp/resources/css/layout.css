@@ -2121,7 +2121,8 @@ html {
       -o-transform: rotate(-180deg);
       -ms-transform: rotate(-180deg);}
         .wrapper .sidebar .profile > a:hover {
-          color: #2399e5; }
+          /*color: #2399e5; */
+        }
       .wrapper .sidebar .profile > ul {
         display: none;
         background-color: #ffffff;
@@ -2150,6 +2151,19 @@ html {
         background-color:  #e8e8e8 !important;
         width: 100%;
     }
+    .wrapper .sidebar li ul li a {
+    padding: 8px 16px 8px 32px;
+    font-size: 14px;
+}
+.wrapper .sidebar li ul li ul li a {
+    padding-left: 48px;
+}
+.wrapper .sidebar li ul li ul ul li a {
+    padding-left: 64px;
+}
+.wrapper .sidebar li a i {
+    color: #757575;
+}
       .wrapper .sidebar ul li > a {
         position: relative;
         color: #212121;
@@ -2180,15 +2194,18 @@ html {
           float: right;
           font-size: 16px; }
         .wrapper .sidebar ul li > a:hover {
+            /*
           padding-left: 20px;
-          color: #2399e5; }
+          color: #2399e5; 
+            */
+          }
           .wrapper .sidebar ul li > a:hover .menu-badge {
             color:   #ffffff; }
       .wrapper .sidebar ul li.active-menuitem > a {
         border-bottom: 0 none;
         background-color: transparent;
         /*background-color: #e8e8e8; */
-        color: #2399e5; 
+        /*color: #2399e5; */
         }
         .wrapper .sidebar ul li.active-menuitem > a .fa:last-child {
           background: none !important;
@@ -2212,7 +2229,7 @@ html {
         /*padding-left: 20px;*/
       }
         .wrapper .sidebar ul li > ul li a {
-          padding: 10px 15px;
+          /*padding: 10px 15px;*/
           font-size: 13px;
           border-top: 0 none; }
         .wrapper .sidebar ul li > ul li:last-child > a {
