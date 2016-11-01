@@ -8,7 +8,7 @@ import com.waytechs.model.entities.AbstractEntityModel;
 import com.waytechs.view.utils.JsfUtils;
 import org.primefaces.event.SelectEvent;
 
-public abstract class DataView<E extends AbstractEntityModel> {
+public abstract class DataView<E> { 
 
     /**
      *
@@ -404,21 +404,31 @@ public abstract class DataView<E extends AbstractEntityModel> {
         cancel();
         load();
         
-        if( getSelectedItem().getId() == null ){
+        
+        if( AbstractEntityModel.class.isAssignableFrom(getSelectedItem().getClass()) ){
+            System.out.println("entro por que la clase es: "+getSelectedItem().getClass());
+            AbstractEntityModel abs =  (AbstractEntityModel) getSelectedItem();
+                    
+            if( abs.getId() == null ){
             
-            if( getViewTypesAvailable() ==null){
-                return;
+                if( getViewTypesAvailable() ==null){
+                    return;
+                }
+
+                setEnabledEdit(false);
+                setEnabledDelete(false);
+
+                setViewTypeActive(getViewTypesAvailable().get(0));
+            }else{
+                 setEnabledEdit(true);
+            setEnabledDelete(true);
+                setViewTypeActive(DataViewType.ROW);
             }
-            
-            setEnabledEdit(false);
-            setEnabledDelete(false);
-            
-            setViewTypeActive(getViewTypesAvailable().get(0));
         }else{
-             setEnabledEdit(true);
-        setEnabledDelete(true);
-            setViewTypeActive(DataViewType.ROW);
+            setViewTypeActive(getViewTypesAvailable().get(0));
         }
+        
+        
         
     }
     
