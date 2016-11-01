@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../resources/layout/template.xhtml"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:param name="titleOption" value="Perfil de Usuario" />
+    <ui:param name="menu" value="Perfil de Usuario" />
+
+    <ui:define name="head">
+        <script>
+
+            function readPicture(input, output) {
+                if (input.files)
+                {
+                    if (input.files[0])
+                    {
+                        var reader = new FileReader();
+                        reader.onload = function (e)
+                        {
+                            output.attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                        console.log("cargo ok");
+                    }
+                }
+            }
+
+            function showWindowFile() {
+                $("[id='#{upload.clientId}']").trigger('click');
+            }
+
+            function uploadFile(input) {
+                readPicture(input, $(".form_image img"));
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+
+            function removeFile() {
+                var source = $("[id='#{altImage.clientId}']").attr('src');
+                $(".form_image img").attr('src', source);
+                $("[id='#{upload.clientId}']").val('');
+                $("#frmUsuarios\\:imageModified").prop('checked', true);
+            }
+
+        </script>
+    </ui:define>
+
+    <ui:define name="content">
+
+        
+
+        <h:form id="frmPerfil" enctype="multipart/form-data" >
+
+<div style="position: absolute;top: 15px;right: 15px;">
+            
+    <p:commandLink ajax="false" process="@form" style="outline: none !important;font-size: 17px;" > 
+                                <h:outputText styleClass="fa fa-save" />
+                            </p:commandLink>
+            
+        </div>
+            
+
+                    <h:selectBooleanCheckbox  id="imageModified" value="#{account.imageModified}" style="display: none;" />
+
+                    <p:graphicImage  value="#" library="images" name="placeholder.png"  binding="#{altImage}" style="display: none;" id="img_backup"/>
+                    <h:inputFile style="display:none;"   id="pictureUpload"  value="#{account.image}" binding="#{upload}" validator="#{account.validateImage}" onchange="uploadFile(this)"/>
+
+                    <h:panelGrid columns="2" width="100%" columnClasses="grid-colum-top,grid-colum-top">
+                        <h:panelGroup layout="block" >
+
+
+
+                            <div class="form_image">
+                                <o:graphicImage rendered="#{account.activeItem.image != null}"  value="#{account.activeItem.image}" dataURI="true" />   
+                                <p:graphicImage rendered="#{account.activeItem.image == null}"  value="#" library="images" name="placeholder.png"  />
+                                <div class="form_image_buttons" style="position: absolute; width: 100%;">
+                                    <p:commandLink styleClass="form_image_edit" process="@this" onclick="showWindowFile();">
+                                        <h:outputText styleClass="fa fa-pencil" />
+                                    </p:commandLink> 
+
+                                    <p:commandLink styleClass="form_image_remove" process="@this" onclick="removeFile();">
+                                        <h:outputText styleClass="fa fa-trash-o" />
+                                    </p:commandLink> 
+
+                                </div>
+                            </div>
+
+                        </h:panelGroup>
+                        
+                        <h:panelGrid columns="4" style="margin-bottom: 5px;margin-top: 5px;" width="100%" cellspacing="15">
+                            <p:outputLabel for="somCompany" value="Compañia:" styleClass="form-label"></p:outputLabel>
+
+                            <p:selectOneMenu id="somCompany" value="#{account.companySelected}" converter="#{glCompanyConverter}" panelStyle="width:200px"
+                                             effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="true">
+                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                <f:selectItems value="#{account.companies}" var="item" itemLabel="#{item.businessname}" itemValue="#{item}" />
+                                <p:ajax event="change" update="somAgency" listener="#{account.onCompany()}"></p:ajax>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="somAgency" value="Agencia:" styleClass="form-label"></p:outputLabel>
+                            
+                            <p:selectOneMenu id="somAgency" value="#{account.activeItem.glAgencyId}" converter="#{glAgencyConverter}" panelStyle="width:200px"
+                                             effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="true">
+                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                <f:selectItems value="#{account.agencies}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                <p:ajax event="change"></p:ajax>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="itNombres" value="Nombres:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itNombres" value="#{account.activeItem.firstname}" placeholder="Nombres"  /> 
+                            
+                            
+                            <p:outputLabel for="itApellidos" value="Apellidos:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itApellidos" value="#{account.activeItem.lastname}" placeholder="Apellidos" />
+
+                            <p:outputLabel for="itUser" value="Usuario:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itUser" value="#{account.activeItem.username}" placeholder="Usuario"  /> 
+
+                            <p:outputLabel for="itCorreo" value="Correo:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itCorreo" value="#{account.activeItem.email}" placeholder="Correo"  styleClass="fullWidth"
+                                         validatorMessage="Formato de correo inválido"> 
+                                <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            
+                            
+                            <p:outputLabel for="itTelefono" value="Teléfono:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itTelefono" value="#{account.activeItem.phone}" placeholder="Teléfono"  maxlength="9"> 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="9"></f:validateLength>
+                            </p:inputText>
+                            
+                            <p:outputLabel for="itCel" value="Celular:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itCel" value="#{account.activeItem.phone2}" placeholder="Celular"  maxlength="10" > 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="10"></f:validateLength>
+                            </p:inputText>
+                            
+                            <p:outputLabel for="itPass" value="Contraseña:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itPass" value="#{account.pass1}" placeholder="Contraseña"  styleClass="fullWidth" type="password"/>
+                            <p:spacer></p:spacer>
+                        <p:spacer></p:spacer>
+                        
+                        <p:spacer></p:spacer>
+                        <p:inputText id="itPass2" value="#{account.pass2}" placeholder="Confirmar contraseña"  styleClass="fullWidth" type="password"/>
+                            
+                        </h:panelGrid>
+                        
+                        
+                        <p:spacer></p:spacer>
+                        
+                        <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%">
+
+                            
+
+                    </h:panelGrid>
+
+
+                    </h:panelGrid>
+                    
+                        
+
+                    <p:tabView id="tvDetalleRoles">
+                        <p:tab title="Roles">
+
+
+                            <ae:dataList id="dlTest" title="ok" value="#{account.listaUsuarioRoles}"  editableRow="#{account.listaUsuarios.enabledSave}">
+                                <ui:define name="dataTable">
+                                    <p:column headerText="Rol" filterBy="#{row.adRoleId.name}" > 
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{row.adRoleId.name}" />
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:selectOneMenu value="#{row.adRoleId}" converter="#{adRoleConverter}" panelStyle="width:180px"
+                                                                 effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith" >
+                                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                                    <f:selectItems value="#{account.roles}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                                    <p:ajax event="change"></p:ajax>
+                                                </p:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </ui:define>
+                            </ae:dataList>
+
+
+                        </p:tab>
+                        <p:tab title="Otra Info">
+                        </p:tab>
+                    </p:tabView>
+
+
+
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

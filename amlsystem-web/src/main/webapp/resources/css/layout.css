@@ -2183,7 +2183,7 @@ html {
         .wrapper .sidebar ul li > a .menu-badge {
           position: absolute;
           right: 15px;
-          top: 14px;
+          /*top: 14px;*/
           color: #ffffff;
           padding: 2px 6px;
           background-color: #007be5;
@@ -2497,7 +2497,7 @@ h2 {
 .card {
   background-color: #ffffff;
   padding: 1em;
-  margin-top: 16px; }
+  margin-top: 16px; position: relative;}
   .card h1 {
     margin: 0 0 .5em 0;
     border-bottom: 1px solid #d5d5d5;

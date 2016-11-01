@@ -610,3 +610,11 @@ body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
     vertical-align: baseline;
     border-radius: .25em;
 }
+
+.grid-colum-top{
+    vertical-align: top;
+}
+
+.grid-colum-field{
+    margin: 15px;
+}
