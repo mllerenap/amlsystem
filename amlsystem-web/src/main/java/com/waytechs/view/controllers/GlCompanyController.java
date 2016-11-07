@@ -16,10 +16,13 @@ import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
 import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdTypeCompany;
+import com.waytechs.model.entities.GlAgency;
 import com.waytechs.model.entities.GlCompany;
+import com.waytechs.view.components.DataList;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
+import java.math.BigInteger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -110,6 +113,9 @@ public class GlCompanyController implements Serializable {
         protected void rowSelected(GlCompany item) {
             //setPass1(item.getPassword());    
             setActiveItem(item);
+            
+            getListaAgencias().load();
+            
             /*
             getListaUsuarioRoles().load();
             setCompanySelected(item.getGlAgencyId() != null ? item.getGlAgencyId().getGlCompanyId() : null);
@@ -180,6 +186,51 @@ public class GlCompanyController implements Serializable {
     public void setListaTiposCompania(List<AdTypeCompany> listaTiposCompania) {
         this.listaTiposCompania = listaTiposCompania;
     }
+    
+    
+    private DataList<GlAgency> listaAgencias = new DataList<GlAgency>() {
+        @Override
+        protected void initialize() {
+            
+        }
+
+        @Override
+        public List<GlAgency> findAll() {
+            return glAgencyFacade.findByGlCompanyId(getActiveItem());
+        }
+
+        @Override
+        protected GlAgency rowAdd(GlAgency item) {
+            item = new GlAgency();
+            item.setId(BigInteger.ZERO);
+            return item;
+        }
+
+        @Override
+        protected void validateAddRow(GlAgency item) throws Exception{ 
+            if(  item.getName() == null ){
+                
+                JsfUtils.messageError(null, "No puede estar vacio el nombre", null);
+                
+                throw  new Exception("Error rol nulo");
+            }
+        }
+        
+        
+        
+        
+        
+    };
+
+    public DataList<GlAgency> getListaAgencias() {
+        return listaAgencias;
+    }
+
+    public void setListaAgencias(DataList<GlAgency> listaAgencias) {
+        this.listaAgencias = listaAgencias;
+    }
+    
+    
     
     
     

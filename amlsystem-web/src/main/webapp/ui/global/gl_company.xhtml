@@ -60,7 +60,7 @@
                          
                          
                          <p:outputLabel for="itStartDate" value="F. Inicio Actividad:" styleClass="form-label"></p:outputLabel>
-                         <p:calendar id="itStartDate" value="#{glCompany.activeItem.startdate}" readonly="#{not glCompany.listaCompanias.enabledSave}"/>
+                         <p:calendar id="itStartDate" value="#{glCompany.activeItem.startdate}" disabled="#{not glCompany.listaCompanias.enabledSave}"/>
 
                          <p:outputLabel for="itBusiness" value="Razón Social:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itBusiness" value="#{glCompany.activeItem.businessname}" placeholder="Razón Social" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
@@ -120,6 +120,24 @@
 
                     <p:tabView id="tvDetalleOtros">
                         <p:tab title="Agencias">
+                            
+                            
+                            <ae:dataList id="dlAgencias" title="ok" value="#{glCompany.listaAgencias}"  editableRow="#{glCompany.listaCompanias.enabledSave}">
+                                <ui:define name="dataTable">
+                                    <p:column headerText="Name" filterBy="#{row.name}" > 
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{row.name}" />
+                                            </f:facet>
+                                            <f:facet name="input">                                                
+                                                <p:inputText value="#{row.name}" placeholder="Nombre agencia" > 
+                                                    <p:ajax event="change"></p:ajax>
+                                                </p:inputText>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                </ui:define>
+                            </ae:dataList>
 
 
                         </p:tab>

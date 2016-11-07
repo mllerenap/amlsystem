@@ -50,14 +50,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlAgency.findByIsactive", query = "SELECT g FROM GlAgency g WHERE g.isactive = :isactive")
     , @NamedQuery(name = "GlAgency.findByGlCompanyId", query = "SELECT g FROM GlAgency g WHERE g.glCompanyId = :glCompanyId and g.isactive = :isactive")
 })
-public class GlAgency implements Serializable {
+public class GlAgency extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private BigInteger id;  
+    private BigInteger id;
     
     @Size(max = 255)
     @Column(name = "name")
