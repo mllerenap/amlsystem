@@ -5,6 +5,8 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -12,6 +14,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -38,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "GlCompany.findAll", query = "SELECT g FROM GlCompany g")
     , @NamedQuery(name = "GlCompany.findById", query = "SELECT g FROM GlCompany g WHERE g.id = :id")
     , @NamedQuery(name = "GlCompany.findByIde", query = "SELECT g FROM GlCompany g WHERE g.ide = :ide")
-    , @NamedQuery(name = "GlCompany.findByBusinessname", query = "SELECT g FROM GlCompany g WHERE g.businessname = :businessname")
+    , @NamedQuery(name = "GlCompany.findByBusinessname", query = "SELECT g FROM GlCompany g WHERE g.businessname like :businessname and g.isactive = :isactive")
     , @NamedQuery(name = "GlCompany.findByComercialname", query = "SELECT g FROM GlCompany g WHERE g.comercialname = :comercialname")
     , @NamedQuery(name = "GlCompany.findByStartdate", query = "SELECT g FROM GlCompany g WHERE g.startdate = :startdate")
     , @NamedQuery(name = "GlCompany.findByEmail1", query = "SELECT g FROM GlCompany g WHERE g.email1 = :email1")
@@ -48,7 +51,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlCompany.findByCodsbs", query = "SELECT g FROM GlCompany g WHERE g.codsbs = :codsbs")
     , @NamedQuery(name = "GlCompany.findByWww", query = "SELECT g FROM GlCompany g WHERE g.www = :www")
     , @NamedQuery(name = "GlCompany.findByConespecial", query = "SELECT g FROM GlCompany g WHERE g.conespecial = :conespecial")})
-public class GlCompany implements Serializable {
+public class GlCompany extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +59,25 @@ public class GlCompany implements Serializable {
     @NotNull
     @Column(name = "id")
     private BigInteger id;  
+    
+     @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+    @Size(max = 255)
+    @Column(name = "createdby")
+    private String createdby;
+    @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
+    @Size(max = 255)
+    @Column(name = "updatedby")
+    private String updatedby;
+    
+    
+    @Basic(optional = false)
+    @Column(name = "isactive")
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
     
     @Basic(optional = false)
     @NotNull
@@ -215,6 +237,48 @@ public class GlCompany implements Serializable {
     public void setGlAgencyList(List<GlAgency> glAgencyList) {
         this.glAgencyList = glAgencyList;
     }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(String createdby) {
+        this.createdby = createdby;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public String getUpdatedby() {
+        return updatedby;
+    }
+
+    public void setUpdatedby(String updatedby) {
+        this.updatedby = updatedby;
+    }
+
+    public YesNo getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(YesNo isactive) {
+        this.isactive = isactive;
+    }
+    
+    
 
     @Override
     public int hashCode() {

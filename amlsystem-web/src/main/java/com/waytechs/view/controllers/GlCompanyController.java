@@ -13,16 +13,22 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
+import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdTypeCompany;
+import com.waytechs.model.entities.AdTypeOffice;
+import com.waytechs.model.entities.AdUserRoles;
 import com.waytechs.model.entities.GlAgency;
 import com.waytechs.model.entities.GlCompany;
+import com.waytechs.model.exceptions.ExecuteRollbackException;
 import com.waytechs.view.components.DataList;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
 import java.math.BigInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -39,7 +45,7 @@ public class GlCompanyController implements Serializable {
     
     
     @Inject
-    private GlCompanyFacade alCompanyFacade;
+    private GlCompanyFacade glCompanyFacade;
     
     @Inject
     private GlAgencyFacade glAgencyFacade;
@@ -48,8 +54,12 @@ public class GlCompanyController implements Serializable {
     @Inject
     private AdTypeCompanyFacade adTypeCompanyFacade;
     
+    @Inject
+    private AdTypeOfficeFacade adTypeOfficeFacade;
     
     private List<AdTypeCompany> listaTiposCompania;
+    
+    private List<AdTypeOffice> listaTiposOficinas;
     
     private TemplateController template;
     
@@ -65,6 +75,8 @@ public class GlCompanyController implements Serializable {
         
         
         listaTiposCompania = adTypeCompanyFacade.findAll();
+        
+        listaTiposOficinas = adTypeOfficeFacade.findAll();
         
     }
 
@@ -130,7 +142,7 @@ public class GlCompanyController implements Serializable {
 
         @Override
         public List<GlCompany> findAll() {
-            return alCompanyFacade.findFull();
+            return glCompanyFacade.findFull();
         }
 
         @Override
@@ -144,12 +156,47 @@ public class GlCompanyController implements Serializable {
         @Override
         protected GlCompany save(GlCompany item) {
             
-            item = getActiveItem();
-            
-
-            JsfUtils.messageInfo(null, "Compañia guardada correctamente.", null);
-
-            return item;
+             try {
+                 item = getActiveItem();
+                 
+                 glCompanyFacade.save(item);
+                 
+                List<GlAgency> listaAgenciasActual = glAgencyFacade.findByGlCompanyId(getActiveItem());
+                List<GlAgency> listaAgenciasFinal = getListaAgencias().getValue();
+                
+                
+                if(  listaAgenciasActual != null && !listaAgenciasActual.isEmpty()){
+                    for (GlAgency ur : listaAgenciasActual) {
+                        boolean find = false;
+                        
+                        //buscar en lista final
+                        if(  listaAgenciasFinal != null && !listaAgenciasFinal.isEmpty()){
+                            for (GlAgency f : listaAgenciasFinal) {
+                                if(f.getId() != null && (ur.getId().intValue() == f.getId().intValue()) ){
+                                    find = true;
+                                    break;
+                                }else{
+                                    f.setId(null);
+                                    //glAgencyFacade.save(f,getActiveItem());
+                                }
+                                        
+                            }
+                        }
+                        //si no se encontro se elimina
+                        if( !find ){
+                            glAgencyFacade.delete(ur);
+                        }
+                        
+                    }
+                }
+                 
+                 JsfUtils.messageInfo(null, "Compañia guardada correctamente.", null);
+                 
+                 return item;
+             } catch (Exception e) {
+                JsfUtils.messageError(null, e.getMessage(), null);
+                return null;
+            }
         }
 
         @Override
@@ -203,6 +250,7 @@ public class GlCompanyController implements Serializable {
         protected GlAgency rowAdd(GlAgency item) {
             item = new GlAgency();
             item.setId(BigInteger.ZERO);
+            item.setGlCompanyId(activeItem);
             return item;
         }
 
@@ -214,6 +262,21 @@ public class GlCompanyController implements Serializable {
                 
                 throw  new Exception("Error rol nulo");
             }
+            
+            if(  item.getGlCompanyId() == null ){
+                
+                JsfUtils.messageError(null, "No puede estar vacio la compañia", null);
+                
+                throw  new Exception("Error rol nulo");
+            }
+            
+            if(  item.getAdTypeOfficeId() == null ){
+                
+                JsfUtils.messageError(null, "No puede estar vacio el tipo oficina", null);
+                
+                throw  new Exception("Error rol nulo");
+            }
+            
         }
         
         
@@ -228,6 +291,14 @@ public class GlCompanyController implements Serializable {
 
     public void setListaAgencias(DataList<GlAgency> listaAgencias) {
         this.listaAgencias = listaAgencias;
+    }
+
+    public List<AdTypeOffice> getListaTiposOficinas() {
+        return listaTiposOficinas;
+    }
+
+    public void setListaTiposOficinas(List<AdTypeOffice> listaTiposOficinas) {
+        this.listaTiposOficinas = listaTiposOficinas;
     }
     
     

@@ -5,12 +5,16 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -49,7 +53,8 @@ public class AdTypeOffice implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
@@ -73,31 +78,39 @@ public class AdTypeOffice implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    @Size(max = 255)
+    
+    
+     @Basic(optional = false)
     @Column(name = "isactive")
-    private String isactive;
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adTypeOfficeId")
     private List<GlAgency> glAgencyList;
 
     public AdTypeOffice() {
     }
 
-    public AdTypeOffice(Long id) {
-        this.id = id;
-    }
-
-    public AdTypeOffice(Long id, String codoffice) {
-        this.id = id;
-        this.codoffice = codoffice;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    public YesNo getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(YesNo isactive) {
+        this.isactive = isactive;
+    }
+    
+    
+
+    
 
     public String getCodoffice() {
         return codoffice;
@@ -153,14 +166,6 @@ public class AdTypeOffice implements Serializable {
 
     public void setUpdatedby(String updatedby) {
         this.updatedby = updatedby;
-    }
-
-    public String getIsactive() {
-        return isactive;
-    }
-
-    public void setIsactive(String isactive) {
-        this.isactive = isactive;
     }
 
     @XmlTransient

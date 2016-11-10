@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "GlAgency.findAll", query = "SELECT g FROM GlAgency g")
     , @NamedQuery(name = "GlAgency.findById", query = "SELECT g FROM GlAgency g WHERE g.id = :id")
-    , @NamedQuery(name = "GlAgency.findByName", query = "SELECT g FROM GlAgency g WHERE g.name = :name")
+    , @NamedQuery(name = "GlAgency.findByName", query = "SELECT g FROM GlAgency g WHERE g.name like :name and g.isactive = :isactive")
     , @NamedQuery(name = "GlAgency.findByDescription", query = "SELECT g FROM GlAgency g WHERE g.description = :description")
     , @NamedQuery(name = "GlAgency.findByStartdate", query = "SELECT g FROM GlAgency g WHERE g.startdate = :startdate")
     , @NamedQuery(name = "GlAgency.findByCreated", query = "SELECT g FROM GlAgency g WHERE g.created = :created")
