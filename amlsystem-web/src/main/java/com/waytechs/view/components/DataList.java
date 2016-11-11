@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import com.waytechs.model.entities.AbstractEntityModel;
 import com.waytechs.view.utils.JsfUtils;
+import java.util.Collection;
+import java.util.Collections;
 import org.primefaces.context.RequestContext;
 
 public abstract class DataList<E extends AbstractEntityModel> {
@@ -38,6 +40,8 @@ public abstract class DataList<E extends AbstractEntityModel> {
     protected E newItem;
 
     protected List<E> modifiedItems;
+    
+    protected List<E> deletedItems;
 
     private String updateComponents;
     
@@ -51,7 +55,6 @@ public abstract class DataList<E extends AbstractEntityModel> {
     public void init() {
         System.out.println("initialize DataList.. ");
         initialize();
-        
     }
 
     protected abstract void initialize();
@@ -155,6 +158,16 @@ public abstract class DataList<E extends AbstractEntityModel> {
         this.modifiedItems = modifiedItems;
     }
 
+    public List<E> getDeletedItems() {
+        return deletedItems;
+    }
+
+    public void setDeletedItems(List<E> deletedItems) {
+        this.deletedItems = deletedItems;
+    }
+    
+    
+
     public void put(E dataReg, List<E> items) {
         // lista actual de registros
         List<E> col = items;
@@ -172,6 +185,7 @@ public abstract class DataList<E extends AbstractEntityModel> {
     
     public void load() {
         setValue(findAll());
+        setDeletedItems(new ArrayList<E>());
     }
 
    public int getRowCountTotal() {
@@ -196,6 +210,7 @@ public abstract class DataList<E extends AbstractEntityModel> {
         for (E bean:   getValue() ){
             if(bean.getId().intValue()== row.getId().intValue()){
                 getValue().remove(bean);
+                getDeletedItems().add(bean);
                 break;
             }
         }
@@ -203,12 +218,13 @@ public abstract class DataList<E extends AbstractEntityModel> {
     }
 
     public void onRowEditInit(E item) {
+        System.out.println("onRowEditInit execute- "+item);
         
     }
 
-    public void onRowEdit(int index) {
-
-        
+    public void onRowEdit(E item) {
+       System.out.println("onRowEdit execute- "+item);
+       item.setChange(true);
     }
 
     public void onRowEditCancel(int index) {

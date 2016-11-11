@@ -41,7 +41,7 @@
         <h:panelGroup id="#{id}" style="height:100%;#{style}" rendered="#{rendered}">       
 
             <o:methodParam name="onRowEditInit" value="#{value.onRowEditInit(row)}" />
-            <o:methodParam name="onRowEdit" value="#{value.onRowEdit(rowIndex)}" />
+            <o:methodParam name="onRowEdit" value="#{value.onRowEdit(row)}" />
             <o:methodParam name="onRowEditCancel" value="#{value.onRowEditCancel(rowIndex)}" />
             <o:methodParam name="onRowDelete" value="#{value.onRowDelete(row)}" />
             

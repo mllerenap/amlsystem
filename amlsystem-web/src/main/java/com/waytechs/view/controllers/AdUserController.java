@@ -29,7 +29,7 @@ import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdRole;
 import com.waytechs.model.entities.AdUser;
-import com.waytechs.model.entities.AdUserRoles;
+import com.waytechs.model.entities.AdUserRoles; 
 import com.waytechs.model.entities.GlAgency;
 import com.waytechs.model.entities.GlCompany;
 import com.waytechs.view.components.DataList;

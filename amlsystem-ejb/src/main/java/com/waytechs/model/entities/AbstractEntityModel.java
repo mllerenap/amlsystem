@@ -61,7 +61,7 @@ public abstract class AbstractEntityModel {
     public void setChange(boolean change) {
         this.change = change;
     }
-
+    
     @Transient
     private Date fromDate;
     @Transient

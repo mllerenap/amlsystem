@@ -160,11 +160,30 @@ public class GlCompanyController implements Serializable {
                  item = getActiveItem();
                  
                  glCompanyFacade.save(item);
+                 setSelectedItem(item);
                  
-                List<GlAgency> listaAgenciasActual = glAgencyFacade.findByGlCompanyId(getActiveItem());
+                List<GlAgency> listaAgenciasActual = glAgencyFacade.findByGlCompanyId(item);
                 List<GlAgency> listaAgenciasFinal = getListaAgencias().getValue();
                 
+                System.out.println("listaAgenciasActual: "+listaAgenciasActual);
+                System.out.println("listaAgenciasFinal: "+listaAgenciasFinal);
                 
+                List<GlAgency> listaAgenciasDeleted= getListaAgencias().getDeletedItems();
+                
+                System.out.println("listaAgenciasDeleted: "+listaAgenciasDeleted);
+                
+                
+                if(  listaAgenciasFinal != null && !listaAgenciasFinal.isEmpty()){
+                            for (GlAgency f : listaAgenciasFinal) {
+                                
+                                if( f.getId().intValue() == 0 ){
+                                    f.setId(null);
+                                }
+                                
+                                System.out.println("id: "+f.getId()+" change: "+f.isChange());
+                            }
+                }
+                /*
                 if(  listaAgenciasActual != null && !listaAgenciasActual.isEmpty()){
                     for (GlAgency ur : listaAgenciasActual) {
                         boolean find = false;
@@ -177,7 +196,7 @@ public class GlCompanyController implements Serializable {
                                     break;
                                 }else{
                                     f.setId(null);
-                                    //glAgencyFacade.save(f,getActiveItem());
+                                    glAgencyFacade.save(f,item);
                                 }
                                         
                             }
@@ -188,7 +207,7 @@ public class GlCompanyController implements Serializable {
                         }
                         
                     }
-                }
+                }*/
                  
                  JsfUtils.messageInfo(null, "Compañia guardada correctamente.", null);
                  
@@ -250,7 +269,6 @@ public class GlCompanyController implements Serializable {
         protected GlAgency rowAdd(GlAgency item) {
             item = new GlAgency();
             item.setId(BigInteger.ZERO);
-            item.setGlCompanyId(activeItem);
             return item;
         }
 
@@ -259,13 +277,6 @@ public class GlCompanyController implements Serializable {
             if(  item.getName() == null ){
                 
                 JsfUtils.messageError(null, "No puede estar vacio el nombre", null);
-                
-                throw  new Exception("Error rol nulo");
-            }
-            
-            if(  item.getGlCompanyId() == null ){
-                
-                JsfUtils.messageError(null, "No puede estar vacio la compañia", null);
                 
                 throw  new Exception("Error rol nulo");
             }

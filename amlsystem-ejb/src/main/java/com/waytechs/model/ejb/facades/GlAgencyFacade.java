@@ -43,7 +43,7 @@ public class GlAgencyFacade extends AbstractFacade<GlAgency> {
     public List<GlAgency> findByGlCompanyId(GlCompany company) {
         List<GlAgency> result = null;
         try {
-            Query query = em.createNamedQuery("GlAgency.findByGlAgencyId");
+            Query query = em.createNamedQuery("GlAgency.findByGlCompanyId");
             query.setParameter("glCompanyId", company); 
             query.setParameter("isactive", YesNo.SI);
             result = query.getResultList();
@@ -86,10 +86,15 @@ public class GlAgencyFacade extends AbstractFacade<GlAgency> {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void save(GlAgency item) throws ExecuteRollbackException {
+    public void save(GlAgency item,GlCompany company) throws ExecuteRollbackException {
         try {
+            
+            if (company == null) {
+                throw new ProcessOperationException("El parámetro company no puede ser null.");
+            }
 
             if (item.getId() == null) {
+                item.setGlCompanyId(company);
                 validateExistence(item);
                 this.create(item);
             } else {
