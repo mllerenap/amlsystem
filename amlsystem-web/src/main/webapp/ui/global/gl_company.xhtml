@@ -175,8 +175,56 @@
 
 
                         </p:tab>
-                        <p:tab title="Otra Info">
+                        <p:tab title="Rep. Legal">
 
+                            <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15">
+                                
+                                
+                                
+                                <p:outputLabel for="itIde" value="Identificación:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itIde" value="#{glCompany.repLegal.ide}" placeholder="Identificación" readonly="#{not glCompany.listaCompanias.enabledSave}" />
+                         
+                         
+                         <p:outputLabel for="itStartDate" value="F. Inicio Actividad:" styleClass="form-label"></p:outputLabel>
+                         <p:calendar id="itStartDate" value="#{glCompany.repLegal.startdate}" disabled="#{not glCompany.listaCompanias.enabledSave}"/>
+
+                         <p:outputLabel for="itBusiness" value="Razón Social:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itBusiness" value="#{glCompany.repLegal.businessname}" placeholder="Razón Social" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                         
+                         <p:outputLabel for="itComName" value="Nombre Comercial:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itComName" value="#{glCompany.repLegal.comercialname}" placeholder="Nombre Comercial" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                         
+                         
+                         <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itEmail" value="#{glCompany.repLegal.email1}" placeholder="Correo" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
+                                      validatorMessage="Formato de correo inválido"> 
+                             <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                         </p:inputText>
+                         
+                         <p:outputLabel for="itEmail2" value="Correo alterno:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itEmail2" value="#{glCompany.repLegal.email2}" placeholder="Correo alterno" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
+                                      validatorMessage="Formato de correo inválido"> 
+                             <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                         </p:inputText>
+                         
+                         
+                         <p:outputLabel for="itTelefono" value="Teléfono:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itTelefono" value="#{glCompany.repLegal.celular1}" placeholder="Teléfono"  maxlength="9"
+                                      readonly="#{not glCompany.listaCompanias.enabledSave}"> 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="9"></f:validateLength>
+                            </p:inputText>
+                            
+                            <p:outputLabel for="itCel" value="Celular:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itCel" value="#{glCompany.repLegal.celular2}" placeholder="Celular"  maxlength="10" 
+                                         readonly="#{not glCompany.listaCompanias.enabledSave}"> 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="10"></f:validateLength>
+                            </p:inputText>
+                                
+                            </h:panelGrid>
 
                         </p:tab>
                     </p:tabView>

@@ -63,7 +63,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlPeople.findByUpdatedby", query = "SELECT g FROM GlPeople g WHERE g.updatedby = :updatedby")
     , @NamedQuery(name = "GlPeople.findByIsactive", query = "SELECT g FROM GlPeople g WHERE g.isactive = :isactive")
     , @NamedQuery(name = "GlPeople.findByIselderly", query = "SELECT g FROM GlPeople g WHERE g.iselderly = :iselderly")
-    , @NamedQuery(name = "GlPeople.findByIsespecial", query = "SELECT g FROM GlPeople g WHERE g.isespecial = :isespecial")})
+    , @NamedQuery(name = "GlPeople.findByIsespecial", query = "SELECT g FROM GlPeople g WHERE g.isespecial = :isespecial")
+    , @NamedQuery(name = "GlPeople.findByGlCompanyId", query = "SELECT g FROM GlPeople g WHERE g.glCompanyId = :glCompanyId")
+    , @NamedQuery(name = "GlPeople.findByIdref", query = "SELECT g FROM GlPeople g WHERE g.idref = :idref")    
+})
 public class GlPeople extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -179,6 +182,7 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
     private AdTypePep adTypePepId;
     @OneToMany(mappedBy = "idref")
     private List<GlPeople> glPeopleList;
+    
     @JoinColumn(name = "idref", referencedColumnName = "id")
     @ManyToOne
     private GlPeople idref;

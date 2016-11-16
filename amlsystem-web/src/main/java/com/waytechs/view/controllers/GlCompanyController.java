@@ -16,11 +16,13 @@ import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
 import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
+import com.waytechs.model.ejb.facades.GlPeopleFacade;
 import com.waytechs.model.entities.AdTypeCompany;
 import com.waytechs.model.entities.AdTypeOffice;
 import com.waytechs.model.entities.AdUserRoles;
 import com.waytechs.model.entities.GlAgency;
 import com.waytechs.model.entities.GlCompany;
+import com.waytechs.model.entities.GlPeople;
 import com.waytechs.model.exceptions.ExecuteRollbackException;
 import com.waytechs.view.components.DataList;
 import com.waytechs.view.components.DataView;
@@ -64,6 +66,11 @@ public class GlCompanyController implements Serializable {
     private TemplateController template;
     
     private GlCompany activeItem;
+    
+    @Inject
+    private GlPeopleFacade glPeopleFacade;
+    
+    private GlPeople repLegal;
 
     @PostConstruct
     public void initialize() {
@@ -78,6 +85,16 @@ public class GlCompanyController implements Serializable {
         
         listaTiposOficinas = adTypeOfficeFacade.findAll();
         
+        repLegal = new GlPeople();
+        
+    }
+
+    public GlPeople getRepLegal() {
+        return repLegal;
+    }
+
+    public void setRepLegal(GlPeople repLegal) {
+        this.repLegal = repLegal;
     }
 
     
@@ -91,6 +108,8 @@ public class GlCompanyController implements Serializable {
     public void setActiveItem(GlCompany activeItem) {
         this.activeItem = activeItem;
     }
+
+    
     
     
     
@@ -127,6 +146,12 @@ public class GlCompanyController implements Serializable {
             setActiveItem(item);
             
             getListaAgencias().load();
+            
+            
+            GlPeople empPeople = glPeopleFacade.findByGlCompanyId(item);
+            GlPeople repPeople = glPeopleFacade.findByIdref(empPeople);
+            
+            setRepLegal(repPeople); 
             
             /*
             getListaUsuarioRoles().load();
