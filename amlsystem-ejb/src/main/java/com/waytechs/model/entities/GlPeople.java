@@ -5,6 +5,8 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -12,13 +14,17 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,14 +64,20 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlPeople.findByIsactive", query = "SELECT g FROM GlPeople g WHERE g.isactive = :isactive")
     , @NamedQuery(name = "GlPeople.findByIselderly", query = "SELECT g FROM GlPeople g WHERE g.iselderly = :iselderly")
     , @NamedQuery(name = "GlPeople.findByIsespecial", query = "SELECT g FROM GlPeople g WHERE g.isespecial = :isespecial")})
-public class GlPeople implements Serializable {
+public class GlPeople extends AbstractEntityModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    @SequenceGenerator(name = "GlPeople_seq",
+            sequenceName = "gl_people_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GlPeople_seq")
+    private BigInteger id;
+    
+    
     @Size(max = 255)
     @Column(name = "firstname")
     private String firstname;
@@ -78,11 +90,12 @@ public class GlPeople implements Serializable {
     @Size(max = 255)
     @Column(name = "secondlastname")
     private String secondlastname;
+    
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "ide")
     private String ide;
+    
     @Size(max = 255)
     @Column(name = "businessname")
     private String businessname;
@@ -122,9 +135,14 @@ public class GlPeople implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    @Size(max = 255)
+    
+    
+    @Basic(optional = false)
     @Column(name = "isactive")
-    private String isactive;
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
+    
+    
     @Column(name = "iselderly")
     private BigInteger iselderly;
     @Column(name = "isespecial")
@@ -172,22 +190,23 @@ public class GlPeople implements Serializable {
     public GlPeople() {
     }
 
-    public GlPeople(Long id) {
-        this.id = id;
-    }
-
-    public GlPeople(Long id, String ide) {
-        this.id = id;
-        this.ide = ide;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
+
+    public YesNo getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(YesNo isactive) {
+        this.isactive = isactive;
+    }
+
+    
 
     public String getFirstname() {
         return firstname;
@@ -331,14 +350,6 @@ public class GlPeople implements Serializable {
 
     public void setUpdatedby(String updatedby) {
         this.updatedby = updatedby;
-    }
-
-    public String getIsactive() {
-        return isactive;
-    }
-
-    public void setIsactive(String isactive) {
-        this.isactive = isactive;
     }
 
     public BigInteger getIselderly() {

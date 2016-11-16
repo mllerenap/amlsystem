@@ -16,12 +16,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,6 +61,10 @@ public class GlCompany extends AbstractEntityModel implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
+    @SequenceGenerator(name = "GlCompany_seq",
+            sequenceName = "gl_company_seq",
+            allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GlCompany_seq")
     private BigInteger id;  
     
      @Column(name = "created")

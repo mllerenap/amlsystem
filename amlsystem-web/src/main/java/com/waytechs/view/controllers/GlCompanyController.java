@@ -179,35 +179,17 @@ public class GlCompanyController implements Serializable {
                                 if( f.getId().intValue() == 0 ){
                                     f.setId(null);
                                 }
-                                
+                                glAgencyFacade.save(f,item);
                                 System.out.println("id: "+f.getId()+" change: "+f.isChange());
                             }
                 }
-                /*
-                if(  listaAgenciasActual != null && !listaAgenciasActual.isEmpty()){
-                    for (GlAgency ur : listaAgenciasActual) {
-                        boolean find = false;
-                        
-                        //buscar en lista final
-                        if(  listaAgenciasFinal != null && !listaAgenciasFinal.isEmpty()){
-                            for (GlAgency f : listaAgenciasFinal) {
-                                if(f.getId() != null && (ur.getId().intValue() == f.getId().intValue()) ){
-                                    find = true;
-                                    break;
-                                }else{
-                                    f.setId(null);
-                                    glAgencyFacade.save(f,item);
-                                }
-                                        
+                
+                
+                if(  listaAgenciasDeleted != null && !listaAgenciasDeleted.isEmpty()){
+                            for (GlAgency f : listaAgenciasDeleted) {
+                                glAgencyFacade.delete(f);
                             }
-                        }
-                        //si no se encontro se elimina
-                        if( !find ){
-                            glAgencyFacade.delete(ur);
-                        }
-                        
-                    }
-                }*/
+                }
                  
                  JsfUtils.messageInfo(null, "Compañia guardada correctamente.", null);
                  
