@@ -468,7 +468,7 @@ body .md-inputfield {
     
 body .ui-inputfield {
     background: transparent;
-    border-width: 0 0 1px 0;
+    border-width: 0 0 1px 0 !important;
     padding: 2px 2px 1px 2px;
     /*font-size: 16px;*/
     border-color: #bdbdbd;
@@ -498,7 +498,7 @@ body .ui-datatable thead th.ui-state-active .ui-inputfield, body .ui-datatable t
         body .ui-datatable thead th.ui-state-active .ui-inputfield.ui-state-focus, body .ui-datatable thead th.ui-state-highlight .ui-inputfield.ui-state-focus {
           border-color: #212121; }
         
-.ui-inputfield.ui-state-focus,.ui-widget-content .ui-inputfield.ui-state-focus,.ui-widget-header .ui-inputfield.ui-state-focus{
+body .ui-inputfield.ui-state-focus,.ui-widget-content .ui-inputfield.ui-state-focus,.ui-widget-header .ui-inputfield.ui-state-focus{
     -moz-box-shadow:none !important;
     -webkit-box-shadow:none !important;
     box-shadow:none !important}        
