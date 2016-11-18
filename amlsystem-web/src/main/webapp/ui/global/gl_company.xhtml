@@ -177,7 +177,7 @@
                         </p:tab>
                         <p:tab title="Rep. Legal">
 
-                            <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15">
+                            <h:panelGrid columns="6" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15">
                                 
                                 
                                 
@@ -185,15 +185,19 @@
                          <p:inputText id="itIdeRep" value="#{glCompany.repLegal.ide}" placeholder="Identificación" readonly="#{not glCompany.listaCompanias.enabledSave}" />
                          
                          
-                         <p:outputLabel for="itStartDate" value="F. Inicio Actividad:" styleClass="form-label"></p:outputLabel>
-                         <p:calendar id="itStartDate" value="#{glCompany.repLegal.startdate}" disabled="#{not glCompany.listaCompanias.enabledSave}"/>
-
-                         <p:outputLabel for="itBusiness" value="Razón Social:" styleClass="form-label"></p:outputLabel>
-                         <p:inputText id="itBusiness" value="#{glCompany.repLegal.businessname}" placeholder="Razón Social" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                          <p:outputLabel for="itFname" value="Primer nombre:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itFname" value="#{glCompany.repLegal.firstname}" placeholder="Primer nombre" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itSname" value="Segundo nombre:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itSname" value="#{glCompany.repLegal.secondname}" placeholder="Segundo nombre" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itLname" value="Apellido paterno:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itLname" value="#{glCompany.repLegal.lastname}" placeholder="Apellido paterno" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itSlname" value="Apellido materno" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itSlname" value="#{glCompany.repLegal.secondlastname}" placeholder="Apellido materno" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
                          
-                         <p:outputLabel for="itComName" value="Nombre Comercial:" styleClass="form-label"></p:outputLabel>
-                         <p:inputText id="itComName" value="#{glCompany.repLegal.comercialname}" placeholder="Nombre Comercial" readonly="#{not glCompany.listaCompanias.enabledSave}" /> 
-                         
+                        
                          
                          <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itEmail" value="#{glCompany.repLegal.email1}" placeholder="Correo" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"

@@ -6,6 +6,7 @@
 package com.waytechs.model.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -49,7 +50,8 @@ public class AdTypeIde implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+     private BigInteger id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
@@ -82,20 +84,11 @@ public class AdTypeIde implements Serializable {
     public AdTypeIde() {
     }
 
-    public AdTypeIde(Long id) {
-        this.id = id;
-    }
-
-    public AdTypeIde(Long id, String codtypeide) {
-        this.id = id;
-        this.codtypeide = codtypeide;
-    }
-
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
