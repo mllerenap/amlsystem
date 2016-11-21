@@ -8,6 +8,9 @@ package com.waytechs.model.ejb.facades;
 import com.waytechs.model.entities.GlCompany;
 import com.waytechs.model.entities.GlPeople;
 import com.waytechs.model.enums.YesNo;
+import com.waytechs.model.exceptions.ExecuteRollbackException;
+import com.waytechs.model.exceptions.ExistException;
+import com.waytechs.model.exceptions.ProcessOperationException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -59,6 +62,41 @@ public class GlPeopleFacade extends AbstractFacade<GlPeople> {
             e.printStackTrace();
         }
         return result.isEmpty() || result == null ? null : result.get(0);
+    }
+    
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void save(GlPeople item) throws ExecuteRollbackException {
+        try {
+
+            if (item.getId() == null) {
+                this.create(item);
+            } else {
+                this.edit(item);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExecuteRollbackException("Error al guardar el registro!");
+        }
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void delete(GlPeople item) throws ExecuteRollbackException {
+        try {
+            if (item == null) {
+                throw new ProcessOperationException("El parámetro item no puede ser null.");
+            }
+
+            item.setIsactive(YesNo.NO);
+
+            this.edit(item);
+
+        } catch (ProcessOperationException e) {
+            throw new ExecuteRollbackException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExecuteRollbackException("Error al borrar el registro!");
+        }
     }
     
 }

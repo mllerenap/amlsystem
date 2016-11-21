@@ -180,6 +180,14 @@
                             <h:panelGrid columns="6" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15">
                                 
                                 
+                                <p:outputLabel for="somTypeIde" value="Tipo Identificación:" styleClass="form-label"></p:outputLabel>
+
+                                <p:selectOneMenu id="somTypeIde" value="#{glCompany.repLegal.adTypeIdeId}" converter="#{adTypeIdeConverter}" panelStyle="width:200px"
+                                             effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glCompany.listaCompanias.enabledSave}">
+                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                <f:selectItems value="#{glCompany.listaTiposIdentificacion}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                <p:ajax event="change" ></p:ajax>
+                            </p:selectOneMenu>
                                 
                                 <p:outputLabel for="itIdeRep" value="Identificación:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itIdeRep" value="#{glCompany.repLegal.ide}" placeholder="Identificación" readonly="#{not glCompany.listaCompanias.enabledSave}" />

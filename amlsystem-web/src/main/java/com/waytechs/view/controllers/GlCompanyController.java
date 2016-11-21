@@ -5,6 +5,7 @@
  */
 package com.waytechs.view.controllers;
 
+import com.waytechs.model.ejb.facades.AdGenderFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
+import com.waytechs.model.ejb.facades.AdTypeIdeFacade;
 import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.ejb.facades.GlPeopleFacade;
+import com.waytechs.model.entities.AdGender;
 import com.waytechs.model.entities.AdTypeCompany;
+import com.waytechs.model.entities.AdTypeIde;
 import com.waytechs.model.entities.AdTypeOffice;
 import com.waytechs.model.entities.AdUserRoles;
 import com.waytechs.model.entities.GlAgency;
@@ -71,6 +75,15 @@ public class GlCompanyController implements Serializable {
     private GlPeopleFacade glPeopleFacade;
     
     private GlPeople repLegal;
+    
+    
+    @Inject
+    private AdTypeIdeFacade adTypeIdeFacade;
+    
+    private List<AdTypeIde> listaTiposIdentificacion;
+    
+    @Inject
+    private AdGenderFacade adGenderFacade;
 
     @PostConstruct
     public void initialize() {
@@ -84,6 +97,9 @@ public class GlCompanyController implements Serializable {
         listaTiposCompania = adTypeCompanyFacade.findAll();
         
         listaTiposOficinas = adTypeOfficeFacade.findAll();
+        
+        
+        listaTiposIdentificacion = adTypeIdeFacade.findAll();
         
         repLegal = new GlPeople();
         
@@ -151,6 +167,8 @@ public class GlCompanyController implements Serializable {
             GlPeople empPeople = glPeopleFacade.findByGlCompanyId(item);
             GlPeople repPeople = glPeopleFacade.findByIdref(empPeople);
             
+            System.out.println("repPeople "+repPeople.getAdTypeIdeId());
+            
             setRepLegal(repPeople); 
             
             /*
@@ -215,6 +233,27 @@ public class GlCompanyController implements Serializable {
                                 glAgencyFacade.delete(f);
                             }
                 }
+                
+                
+                GlPeople empPeople = glPeopleFacade.findByGlCompanyId(item);
+                
+                empPeople.setIde(item.getIde());
+                AdTypeIde adTypeIdeEmpresa = adTypeIdeFacade.find(new BigInteger("2"));
+                empPeople.setAdTypeIdeId(adTypeIdeEmpresa);
+                empPeople.setBusinessname(item.getBusinessname());
+                empPeople.setComercialname(item.getComercialname());
+                empPeople.setStartdate(item.getStartdate());
+                AdGender adGenderEmpresa = adGenderFacade.find(new BigInteger("3"));
+                empPeople.setAdGenderId(adGenderEmpresa);
+                empPeople.setEmail1(item.getEmail1());
+                empPeople.setEmail2(item.getEmail2());
+                empPeople.setCelular1(item.getCelular1());
+                empPeople.setCelular2(item.getCelular2());
+                
+                glPeopleFacade.save(empPeople);
+                
+                
+                glPeopleFacade.save(getRepLegal());
                  
                  JsfUtils.messageInfo(null, "Compañia guardada correctamente.", null);
                  
@@ -318,6 +357,15 @@ public class GlCompanyController implements Serializable {
     public void setListaTiposOficinas(List<AdTypeOffice> listaTiposOficinas) {
         this.listaTiposOficinas = listaTiposOficinas;
     }
+
+    public List<AdTypeIde> getListaTiposIdentificacion() {
+        return listaTiposIdentificacion;
+    }
+
+    public void setListaTiposIdentificacion(List<AdTypeIde> listaTiposIdentificacion) {
+        this.listaTiposIdentificacion = listaTiposIdentificacion;
+    }
+    
     
     
     
