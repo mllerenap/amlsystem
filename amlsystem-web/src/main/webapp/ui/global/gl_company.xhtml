@@ -71,16 +71,12 @@
                          
                          <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itEmail" value="#{glCompany.activeItem.email1}" placeholder="Correo" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
-                                      validatorMessage="Formato de correo inválido"> 
-                             <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                      validator="emailValidator" required="true"> 
                          </p:inputText>
                          
                          <p:outputLabel for="itEmail2" value="Correo alterno:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itEmail2" value="#{glCompany.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
-                                      validatorMessage="Formato de correo inválido"> 
-                             <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                      required="false" validator="emailValidator"> 
                          </p:inputText>
                          
                          
@@ -209,16 +205,13 @@
                          
                          <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itEmail" value="#{glCompany.repLegal.email1}" placeholder="Correo" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
-                                      validatorMessage="Formato de correo inválido"> 
-                             <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                      required="true"
+                                      validator="emailValidator"> 
                          </p:inputText>
                          
                          <p:outputLabel for="itEmail2" value="Correo alterno:" styleClass="form-label"></p:outputLabel>
                          <p:inputText id="itEmail2" value="#{glCompany.repLegal.email2}" placeholder="Correo alterno" readonly="#{not glCompany.listaCompanias.enabledSave}" styleClass="fullWidth"
-                                      validatorMessage="Formato de correo inválido"> 
-                             <f:validateRegex
-                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                      validator="emailValidator" required="false"> 
                          </p:inputText>
                          
                          

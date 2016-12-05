@@ -200,6 +200,8 @@ public class GlCompanyController implements Serializable {
         protected GlCompany save(GlCompany item) {
             
              try {
+                 
+                 
                  item = getActiveItem();
                  
                  glCompanyFacade.save(item);

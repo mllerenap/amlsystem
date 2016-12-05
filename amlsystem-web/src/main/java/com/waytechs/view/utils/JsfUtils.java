@@ -181,5 +181,6 @@ public class JsfUtils {
     public static Object getManagedBean(String beanName) {
         return getCurrentContext().getApplication().getELResolver().getValue(getElContext(), null, beanName);
     }
+    
 
 }
