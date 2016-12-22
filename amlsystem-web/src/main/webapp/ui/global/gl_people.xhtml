@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../../resources/layout/template.xhtml"
+                xmlns:ae="http://primefaces.org/aeopensolutions"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:o="http://omnifaces.org/ui">
+
+    <ui:param name="titleOption" value="Gestión Socios - #{glPeople.adTypePeople.name}" />
+    <ui:param name="menu" value="Gestión Socios" />
+
+    <ui:define name="head">
+    </ui:define>
+
+    <ui:define name="content">
+
+
+
+        <h:form id="frmPersonas" enctype="multipart/form-data" >
+
+
+            <ae:dataView id="#{glPeople.listaSocios.id}" value="#{glPeople.listaSocios}" titleRow="Código: #{glPeople.activeItem.id}" auditable="false"> 
+
+                <ui:define name="dataTable">
+                    
+                    <p:column headerText="Identificacion" filterBy="#{row.ide}" > 
+                        <h:outputText value="#{row.ide}" />
+                    </p:column>
+                    
+                    <p:column headerText="Nombre" filterBy="#{row.firstname}" > 
+                        <h:outputText value="#{row.firstname}" />
+                    </p:column>
+                    
+                     <p:column headerText="F. Inicio" width="130">
+                        <h:outputText value="#{row.startdate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy" type="both" />
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Correo"> 
+                        <h:outputText value="#{row.email1}" />
+                    </p:column>
+
+                </ui:define>
+
+                <ui:define name="dataRow">
+
+                     <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15">
+                         
+                         
+                         <p:outputLabel for="somTypeIde" value="Tipo Identificación:" styleClass="form-label"></p:outputLabel>
+
+                                <p:selectOneMenu id="somTypeIde" value="#{glPeople.activeItem.adTypeIdeId}" converter="#{adTypeIdeConverter}" panelStyle="width:200px"
+                                             effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
+                                <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                <f:selectItems value="#{glPeople.listaTiposIdentificacion}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
+                                <p:ajax event="change" ></p:ajax>
+                            </p:selectOneMenu>
+                                
+                                <p:outputLabel for="itIdeRep" value="Identificación:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itIdeRep" value="#{glPeople.activeItem.ide}" placeholder="Identificación" readonly="#{not glPeople.listaSocios.enabledSave}" />
+                         
+                         
+                          <p:outputLabel for="itFname" value="Primer nombre:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itFname" value="#{glPeople.activeItem.firstname}" placeholder="Primer nombre" readonly="#{not glPeople.listaSocios.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itSname" value="Segundo nombre:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itSname" value="#{glPeople.activeItem.secondname}" placeholder="Segundo nombre" readonly="#{not glPeople.listaSocios.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itLname" value="Apellido paterno:" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itLname" value="#{glPeople.activeItem.lastname}" placeholder="Apellido paterno" readonly="#{not glPeople.listaSocios.enabledSave}" /> 
+                          
+                          <p:outputLabel for="itSlname" value="Apellido materno" styleClass="form-label"></p:outputLabel>
+                          <p:inputText id="itSlname" value="#{glPeople.activeItem.secondlastname}" placeholder="Apellido materno" readonly="#{not glPeople.listaSocios.enabledSave}" /> 
+                         
+                        
+                         
+                         <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itEmail" value="#{glPeople.activeItem.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" styleClass="fullWidth"
+                                      required="true"
+                                      validator="emailValidator"> 
+                         </p:inputText>
+                         
+                         <p:outputLabel for="itEmail2" value="Correo alterno:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itEmail2" value="#{glPeople.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glPeople.listaSocios.enabledSave}" styleClass="fullWidth"
+                                      validator="emailValidator" required="false"> 
+                         </p:inputText>
+                         
+                         
+                         <p:outputLabel for="itTelefono" value="Teléfono:" styleClass="form-label"></p:outputLabel>
+                         <p:inputText id="itTelefono" value="#{glPeople.activeItem.celular1}" placeholder="Teléfono"  maxlength="9"
+                                      readonly="#{not glPeople.listaSocios.enabledSave}"> 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="9"></f:validateLength>
+                            </p:inputText>
+                            
+                            <p:outputLabel for="itCel" value="Celular:" styleClass="form-label"></p:outputLabel>
+                            <p:inputText id="itCel" value="#{glPeople.activeItem.celular2}" placeholder="Celular"  maxlength="10" 
+                                         readonly="#{not glPeople.listaSocios.enabledSave}"> 
+                                <p:keyFilter mask="num"></p:keyFilter>
+                                <f:validateLength minimum="10"></f:validateLength>
+                            </p:inputText>
+                         
+                         
+                        
+
+                        </h:panelGrid>
+
+
+                    <br></br>
+
+                    <p:tabView id="tvDetalleOtros">
+                        <p:tab title="Agencias">
+                           
+                        </p:tab>
+                        <p:tab title="Rep. Legal">
+
+                           
+
+                        </p:tab>
+                    </p:tabView>
+
+
+
+
+                </ui:define>
+
+
+
+
+
+            </ae:dataView>
+
+
+
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

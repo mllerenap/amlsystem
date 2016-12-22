@@ -66,6 +66,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "GlPeople.findByIsespecial", query = "SELECT g FROM GlPeople g WHERE g.isespecial = :isespecial")
     , @NamedQuery(name = "GlPeople.findByGlCompanyId", query = "SELECT g FROM GlPeople g WHERE g.glCompanyId = :glCompanyId")
     , @NamedQuery(name = "GlPeople.findByIdref", query = "SELECT g FROM GlPeople g WHERE g.idref = :idref")    
+    , @NamedQuery(name = "GlPeople.findByAdTypePeopleId", query = "SELECT g FROM GlPeople g WHERE g.adTypePeopleId = :adTypePeopleId and g.isactive = :isactive")    
 })
 public class GlPeople extends AbstractEntityModel implements Serializable {
 

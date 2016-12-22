@@ -5,6 +5,7 @@
  */
 package com.waytechs.model.ejb.facades;
 
+import com.waytechs.model.entities.AdTypePeople;
 import com.waytechs.model.entities.GlCompany;
 import com.waytechs.model.entities.GlPeople;
 import com.waytechs.model.enums.YesNo;
@@ -62,6 +63,20 @@ public class GlPeopleFacade extends AbstractFacade<GlPeople> {
             e.printStackTrace();
         }
         return result.isEmpty() || result == null ? null : result.get(0);
+    }
+    
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<GlPeople> findByAdTypePeopleId(AdTypePeople adTypePeople) { 
+        List<GlPeople> result = null;
+        try {
+            Query query = em.createNamedQuery("GlPeople.findByAdTypePeopleId");
+            query.setParameter("adTypePeopleId", adTypePeople);
+            query.setParameter("isactive", YesNo.SI);
+            result = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
     
     
