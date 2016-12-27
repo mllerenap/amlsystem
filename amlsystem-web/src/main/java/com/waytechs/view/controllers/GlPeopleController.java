@@ -37,6 +37,7 @@ import com.waytechs.view.utils.JsfUtils;
 import java.math.BigInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.event.ValueChangeEvent;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -75,10 +76,16 @@ public class GlPeopleController implements Serializable {
     @Inject
     private AdGenderFacade adGenderFacade;
     
+    private List<AdGender> listaGeneros;
+    
     private AdTypePeople adTypePeople;
     
     @Inject 
     private AdTypePeopleFacade adTypePeopleFacade;
+    
+    
+    private boolean enabledCedula;
+    private boolean enabledRuc;
 
     @PostConstruct
     public void initialize() {
@@ -117,6 +124,8 @@ public class GlPeopleController implements Serializable {
         
         listaTiposIdentificacion = adTypeIdeFacade.findAll();
         
+        listaGeneros = adGenderFacade.findAll();
+        
         
     }
 
@@ -136,6 +145,22 @@ public class GlPeopleController implements Serializable {
 
     public void setActiveItem(GlPeople activeItem) {
         this.activeItem = activeItem;
+    }
+
+    public boolean isEnabledCedula() {
+        return enabledCedula;
+    }
+
+    public void setEnabledCedula(boolean enabledCedula) {
+        this.enabledCedula = enabledCedula;
+    }
+
+    public boolean isEnabledRuc() {
+        return enabledRuc;
+    }
+
+    public void setEnabledRuc(boolean enabledRuc) {
+        this.enabledRuc = enabledRuc;
     }
 
     
@@ -172,6 +197,8 @@ public class GlPeopleController implements Serializable {
             //setPass1(item.getPassword());    
             setActiveItem(item);
             
+            
+            
         }
         
         
@@ -185,9 +212,15 @@ public class GlPeopleController implements Serializable {
 
         @Override
         protected GlPeople create() {
-            System.out.println("create GlCompany");
+            System.out.println("create GlPeople");
             setActiveItem(new GlPeople());
-            //getListaUsuarioRoles().load();
+            
+            AdTypeIde adTypeIdeId = adTypeIdeFacade.find(new BigInteger("1"));
+            getActiveItem().setAdTypeIdeId(adTypeIdeId);
+            
+            setEnabledCedula(true);
+            setEnabledRuc(false);
+            
             return getActiveItem();
         }
 
@@ -269,6 +302,38 @@ public class GlPeopleController implements Serializable {
         this.listaTiposIdentificacion = listaTiposIdentificacion;
     }
     
+    
+    public void onChangeTypeId(ValueChangeEvent event){
+        System.out.println("onChangeTypeId: "+event);
+        
+        AdTypeIde type =  (AdTypeIde) event.getNewValue();
+        
+        switch (type.getId().intValue()) {
+            case 1:
+                setEnabledCedula(true);
+                setEnabledRuc(false);
+                break;
+            case 2:
+                setEnabledCedula(false);
+                setEnabledRuc(true);
+                break;
+            default:
+                setEnabledCedula(true);
+                setEnabledRuc(false);
+                break;
+        }
+        
+            
+        
+    }
+
+    public List<AdGender> getListaGeneros() {
+        return listaGeneros;
+    }
+
+    public void setListaGeneros(List<AdGender> listaGeneros) {
+        this.listaGeneros = listaGeneros;
+    }
     
     
     
