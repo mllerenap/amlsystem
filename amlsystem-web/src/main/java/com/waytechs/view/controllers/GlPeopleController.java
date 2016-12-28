@@ -5,7 +5,10 @@
  */
 package com.waytechs.view.controllers;
 
+import com.waytechs.model.ejb.facades.AdCantonFacade;
+import com.waytechs.model.ejb.facades.AdCountryFacade;
 import com.waytechs.model.ejb.facades.AdGenderFacade;
+import com.waytechs.model.ejb.facades.AdProvinceFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +20,20 @@ import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
 import com.waytechs.model.ejb.facades.AdTypeIdeFacade;
 import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.AdTypePeopleFacade;
-import com.waytechs.model.ejb.facades.GlAgencyFacade;
-import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.ejb.facades.GlPeopleFacade;
+import com.waytechs.model.entities.AdCanton;
+import com.waytechs.model.entities.AdCountry;
 import com.waytechs.model.entities.AdGender;
+import com.waytechs.model.entities.AdProvince;
 import com.waytechs.model.entities.AdTypeCompany;
 import com.waytechs.model.entities.AdTypeIde;
 import com.waytechs.model.entities.AdTypeOffice;
 import com.waytechs.model.entities.AdTypePeople;
-import com.waytechs.model.entities.AdUserRoles;
-import com.waytechs.model.entities.GlAgency;
-import com.waytechs.model.entities.GlCompany;
 import com.waytechs.model.entities.GlPeople;
-import com.waytechs.model.exceptions.ExecuteRollbackException;
-import com.waytechs.view.components.DataList;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
 import java.math.BigInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.event.ValueChangeEvent;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -86,6 +83,22 @@ public class GlPeopleController implements Serializable {
     
     private boolean enabledCedula;
     private boolean enabledRuc;
+    
+    private AdCountry adCountrySelected;
+    private AdProvince adProvinceSelected;
+    
+    private List<AdCountry> listaPaises;
+    private List<AdProvince> listaProvincias;
+    private List<AdCanton> listaCantones;
+    
+    @Inject 
+    private AdCountryFacade adCountryFacade;
+    
+    @Inject 
+    private AdProvinceFacade adProvinceFacade;
+    
+    @Inject 
+    private AdCantonFacade adCantonFacade;
 
     @PostConstruct
     public void initialize() {
@@ -125,6 +138,8 @@ public class GlPeopleController implements Serializable {
         listaTiposIdentificacion = adTypeIdeFacade.findAll();
         
         listaGeneros = adGenderFacade.findAll();
+        
+        listaPaises = adCountryFacade.findAll();
         
         
     }
@@ -334,9 +349,69 @@ public class GlPeopleController implements Serializable {
     public void setListaGeneros(List<AdGender> listaGeneros) {
         this.listaGeneros = listaGeneros;
     }
+
+    public AdCountry getAdCountrySelected() {
+        return adCountrySelected;
+    }
+
+    public void setAdCountrySelected(AdCountry adCountrySelected) {
+        this.adCountrySelected = adCountrySelected;
+    }
+
+    public AdProvince getAdProvinceSelected() {
+        return adProvinceSelected;
+    }
+
+    public void setAdProvinceSelected(AdProvince adProvinceSelected) {
+        this.adProvinceSelected = adProvinceSelected;
+    }
+
+    public List<AdCountry> getListaPaises() {
+        return listaPaises;
+    }
+
+    public void setListaPaises(List<AdCountry> listaPaises) {
+        this.listaPaises = listaPaises;
+    }
+    
+    public List<AdProvince> getListaProvincias() {
+        return listaProvincias;
+    }
+
+    public void setListaProvincias(List<AdProvince> listaProvincias) {
+        this.listaProvincias = listaProvincias;
+    }
+
+    public List<AdCanton> getListaCantones() {
+        return listaCantones;
+    }
+
+    public void setListaCantones(List<AdCanton> listaCantones) {
+        this.listaCantones = listaCantones;
+    }
     
     
     
+    
+    public void onChangeAdCountry(ValueChangeEvent event){
+        
+        AdCountry country =   (AdCountry) event.getNewValue();
+        
+        System.out.println("onChangeAdCountrySelected: "+event+" getAdCountrySelected: "+country);
+        
+        listaProvincias = adProvinceFacade.findByAdCountryId(country);
+        
+    }
+    
+    public void onChangeAdPronvince(ValueChangeEvent event){
+        
+        AdProvince province =   (AdProvince) event.getNewValue();
+        
+        System.out.println("onChangeAdCountrySelected: "+event+" getAdProvinceSelected: "+province);
+        
+        listaCantones = adCantonFacade.findByAdProvinceId(province);
+        
+    }
     
     
     
