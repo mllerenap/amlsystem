@@ -6,7 +6,9 @@
 package com.waytechs.view.controllers;
 
 import com.waytechs.model.ejb.facades.AdCantonFacade;
+import com.waytechs.model.ejb.facades.AdCivilStatusFacade;
 import com.waytechs.model.ejb.facades.AdCountryFacade;
+import com.waytechs.model.ejb.facades.AdCreditActivitySubjectFacade;
 import com.waytechs.model.ejb.facades.AdGenderFacade;
 import com.waytechs.model.ejb.facades.AdProvinceFacade;
 import java.io.Serializable;
@@ -17,18 +19,24 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import com.waytechs.model.ejb.facades.AdTypeCompanyFacade;
+import com.waytechs.model.ejb.facades.AdTypeEconomicActivityFacade;
 import com.waytechs.model.ejb.facades.AdTypeIdeFacade;
 import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.AdTypePeopleFacade;
+import com.waytechs.model.ejb.facades.AdTypePepFacade;
 import com.waytechs.model.ejb.facades.GlPeopleFacade;
 import com.waytechs.model.entities.AdCanton;
+import com.waytechs.model.entities.AdCivilStatus;
 import com.waytechs.model.entities.AdCountry;
+import com.waytechs.model.entities.AdCreditActivitySubject;
 import com.waytechs.model.entities.AdGender;
 import com.waytechs.model.entities.AdProvince;
 import com.waytechs.model.entities.AdTypeCompany;
+import com.waytechs.model.entities.AdTypeEconomicActivity;
 import com.waytechs.model.entities.AdTypeIde;
 import com.waytechs.model.entities.AdTypeOffice;
 import com.waytechs.model.entities.AdTypePeople;
+import com.waytechs.model.entities.AdTypePep;
 import com.waytechs.model.entities.GlPeople;
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
@@ -99,6 +107,27 @@ public class GlPeopleController implements Serializable {
     
     @Inject 
     private AdCantonFacade adCantonFacade;
+    
+    private List<AdCivilStatus> listaEstadoCivil;
+    @Inject 
+    private AdCivilStatusFacade adCivilStatusFacade;
+    
+    
+    private List<AdTypePep> listaTiposPep;
+    
+    @Inject 
+    private AdTypePepFacade adTypePepFacade;
+    
+    
+    private List<AdCreditActivitySubject> listaActividadEconomica;
+    
+    @Inject 
+    private AdCreditActivitySubjectFacade adCreditActivitySubjectFacade;
+    
+    @Inject 
+    private AdTypeEconomicActivityFacade adTypeEconomicActivityFacade;
+    
+    
 
     @PostConstruct
     public void initialize() {
@@ -112,16 +141,16 @@ public class GlPeopleController implements Serializable {
         
         switch (template.getCurrentMenu().getId().intValue()) {
             case 10:
-                adTypePeople = adTypePeopleFacade.find(1L);
+                adTypePeople = adTypePeopleFacade.find(new BigInteger("1"));
                 break;
             case 11:
-                adTypePeople = adTypePeopleFacade.find(2L);
+                adTypePeople = adTypePeopleFacade.find(new BigInteger("2"));
                 break;
             case 12:
-                adTypePeople = adTypePeopleFacade.find(3L);
+                adTypePeople = adTypePeopleFacade.find(new BigInteger("3"));
                 break;
             case 13:
-                adTypePeople = adTypePeopleFacade.find(4L);
+                adTypePeople = adTypePeopleFacade.find(new BigInteger("4"));
                 break;
             default:
                 break;
@@ -141,6 +170,9 @@ public class GlPeopleController implements Serializable {
         
         listaPaises = adCountryFacade.findAll();
         
+        listaEstadoCivil = adCivilStatusFacade.findAll();
+        
+        listaTiposPep = adTypePepFacade.findAll();
         
     }
 
@@ -327,10 +359,19 @@ public class GlPeopleController implements Serializable {
             case 1:
                 setEnabledCedula(true);
                 setEnabledRuc(false);
+                
+                
+                AdTypeEconomicActivity adTypeEconomicActivity2 = adTypeEconomicActivityFacade.find(new BigInteger("2"));
+                listaActividadEconomica  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity2);
+                
                 break;
             case 2:
                 setEnabledCedula(false);
                 setEnabledRuc(true);
+                
+                AdTypeEconomicActivity adTypeEconomicActivity1 = adTypeEconomicActivityFacade.find(new BigInteger("1"));
+                listaActividadEconomica  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity1);
+                
                 break;
             default:
                 setEnabledCedula(true);
@@ -388,6 +429,30 @@ public class GlPeopleController implements Serializable {
 
     public void setListaCantones(List<AdCanton> listaCantones) {
         this.listaCantones = listaCantones;
+    }
+
+    public List<AdCivilStatus> getListaEstadoCivil() {
+        return listaEstadoCivil;
+    }
+
+    public void setListaEstadoCivil(List<AdCivilStatus> listaEstadoCivil) {
+        this.listaEstadoCivil = listaEstadoCivil;
+    }
+
+    public List<AdTypePep> getListaTiposPep() {
+        return listaTiposPep;
+    }
+
+    public void setListaTiposPep(List<AdTypePep> listaTiposPep) {
+        this.listaTiposPep = listaTiposPep;
+    }
+
+    public List<AdCreditActivitySubject> getListaActividadEconomica() {
+        return listaActividadEconomica;
+    }
+
+    public void setListaActividadEconomica(List<AdCreditActivitySubject> listaActividadEconomica) {
+        this.listaActividadEconomica = listaActividadEconomica;
     }
     
     
