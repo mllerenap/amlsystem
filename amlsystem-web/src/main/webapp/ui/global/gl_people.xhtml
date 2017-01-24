@@ -145,8 +145,8 @@
                         </p:selectOneMenu>
                         
                          <p:outputLabel for="somTiposPep" value="Tipo PEP:" styleClass="form-label" ></p:outputLabel>
-                         <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
+                         <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" panelStyle="width:350px;" autoWidth="false"
+                                         effect="fade" style="width:300px !important" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaTiposPep}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
@@ -155,8 +155,8 @@
                          
                          
                          <p:outputLabel for="somActEco" value="Actividad Economica:" styleClass="form-label" ></p:outputLabel>
-                         <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:250px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
+                         <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" panelStyle="width:400px"
+                                         effect="fade" style="width:300px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaActividadEconomica}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>

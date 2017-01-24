@@ -268,6 +268,9 @@ public class GlPeopleController implements Serializable {
             setEnabledCedula(true);
             setEnabledRuc(false);
             
+            AdTypeEconomicActivity adTypeEconomicActivity2 = adTypeEconomicActivityFacade.find(new BigInteger("2"));
+            listaActividadEconomica  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity2);
+            
             return getActiveItem();
         }
 
