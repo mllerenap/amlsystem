@@ -49,6 +49,10 @@
             <o:methodParam name="onRowCancelAddRow" value="#{value.onRowCancel}" />
             <o:methodParam name="onValidateAddRow" value="#{value.onValidateAddRow(dataTableId,row)}" />
             
+            <o:methodParam name="onRowAdd" value="#{value.onRowAdd}" />
+            
+            <p:commandLink style="display: inline;text-decoration: none;" id="addRow" value="Agregar nuevo ítem." process="@this"
+                                                       actionListener="#{onRowAdd}" update="#{id}" oncomplete="addRowItem('#{dataTableId}');" rendered="#{editableRow}"></p:commandLink>
 
             <ae:dataTable id="#{dataTableId}" value="#{value.value}" var="row" rowStyleClass="no-color"  rowIndexVar="rowIndex"  widgetVar="#{widgetVarId}" auditable="false" rowKey="#{row.id}" paginatorAlwaysVisible="false" editable="true" selection="#{value.selectItems}">  
 
@@ -109,8 +113,9 @@
 
             </ae:dataTable>
 
-            <o:methodParam name="onRowAdd" value="#{value.onRowAdd}" />
+            
 
+            <!--
             <div id="extraLines" >
                 <div class="ui-datatable ui-widget datalist">
                     <div class="ui-datatable-tablewrapper">
@@ -120,16 +125,14 @@
                                     <td style="text-align: left !important;">
 
 
-                                        <p:commandLink style="display: inline;text-decoration: none;" id="addRow" value="Agregar nuevo ítem.  " process="@this"
-                                                       actionListener="#{onRowAdd}" update="#{id}" oncomplete="addRowItem('#{dataTableId}');" rendered="#{editableRow}"></p:commandLink>
+                                        
 
                                     </td>
                                 </tr>
 
                             </tbody>
-                            <tfoot class="tableFoot"><tr><td></td></tr></tfoot>
                         </table></div></div>
-            </div>  
+            </div>  -->
 
 
         </h:panelGroup>            

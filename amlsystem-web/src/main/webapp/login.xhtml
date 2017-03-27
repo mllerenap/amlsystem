@@ -13,13 +13,19 @@
         <h:head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
-            <title>AML Plataform</title>  
+            <title>Login</title>  
             
-            <h:outputStylesheet name="login/full.css" library="css" />
-            <h:outputStylesheet name="login/bootstrap.css" library="css" />
-            <h:outputStylesheet name="login/font-awesome.css" library="css" />
-            
-            <h:outputStylesheet name="login/web_login_style.css" library="css" />
+            <!--
+            <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+            -->
+
+            <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
+            <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
+
+            <h:outputStylesheet name="nanoscroller.css" library="css"></h:outputStylesheet>
+            <h:outputScript name="nanoscroller.js" library="js"></h:outputScript>
+
+            <h:outputStylesheet name="animate.css" library="css"></h:outputStylesheet>
 
             <ui:insert name="head" />
 
@@ -44,26 +50,16 @@
 
         </h:head>
 
-        <h:body >
+        <h:body styleClass="login-body">
 
             <!--
             <p:focus for="j_username" context="j_username"></p:focus>
             -->
 
             <p:growl autoUpdate="true" globalOnly="true" />
-
-
-
-
-            <div class="body_login">
-                <div id="background-wrapper" style="background-image: url('#{facesContext.externalContext.requestContextPath}/resources/images/background_login_#{login.timeZoneBackground()}.png');"></div>
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-11 o_database_list">
-                    <div class="text-center">
-                        <h:graphicImage name="/logo-aml.png" library="images" /> 
-                    </div>
-                    <br/>
-
-                    <form class="oe_login_form" role="form" method="post" action="api/auth/login" id="loginForm" >
+            
+            
+            <form class="oe_login_form" role="form" method="post" action="api/auth/login" id="loginForm" >
 
                         <c:if test="#{param['error']=='true'}">
                             <h:panelGroup>
@@ -73,31 +69,51 @@
                                 </center>
                             </h:panelGroup>
                         </c:if>
-
-                        <div class="form-group field-login">
-                            <input type="text" name="j_username" id="j_username" class="form-control" required="required" 
-                                   autofocus="autofocus" autocapitalize="off" placeholder="Usuario ..." autocomplete="off" autocorrect="off"></input>
-                        </div>
-
-                        <div class="form-group field-password">
-                            <input type="password" name="j_password" id="j_password" class="form-control" 
+            
+            
+            <div id="login-wrapper">
+                
+                <h:graphicImage name="/logo-aml.png" library="images" /> 
+            
+            <div id="login-container">
+                <span class="title">Acceso</span>
+                
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        
+                        <input type="text" name="j_username" id="j_username" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" required="required" 
+                                   autofocus="autofocus" autocapitalize="off" placeholder="Usuario ..." autocomplete="off" autocorrect="off" aria-disabled="false" aria-readonly="false"></input>
+                            
+                            
+                    </div>
+                    <div class="ui-g-12">
+                        
+                         <input type="password" name="j_password" id="j_password" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                                aria-disabled="false" aria-readonly="false"
                                    required="required" placeholder="Clave ..."></input>
-                        </div>
-
-
-
-
-                        <input type="hidden" name="redirect"></input>
-                        <div class="clearfix oe_login_buttons">
-                            <button type="submit" onclick="document.getElementById('loginForm').submit();" 
-                                    class="btn btn-primary">Iniciar</button>
-                        </div>
-
-                    </form>
-
-
+                            
+                            
+                    </div>
+                    
+                    <div class="ui-g-12">
+                        
+                        
+                        <button type="submit" onclick="document.getElementById('loginForm').submit();"  
+                                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" role="button" aria-disabled="false">
+                            <span class="ui-button-icon-left ui-icon ui-c fa fa-check"></span><span class="ui-button-text ui-c">Iniciar</span></button>                        
+                        
+                    </div>
                 </div>
             </div>
+            
+            <div class="login-footer">Waytechs Cia. Ltda.</div>
+        </div>
+                
+                
+                </form>
+
+
+
         
 
 

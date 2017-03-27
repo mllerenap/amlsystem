@@ -20,7 +20,7 @@
                 
                 
                 
-                <p:commandButton process="@this" rendered="#{value.enabledCreate and value.hasPermmissionCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" styleClass="red-button"/> 
+                <p:commandButton process="@this" rendered="#{value.enabledCreate and value.hasPermmissionCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" /> 
 
                 
                 <p:commandButton ajax="false" rendered="#{value.enabledSave and value.hasPermmissionSave}" value="Guardar" icon="fa fa-save" actionListener="#{value.actionSave}" 
@@ -30,13 +30,13 @@
                 <p:commandButton process="@this" rendered="#{value.enabledEdit and value.hasPermmissionEdit}" value="Editar" icon="fa fa-edit" actionListener="#{value.actionEdit}" update="@parent:@parent"/> 
                 
                 
-                <p:commandButton process="@this" rendered="#{value.enabledDelete and value.hasPermmissionDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent"> 
+                <p:commandButton process="@this" rendered="#{value.enabledDelete and value.hasPermmissionDelete}" value="Eliminar" icon="fa fa-remove" actionListener="#{value.actionDelete}" update="@parent:@parent" styleClass="yellow-button"> 
                     <p:confirm header="Confirmación" message="¿Esta seguro que desea eliminar el registro?"
                                    icon="ui-icon-alert"  />
                 </p:commandButton>
 
                 <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" 
-                                 icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent"/> 
+                                 icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent" styleClass="yellow-button"/> 
                 
                 
 
@@ -72,12 +72,12 @@
 
                 <ui:repeat value="#{value.viewTypesAvailable}" var="viewType" id="rViewType" >
 
-                    <p:commandLink style="font-size: 17px;outline: none !important;padding: 1px 5px !important;" styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : ''}" actionListener="#{value.actionSelectionViewType}"
+                    <p:commandLink  styleClass="#{value.viewTypeActive eq  viewType ? 'active-nav-button' : 'deactive-nav-button'}" actionListener="#{value.actionSelectionViewType}"
                                    update="@parent:@parent:pg_cmp_dv_#{id}" process="@this">
                         <f:attribute name="viewType" value="#{viewType}"></f:attribute>
-                        <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-file-o'}" />
+                        <h:outputText styleClass="#{viewType eq 'TABLE' ? 'fa fa-bars' : viewType eq 'GRID' ? 'fa fa-th' : 'fa fa-edit'}" />
                     </p:commandLink>
-                    <p:spacer width="5"></p:spacer>
+                    <p:spacer width="0"></p:spacer>
 
                 </ui:repeat>
 

@@ -17,8 +17,11 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
             <title>AML Plataform</title>
-
+            
+            
             <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+            
+            
 
             <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
@@ -41,7 +44,132 @@
             <p:growl autoUpdate="true" > </p:growl>
             
             
+            
+                    <div class="wrapper">
 
+    <div class="topbar clearfix">
+        <a id="omega-menu-button" href="#">
+            <span class="fa fa-bars"></span>
+        </a>
+        
+        <span class="topbar-title">#{titleOption}</span>
+        
+        <a id="options-menu-button" href="#">
+            <span class="fa fa-ellipsis-h"></span>
+        </a>
+        
+        <div id="topbar-icons" class="animated">
+            <span class="topbar-search">
+                <input type="text" placeholder="Search"/>
+                <span class="topbar-search-icon fa fa-search"></span>
+            </span>
+            <a href="#">
+                <span class="topbar-item-text">Messages</span>
+                <span class="topbar-icon fa fa-envelope-o animated swing"></span>
+                <span class="topbar-badge animated rubberBand">5</span>
+            </a>
+            <a href="#">
+                <span class="topbar-item-text">Settings</span>
+                <span class="topbar-icon fa fa-gear"></span>
+            </a>
+            <a href="#">
+                <span class="topbar-item-text">User</span>
+                <span class="topbar-icon fa fa-user"></span>
+            </a>
+        </div>
+        
+    </div>
+
+    <div class="sidebar">
+        <div class="nano has-scrollbar">
+            <div class="nano-content sidebar-scroll-content" tabindex="0" style="margin-right: -17px;">
+                <div class="logo">
+                    <!--
+                    <img id="j_idt14" src="/omega/javax.faces.resource/images/logo.png.xhtml?ln=omega-layout" alt="" width="113">
+                    -->
+                    
+                    <h:graphicImage name="/logo-aml-ext.png" library="images" width="248" height="37"/> 
+                    
+                </div>
+
+                <div class="profile">
+                    <!--
+                    <img id="j_idt16" src="/omega/javax.faces.resource/images/profile.png.xhtml?ln=omega-layout" alt="">
+                        
+                    <a id="profile-button" href="#">
+                        <span class="username">Peggy Olson</span>
+                        <i class="fa fa-fw fa-cog"></i>
+                    </a>
+                        
+                    <ul>
+                        <li><a href="#"><i class="fa fa-fw fa-sliders"></i><span>Account</span></a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notifications</span><span class="menu-badge">2</span></a></li>
+                        <li><a href="#"><i class="fa fa-fw fa-sign-out"></i><span>Logout</span></a></li>
+                    </ul>-->
+                        
+                    
+                        <div class="#{template.adUser.adGenderId.codgender eq 'M' ? 'profile-image-male' : 'profile-image-female'}" jsf:rendered="#{template.adUser.image == null}"></div>
+                                <o:graphicImage rendered="#{template.adUser.image != null}"  value="#{template.adUser.image}" dataURI="true" width="90" height="90"/>  
+                                <a id="profile-button" href="#">
+                                    <span class="username">#{template.adUser.firstname} #{template.adUser.lastname}</span>
+                                    <i class="fa fa-fw fa-cog"></i>
+                                </a>
+                                <ul >
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/ui/admin/ad_account.jsf"><i class="fa fa-fw fa-sliders"></i><span>Perfil</span></a></li>
+                                    <li><a href="#"><i class="fa fa-fw fa-bell"></i><span>Notificaciones</span><span class="menu-badge">2</span></a></li>
+                                    <li><a href="#{facesContext.externalContext.requestContextPath}/api/auth/logout"><i class="fa fa-fw fa-sign-out"></i><span>Cerrar</span></a></li>
+                                </ul>
+                        
+                        
+                </div>
+                
+                
+                <h:form>
+                                <div class="menu" >
+                                    <ae:menu model="#{template.model}"></ae:menu>
+                                </div>
+                                    </h:form>
+
+                
+            </div>
+            <!--
+            <div class="nano-pane" style="display: block;"><div class="nano-slider" style="height: 64px; transform: translate(0px, 0px);"></div></div>
+            -->
+            
+        </div>
+    </div>
+            
+            <div class="main">
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card">
+                        <ui:insert name="content">
+                                    </ui:insert> 
+                    </div>                    
+                </div>
+            </div>
+
+            </div>
+    
+                        <!--
+    <div class="footer">
+        <span class="footer-text">PrimeFaces Omega Theme and Layout</span>
+    </div>-->
+                        
+        </div>
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            <!--
             <div class="wrapper">
                 
                
@@ -155,7 +283,7 @@
                             </div>
                         </div></div></div>
             </div>
-
+-->
 
 
 
