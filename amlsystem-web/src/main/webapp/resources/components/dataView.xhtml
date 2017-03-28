@@ -11,11 +11,14 @@
 
     <ae:default var="auditable" value="#{true}" />
     
+    
+    <ae:default var="backButtonText" value="Ir a atras" />
+    
     <h:panelGroup id="pg_cmp_dv_#{id}">
 
         
         
-       <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix ui-widget-header">
+       <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix">
             <div class="ui-toolbar-group-left">
                 
                 
@@ -46,12 +49,6 @@
                 <div class="searchLoader">
                     <p:graphicImage  name="search-loader.gif" library="images"/>
                 </div>
-                
-                  
-                
-                  
-                
-                  
                 
                 <o:resolveComponent name="tableComponent" for="dt_#{id}" />
                 
@@ -185,7 +182,7 @@
                     
                     <div style="position: absolute;top: 15px;right: 15px;">
                     
-                            <p:commandLink process="@this" actionListener="#{value.actionBack}" update="pg_cmp_dv_#{id}" style="outline: none !important;"> 
+                        <p:commandLink process="@this" actionListener="#{value.actionBack}" update="pg_cmp_dv_#{id}" style="outline: none !important;" title="#{backButtonText}"> 
                                 <h:outputText styleClass="fa fa-reply" />
                             </p:commandLink>
                     </div>    
