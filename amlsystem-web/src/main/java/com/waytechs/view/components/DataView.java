@@ -312,6 +312,7 @@ public abstract class DataView<E> {
         //FacesContext.getCurrentInstance().addMessage(null, msg);
         //JsfUtils.messageInfo(null, ((E) event.getObject()).getId() +" selected", null);
         setViewTypeActive(DataViewType.ROW);
+        setEnabledCreate(false);
         setEnabledEdit(true);
         setEnabledDelete(true);
         rowSelected(selectedItem);
@@ -322,6 +323,7 @@ public abstract class DataView<E> {
         setSelectedItem(selected);
         
         setViewTypeActive(DataViewType.ROW);
+        setEnabledCreate(false);
         setEnabledEdit(true);
         setEnabledDelete(true);
         rowSelected(selectedItem);
@@ -395,7 +397,7 @@ public abstract class DataView<E> {
     }
     
     public final void actionCancel(ActionEvent action) {
-        setEnabledCreate(true);
+        setEnabledCreate(false);
        
         setEnabledSave(false);
         setEnabledCancel(false);

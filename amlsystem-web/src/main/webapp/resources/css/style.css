@@ -612,3 +612,31 @@ body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
 .grid-colum-field{
     margin: 15px;
 }
+
+.card {
+  position: relative;
+}
+
+.wrapper .sidebar .profile .profile-image-male {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 5px auto;
+        background: url("#{resource['images/male.png']}") top left no-repeat;
+        background-size: 90px 90px;
+    }  
+   .wrapper .sidebar .profile .profile-image-female {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 5px auto;
+        background: url("#{resource['images/female.png']}") top left no-repeat;
+        background-size: 90px 90px;
+    }  
+	
+	 .wrapper .sidebar .profile img {
+        display: block;
+        width: 90px !important;
+        height: 90px;
+        margin: 0 auto;
+      -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;}
