@@ -1,6 +1,10 @@
+
+.ui-widget * {
+    font-size: 1em !important;
+}
 /*
-body {
-    font-size: 10px !important;
+.ui-widget {
+    font-size: 90%;
 }*/
 
 .search {
@@ -640,3 +644,8 @@ body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
       -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;}
+         
+         
+.ui-button.ui-state-default.gray-button.ui-button span.ui-icon {
+    color: #525252; 
+}         

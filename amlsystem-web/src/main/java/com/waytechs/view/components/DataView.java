@@ -315,6 +315,7 @@ public abstract class DataView<E> {
         setEnabledCreate(false);
         setEnabledEdit(true);
         setEnabledDelete(true);
+        
         rowSelected(selectedItem);
     }
     
@@ -326,6 +327,7 @@ public abstract class DataView<E> {
         setEnabledCreate(false);
         setEnabledEdit(true);
         setEnabledDelete(true);
+        
         rowSelected(selectedItem);
     }
     
@@ -397,7 +399,7 @@ public abstract class DataView<E> {
     }
     
     public final void actionCancel(ActionEvent action) {
-        setEnabledCreate(false);
+        
        
         setEnabledSave(false);
         setEnabledCancel(false);
@@ -416,14 +418,15 @@ public abstract class DataView<E> {
                 if( getViewTypesAvailable() ==null){
                     return;
                 }
-
+                setEnabledCreate(true);
                 setEnabledEdit(false);
                 setEnabledDelete(false);
 
                 setViewTypeActive(getViewTypesAvailable().get(0));
             }else{
-                 setEnabledEdit(true);
-            setEnabledDelete(true);
+                setEnabledCreate(false);
+                setEnabledEdit(true);
+                setEnabledDelete(true);
                 setViewTypeActive(DataViewType.ROW);
             }
         }else{
