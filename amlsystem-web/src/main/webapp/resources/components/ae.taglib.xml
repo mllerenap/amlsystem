@@ -35,6 +35,15 @@
             <type>java.lang.Boolean</type>
         </attribute>
         
+        <attribute>
+            <description><![CDATA[Codio de identificaicon del registro.]]></description>
+            <name>ident</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        
+        
+        
         
         
     </tag>

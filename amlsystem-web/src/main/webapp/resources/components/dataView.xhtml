@@ -5,6 +5,7 @@
                 xmlns:ae="http://primefaces.org/aeopensolutions"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 xmlns:jsf="http://xmlns.jcp.org/jsf"
                 xmlns:s="http://shiro.apache.org/tags">
@@ -14,13 +15,14 @@
     
     <ae:default var="backButtonText" value="Ir a atras" />
     
+    <ae:default var="titleRow" value="#{titleRow != null ? titleRow : (ident != null ? of:concat('Código: ', ident) : 'Código: [Nuevo registro]')}" />
+    
     <h:panelGroup id="pg_cmp_dv_#{id}">
 
         
         
        <p:outputPanel id="opHeaderTable_#{id}" styleClass="ui-toolbar ui-widget ui-corner-all ui-helper-clearfix">
             <div class="ui-toolbar-group-left">
-                
                 
                 
                 <p:commandButton process="@this" rendered="#{value.enabledCreate and value.hasPermmissionCreate}" value="Crear" icon="fa fa-plus" actionListener="#{value.actionCreate}" update="@parent:@parent" /> 
@@ -42,11 +44,12 @@
                                  icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent" styleClass="gray-button"/> 
                 
                 
+                
 
             </div>
             <div class="ui-toolbar-group-right">
 
-                <div class="searchLoader">
+                 <div class="searchLoader">
                     <p:graphicImage  name="search-loader.gif" library="images"/>
                 </div>
                 
@@ -174,7 +177,7 @@
             
             
             
-            <h:panelGroup id="pgcont_row_#{id}" layout="block" styleClass="form-body">
+            <h:panelGroup id="pgcont_row_#{id}" layout="block" >
             
                 <div class="card-row-item">
 
@@ -186,8 +189,9 @@
                                 <h:outputText styleClass="fa fa-reply" />
                             </p:commandLink>
                     </div>    
-                    
-                    <ui:insert name="dataRow"></ui:insert>        
+                    <div class="ui-fluid">
+                            <ui:insert name="dataRow"></ui:insert>        
+                    </div>
                 </div> 
                 
                 </h:panelGroup>

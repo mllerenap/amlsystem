@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui" >
+
+    <ui:insert name="metadata" />
+
+    <html>
+
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+            <title>Open Source AE Solutions Plataforms</title>        
+            
+            <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+            
+            <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
+
+
+            <h:outputScript>
+                $(document).bind('click', function(){
+                return false;
+                });
+
+            </h:outputScript>
+
+        </h:head>
+
+        <h:body style="background-color: rgba(55, 71, 79, 0.9) !important;" styleClass="main-body">
+
+            <h:form>
+                
+                <p:spacer height="200"></p:spacer>
+                
+                <h:panelGroup  layout="block" styleClass="form-body" style="color: #d8d8d8;">
+            
+                    
+                         
+                     <h1 style="font-size: 50px;">La vista a expirado</h1>
+                     
+                    <p>
+                        Lo sentimos, la sesión a expirado. 
+                    </p>
+                         
+                         
+                                <p:commandButton icon="fa fa-check" style="font-size: 17px;"
+                                                 value="Ir al Inicio"
+                                                 action="/home?faces-redirect=true">
+                                </p:commandButton>  
+                                
+                         
+                     
+
+                 </h:panelGroup>
+
+
+            </h:form>
+
+
+        </h:body>
+    </html>
+</f:view>

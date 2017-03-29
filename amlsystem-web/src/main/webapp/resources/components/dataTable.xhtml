@@ -72,7 +72,7 @@
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  emptyMessage="#{emptyMessage}" 
                  editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
-                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}"> 
+                 selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}" reflow="true"> 
 
         
         <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  

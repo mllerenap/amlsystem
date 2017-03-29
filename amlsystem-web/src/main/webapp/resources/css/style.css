@@ -649,3 +649,9 @@ body .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
 .ui-button.ui-state-default.gray-button.ui-button span.ui-icon {
     color: #525252; 
 }         
+
+
+.ui-outputlabel {
+  /*  font-weight: bold;*/
+    color: #666666;
+}

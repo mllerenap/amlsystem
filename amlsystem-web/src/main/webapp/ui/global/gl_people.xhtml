@@ -23,7 +23,7 @@
         <h:form id="frmPersonas" enctype="multipart/form-data" >
 
 
-            <ae:dataView id="#{glPeople.listaSocios.id}" value="#{glPeople.listaSocios}" titleRow="Código: #{glPeople.activeItem.id != null ? glPeople.activeItem.id : 'Creando secuencia...'}" auditable="false"> 
+            <ae:dataView id="#{glPeople.listaSocios.id}" value="#{glPeople.listaSocios}" ident="#{glPeople.activeItem.id}" auditable="false"> 
 
                 <ui:define name="dataTable">
 
@@ -49,114 +49,117 @@
 
                 <ui:define name="dataRow">
 
-                    <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15" id="pgDatos">
 
-                        <p:outputLabel for="somTypeIde" value="Tipo Identificación:" styleClass="form-label"></p:outputLabel>
 
-                        <p:selectOneMenu id="somTypeIde" value="#{glPeople.activeItem.adTypeIdeId}" converter="#{adTypeIdeConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+
+                    <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatos">            
+
+                        <p:outputLabel for="somTypeIde" value="Tipo Identificación:" ></p:outputLabel>
+
+                        <p:selectOneMenu id="somTypeIde" value="#{glPeople.activeItem.adTypeIdeId}" converter="#{adTypeIdeConverter}" 
+                                         effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"
                                          valueChangeListener="#{glPeople.onChangeTypeId}" >
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaTiposIdentificacion}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" update="pgDatos"></p:ajax>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="itIdeRep" value="Identificación:" styleClass="form-label" ></p:outputLabel>
+                        <p:outputLabel for="itIdeRep" value="Identificación:"  ></p:outputLabel>
                         <p:inputText id="itIdeRep" value="#{glPeople.activeItem.ide}" placeholder="Identificación" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      />
 
-                        <p:outputLabel for="itLname" value="Apellido paterno:" styleClass="form-label" rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                        <p:outputLabel for="itLname" value="Apellido paterno:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
                         <p:inputText id="itLname" value="#{glPeople.activeItem.lastname}" placeholder="Apellido paterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledCedula}"/> 
 
-                        <p:outputLabel for="itSlname" value="Apellido materno" styleClass="form-label" rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                        <p:outputLabel for="itSlname" value="Apellido materno"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
                         <p:inputText id="itSlname" value="#{glPeople.activeItem.secondlastname}" placeholder="Apellido materno" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledCedula}"/> 
 
-                        <p:outputLabel for="itFname" value="Primer nombre:" styleClass="form-label" rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                        <p:outputLabel for="itFname" value="Primer nombre:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
                         <p:inputText id="itFname" value="#{glPeople.activeItem.firstname}" placeholder="Primer nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledCedula}"/> 
 
-                        <p:outputLabel for="itSname" value="Segundo nombre:" styleClass="form-label" rendered="#{glPeople.enabledCedula}"> </p:outputLabel>
+                        <p:outputLabel for="itSname" value="Segundo nombre:"  rendered="#{glPeople.enabledCedula}"> </p:outputLabel>
                         <p:inputText id="itSname" value="#{glPeople.activeItem.secondname}" placeholder="Segundo nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledCedula}"/> 
 
 
-                        <p:outputLabel for="somGenero" value="Genero:" styleClass="form-label" rendered="#{glPeople.enabledCedula}"></p:outputLabel>
-                        <p:selectOneMenu id="somGenero" value="#{glPeople.activeItem.adGenderId}" converter="#{adGenderConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+                        <p:outputLabel for="somGenero" value="Genero:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                        <p:selectOneMenu id="somGenero" value="#{glPeople.activeItem.adGenderId}" converter="#{adGenderConverter}" 
+                                         effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"
                                          rendered="#{glPeople.enabledCedula}">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaGeneros}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
-                        
-                         <p:outputLabel for="itFNac" value="F. nacimiento:" styleClass="form-label"></p:outputLabel>
-                         <p:calendar id="itFNac" value="#{glPeople.activeItem.datebirthday}" disabled="#{not glPeople.listaSocios.enabledSave}"/>
+
+                        <p:outputLabel for="itFNac" value="F. nacimiento:" ></p:outputLabel>
+                        <p:calendar id="itFNac" value="#{glPeople.activeItem.datebirthday}" disabled="#{not glPeople.listaSocios.enabledSave}"/>
 
 
-                        <p:outputLabel for="itBusName" value="Razon Social:" styleClass="form-label" rendered="#{glPeople.enabledRuc}"></p:outputLabel>
+                        <p:outputLabel for="itBusName" value="Razon Social:"  rendered="#{glPeople.enabledRuc}"></p:outputLabel>
                         <p:inputText id="itBusName" value="#{glPeople.activeItem.businessname}" placeholder="Razon Social" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledRuc}"/> 
 
-                        <p:outputLabel for="itNameCom" value="Nombre Comercial:" styleClass="form-label" rendered="#{glPeople.enabledRuc}"></p:outputLabel>
+                        <p:outputLabel for="itNameCom" value="Nombre Comercial:"  rendered="#{glPeople.enabledRuc}"></p:outputLabel>
                         <p:inputText id="itNameCom" value="#{glPeople.activeItem.comercialname}" placeholder="Nombre Comercial" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                      rendered="#{glPeople.enabledRuc}"/> 
 
 
-                        <p:outputLabel for="itStartDate" value="F. Inicio Actividad:" styleClass="form-label"></p:outputLabel>
+                        <p:outputLabel for="itStartDate" value="F. Inicio Actividad:" ></p:outputLabel>
                         <p:calendar id="itStartDate" value="#{glPeople.activeItem.startdate}" disabled="#{not glPeople.listaSocios.enabledSave}"/>
-                        
-                        <p:outputLabel for="somCountry" value="País:" styleClass="form-label"></p:outputLabel>
-                        <p:selectOneMenu id="somCountry" value="#{glPeople.adCountrySelected}" converter="#{adCountryConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+
+                        <p:outputLabel for="somCountry" value="País:" ></p:outputLabel>
+                        <p:selectOneMenu id="somCountry" value="#{glPeople.adCountrySelected}" converter="#{adCountryConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
                                          valueChangeListener="#{glPeople.onChangeAdCountry}" >
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaPaises}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
                             <p:ajax event="change" update="somProvince somCanton"></p:ajax>
                         </p:selectOneMenu>
-                        
-                        
-                        <p:outputLabel for="somProvince" value="Provincia:" styleClass="form-label"></p:outputLabel>
-                        <p:selectOneMenu id="somProvince" value="#{glPeople.adProvinceSelected}" converter="#{adProvinceConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+
+
+                        <p:outputLabel for="somProvince" value="Provincia:" ></p:outputLabel>
+                        <p:selectOneMenu id="somProvince" value="#{glPeople.adProvinceSelected}" converter="#{adProvinceConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
                                          valueChangeListener="#{glPeople.onChangeAdPronvince}" > 
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaProvincias}" var="item" itemLabel="#{item.name}" itemValue="#{item}" /> 
                             <p:ajax event="change" update="somCanton" ></p:ajax>
                         </p:selectOneMenu>
-                        
-                        <p:outputLabel for="somCanton" value="Canton:" styleClass="form-label"></p:outputLabel>
-                        <p:selectOneMenu id="somCanton" value="#{glPeople.activeItem.adCantonId}" converter="#{adCantonConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"> 
+
+                        <p:outputLabel for="somCanton" value="Canton:" ></p:outputLabel>
+                        <p:selectOneMenu id="somCanton" value="#{glPeople.activeItem.adCantonId}" converter="#{adCantonConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"> 
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaCantones}" var="item" itemLabel="#{item.name}" itemValue="#{item}" /> 
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
-                        
-                        
-                        
-                        <p:outputLabel for="somEstadoCivil" value="Estado Civil:" styleClass="form-label" ></p:outputLabel>
-                        <p:selectOneMenu id="somEstadoCivil" value="#{glPeople.activeItem.adCivilStatusId}" converter="#{adCivilStatusConverter}" panelStyle="width:200px"
-                                         effect="fade" style="width:190px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
+
+
+
+                        <p:outputLabel for="somEstadoCivil" value="Estado Civil:"  ></p:outputLabel>
+                        <p:selectOneMenu id="somEstadoCivil" value="#{glPeople.activeItem.adCivilStatusId}" converter="#{adCivilStatusConverter}" 
+                                         effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaEstadoCivil}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
-                        
-                         <p:outputLabel for="somTiposPep" value="Tipo PEP:" styleClass="form-label" ></p:outputLabel>
-                         <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" panelStyle="width:350px;" autoWidth="false"
-                                         effect="fade" style="width:300px !important" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
+
+                        <p:outputLabel for="somTiposPep" value="Tipo PEP:"  ></p:outputLabel>
+                        <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" autoWidth="false"
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaTiposPep}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
-                         
-                         
-                         
-                         <p:outputLabel for="somActEco" value="Actividad Economica:" styleClass="form-label" ></p:outputLabel>
-                         <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" panelStyle="width:400px"
-                                         effect="fade" style="width:300px" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false">
+
+
+
+                        <p:outputLabel for="somActEco" value="Actividad Economica:"  ></p:outputLabel>
+                        <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaActividadEconomica}" var="item" itemLabel="#{item.name}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
@@ -165,7 +168,8 @@
 
 
 
-                    </h:panelGrid>
+                    </p:panelGrid>    
+
 
                     <br></br>
 
@@ -178,42 +182,45 @@
 
 
                         </p:tab>-->
-                        
+
                         <p:tab title="Información de Contacto">
 
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgContacto"> 
 
-                            <h:panelGrid columns="4" style="margin-left: 10px;margin-bottom: 5px;" width="100%" cellspacing="15" id="pgContacto">
-                                <p:outputLabel for="itEmail" value="Correo:" styleClass="form-label"></p:outputLabel>
-                                <p:inputText id="itEmail" value="#{glPeople.activeItem.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" styleClass="fullWidth"
+
+
+
+
+                                <p:outputLabel for="itEmail" value="Correo:" ></p:outputLabel>
+                                <p:inputText id="itEmail" value="#{glPeople.activeItem.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              required="true"
                                              validator="emailValidator"> 
                                 </p:inputText>
 
-                                <p:outputLabel for="itEmail2" value="Correo alterno:" styleClass="form-label"></p:outputLabel>
-                                <p:inputText id="itEmail2" value="#{glPeople.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glPeople.listaSocios.enabledSave}" styleClass="fullWidth"
+                                <p:outputLabel for="itEmail2" value="Correo alterno:" ></p:outputLabel>
+                                <p:inputText id="itEmail2" value="#{glPeople.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              validator="emailValidator" required="false"> 
                                 </p:inputText>
 
 
-                                <p:outputLabel for="itTelefono" value="Teléfono:" styleClass="form-label"></p:outputLabel>
+                                <p:outputLabel for="itTelefono" value="Teléfono:" ></p:outputLabel>
                                 <p:inputText id="itTelefono" value="#{glPeople.activeItem.celular1}" placeholder="Teléfono"  maxlength="9"
                                              readonly="#{not glPeople.listaSocios.enabledSave}"> 
                                     <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="9"></f:validateLength>
                                 </p:inputText>
 
-                                <p:outputLabel for="itCel" value="Celular:" styleClass="form-label"></p:outputLabel>
+                                <p:outputLabel for="itCel" value="Celular:" ></p:outputLabel>
                                 <p:inputText id="itCel" value="#{glPeople.activeItem.celular2}" placeholder="Celular"  maxlength="10" 
                                              readonly="#{not glPeople.listaSocios.enabledSave}"> 
                                     <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="10"></f:validateLength>
                                 </p:inputText>
 
-                            </h:panelGrid> 
+                            </p:panelGrid>
 
                         </p:tab>
                     </p:tabView>
-
 
 
 

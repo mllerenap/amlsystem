@@ -75,78 +75,10 @@
         <location>/error.jsf</location>
     </error-page>
     
-    
-    <!--
-    <error-page>
-        <error-code>401</error-code>
-        <location>/401.html</location>
+     <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/viewExpired.jsf</location>
     </error-page>
-    
-    <error-page>
-        <error-code>403</error-code>
-        <location>/access-denied.jsf</location>
-    </error-page>
-    
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.jsf</location>
-    </error-page>
-    <error-page>
-        <error-code>500</error-code>
-        <location>/error.jsf</location>
-    </error-page>
-    -->
-    
-    <!--
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>UserRolesAMLRealm</realm-name>
-        <form-login-config>
-            <form-login-page>/login.jsf</form-login-page>
-            <form-error-page>/login.jsf?error=true</form-error-page>
-        </form-login-config>
-    </login-config>
-	
-
-    <security-constraint>
-        <display-name>accessAdmin</display-name>
-        <web-resource-collection>
-            <web-resource-name>accessAdmin</web-resource-name>
-            <description />
-            <url-pattern>/home.jsf</url-pattern>
-            <url-pattern>/ui/*</url-pattern>
-            <url-pattern>/ui/admin/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>ADMINISTRADOR</role-name>
-        </auth-constraint>
-    </security-constraint>
-	
-    <security-constraint>
-        <display-name>accessGuest</display-name>
-        <web-resource-collection>
-            <web-resource-name>accessGuest</web-resource-name>
-            <description />
-            <url-pattern>/home.jsf</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>INVITADO</role-name>
-        </auth-constraint>
-    </security-constraint>
-
-    <security-role>
-        <role-name>ADMINISTRADOR</role-name>
-    </security-role>
-	
-    <security-role>
-        <role-name>INVITADO</role-name>
-    </security-role>
-    
-    -->
     
     <mime-mapping>
         <extension>eot</extension>
