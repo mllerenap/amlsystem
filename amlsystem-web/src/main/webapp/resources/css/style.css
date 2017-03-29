@@ -45,13 +45,20 @@
 }
 
 .data-grid {
-    min-height: 100px !important;
+    min-height: 70px !important;
     background-color: #fff !important;
+    /*
     box-shadow: 0 0 1px 1px #6f6f6f !important;
     padding-top: 15px !important;
-    padding-left: 10px !important;
+    padding-left: 10px !important;*/
+    /*
     margin-bottom: 3px !important;
-    margin-right: 3px !important;
+    margin-right: 3px !important;*/
+    
+    box-shadow: 0px 0px 1px 1px #808080;
+    padding: 8px 8px;
+    margin: 4px;
+    
 }
 
 .data-grid-link {
@@ -60,36 +67,32 @@
     background: transparent !important;
 }
 
+.data-grid .data-grid_image{
+    display: inline-block;
+    vertical-align: top;
+    width: 64px;
+    height: 70px; 
+    text-align: center;
+    overflow: hidden; 
+    border-radius: 3px; 
+    border: 0; 
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); 
+}
+
 .ui-datagrid-content {
-    /*
     padding-left: 10px !important;
     padding-top: 10px !important;
     padding-bottom: 10px !important;
     padding-right: 7px !important;
-    background-color: #fff !important;
-    */
-    padding-left: 10px !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    padding-right: 7px !important;
-    /*
-    background: transparent !important;
-    */
-    border: 0px solid #d5d5d5;
     
-    /*
-    background-color: #939393 !important;
-    */
+    /*border: 0px solid #d5d5d5;*/
+    
+    
     background-color: rgba(255, 255, 255, .95);
-    
     /*
-    background-color: #e2e2e0 !important;
-    */
-    
-    
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    border-radius: 3px;
+    border-radius: 3px;*/
 }
 
 .ui-datatable .ui-column-filter {
@@ -239,17 +242,7 @@
     margin-left: -15px;
 }
 
-.data-grid .data-grid_image{
-    display: inline-block;
-    vertical-align: top;
-    width: 64px;
-    height: 70px; 
-    text-align: center;
-    overflow: hidden; 
-    border-radius: 3px; 
-    border: 0; 
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); 
-}
+
 
 /*
 button.ui-button.ui-state-default.gray-button {
