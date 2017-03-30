@@ -54,11 +54,11 @@
     <ae:default var="options" value="#{false}" />
 
     <ae:default var="selection" value="#{null}" />
-    
+
     <ae:default var="paginatorAlwaysVisible" value="#{true}" />
-    
+
     <ae:default var="rowStyleClass" value="#{null}" />
-    
+
     <ae:default var="rowIndexVar" value="#{null}" />
 
 
@@ -67,21 +67,55 @@
 
     <p:dataTable id="#{id}" var="row" value="#{value}" widgetVar="#{widgetVar}"  
                  rowKey="#{rowKey}" paginator="true"  
-                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                  paginatorAlwaysVisible="#{paginatorAlwaysVisible}" rows="#{rows}"  
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginatorAlwaysVisible="#{paginatorAlwaysVisible}" rows="#{rows}"  
                  rowsPerPageTemplate="#{rowsPerPageTemplate}"
                  emptyMessage="#{emptyMessage}" 
                  editable="#{editable}" style="margin-bottom:0" editingRow="#{editingRow}"  rowStyleClass="#{rowStyleClass}" rendered="#{rendered}"
                  selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}" reflow="true"> 
-
         
+        
+
+        <f:facet name="{Exporters}">
+
+            <div style="float:right">
+                
+                <p:commandLink  process="#{id}" >
+                    
+                    <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
+
+                    <p:dataExporter type="xls" target="#{id}" fileName="carsssssss" />
+                    
+                    </p:commandLink>
+                <!--
+                <h:commandLink >
+                    <f:ajax execute="#{id} @this" ></f:ajax>
+                    
+                </h:commandLink>-->
+            </div>
+
+
+            <!--
+          <h:commandLink>
+              <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+              <p:dataExporter type="pdf" target="#{id}" fileName="cars"/>
+          </h:commandLink>
+
+          <h:commandLink>
+              <p:graphicImage name="/demo/images/csv.png" width="24"/>
+              <p:dataExporter type="csv" target="#{id}" fileName="cars" />
+          </h:commandLink>-->
+
+        </f:facet>
+
+
         <p:ajax event="filter" global="false" onstart="showSearchLoader();" oncomplete="hideSearchLoader();"/>  
 
         <ui:insert name="events">
 
         </ui:insert>
-        
-          
+
+
 
 
         <ae:context header="">
@@ -89,8 +123,9 @@
 
             </ui:insert>
         </ae:context>
+ 
 
-        
+
         <p:column sortBy="#{row.created}"  headerText="Creación" rendered="#{auditable}" width="170">
             <h:outputText value="#{row.created}">
                 <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" type="both" />
