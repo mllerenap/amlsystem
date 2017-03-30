@@ -108,6 +108,7 @@ public class TemplateController extends AbstractController implements Serializab
             item.setParam("item", menu.getId());
             //item.setProcess("@this");
             item.setCommand("#{template.actionMenu}");
+            
             System.out.println("childMenu item: "+menu.getName());
             model.addElement(item);
         }
@@ -146,7 +147,7 @@ public class TemplateController extends AbstractController implements Serializab
         
         JsfUtils.sendRedirect(getCurrentMenu().getUrl());
         
-        JsfUtils.executeJS("Omega.verifyActiveMenu()");
+        //JsfUtils.executeJS("PF('wvMenuTemplate').verifyActiveMenu()");
         
     }
 

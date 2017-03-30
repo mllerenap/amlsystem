@@ -29,7 +29,7 @@ import com.waytechs.model.ejb.facades.GlAgencyFacade;
 import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdRole;
 import com.waytechs.model.entities.AdUser;
-import com.waytechs.model.entities.AdUserRoles; 
+import com.waytechs.model.entities.AdUserRoles;
 import com.waytechs.model.entities.GlAgency;
 import com.waytechs.model.entities.GlCompany;
 import com.waytechs.view.components.DataList;
@@ -53,53 +53,51 @@ public class AdUserController implements Serializable {
 
     @Inject
     private AdUserFacade adUserFacade;
-    
-     private AdUser activeItem;
+
+    private AdUser activeItem;
 
     private String pass1;
     private String pass2;
-    
+
     private Part image;
     private boolean imageModified;
 
     @Inject
     private AdRoleFacade adRoleFacade;
-    
+
     @Inject
     private AdUserRolesFacade adUserRolesFacade;
-    
-    
+
     @Inject
     private GlCompanyFacade alCompanyFacade;
-    
+
     @Inject
     private GlAgencyFacade glAgencyFacade;
-    
+
     private List<AdRole> roles;
-    
+
     private TemplateController template;
-    
+
     private List<GlCompany> companies;
-    
+
     private GlCompany companySelected;
-    
+
     private List<GlAgency> agencies;
 
     @PostConstruct
     public void initialize() {
         listaUsuarios.load();
-        
+        listaUsuarios.setViewTypeActive(DataViewType.GRID);
+
         roles = adRoleFacade.findAll();
-        
-        
+
         template = (TemplateController) JsfUtils.getManagedBean("template");
-        
-        
-        System.out.println(getClass().getSimpleName()+" - "+template.getCurrentMenu());  
-        
+
+        System.out.println(getClass().getSimpleName() + " - " + template.getCurrentMenu());
+
         companies = alCompanyFacade.findFull();
         agencies = new ArrayList<>();
-        
+
     }
 
     public Part getImage() {
@@ -117,7 +115,7 @@ public class AdUserController implements Serializable {
         } else if (image == null && activeItem.getImage() != null && imageModified == true) {
             activeItem.setImage(null);
         }
-        System.out.println("setImage: "+image);
+        System.out.println("setImage: " + image);
     }
 
     public boolean isImageModified() {
@@ -127,7 +125,7 @@ public class AdUserController implements Serializable {
     public void setImageModified(boolean imageModified) {
         this.imageModified = imageModified;
     }
-    
+
     public void validateImage(FacesContext ctx, UIComponent comp, Object value) {
         if (value != null) {
             Part file = (Part) value;
@@ -140,8 +138,6 @@ public class AdUserController implements Serializable {
             }
         }
     }
-    
-   
 
     public AdUser getActiveItem() {
         return this.activeItem;
@@ -150,62 +146,53 @@ public class AdUserController implements Serializable {
     public void setActiveItem(AdUser activeItem) {
         this.activeItem = activeItem;
     }
-    
-    
-    
 
     private DataView<AdUser> listaUsuarios = new DataView<AdUser>() {
-        
-         @Override
+
+        @Override
         protected void initialize() {
             setId("dvUsuarios");
-            System.out.println("initialize DataView: "+getId());
-            
-            Subject s =  SecurityUtils.getSubject();
-            
+            System.out.println("initialize DataView: " + getId());
+
+            Subject s = SecurityUtils.getSubject();
+
             setHasPermmissionCreate(s.isPermitted("1:1"));
             setHasPermmissionEdit(s.isPermitted("1:2"));
             setHasPermmissionDelete(s.isPermitted("1:3"));
             setHasPermmissionSave(s.isPermitted("1:4"));
-            
+
         }
-        
+
         @Override
-        protected List<AdUser> filterGrid(String searchKey,List<AdUser> filteredValues) {
+        protected List<AdUser> filterGrid(String searchKey, List<AdUser> filteredValues) {
             List<AdUser> results = new ArrayList<>();
             for (AdUser user : filteredValues) {
-                    if (user.getName().toUpperCase().contains(searchKey.toUpperCase()) ) {
-                        results.add(user);
-                    }
+                if (user.getName().toUpperCase().contains(searchKey.toUpperCase())) {
+                    results.add(user);
                 }
-            System.out.println("filtrado: "+results);
+            }
+            System.out.println("filtrado: " + results);
             return results;
         }
-        
-        
-         @Override
-        public List<DataViewType> viewTypes() { 
-            List<DataViewType> list =  new ArrayList<>();
-            list.add(DataViewType.TABLE);
+
+        @Override
+        public List<DataViewType> viewTypes() {
+            List<DataViewType> list = new ArrayList<>();
             list.add(DataViewType.GRID);
+            list.add(DataViewType.TABLE);
             list.add(DataViewType.ROW);
             return list;
         }
 
         @Override
         protected void rowSelected(AdUser item) {
-            setPass1(item.getPassword());    
+            setPass1(item.getPassword());
             setActiveItem(item);
             getListaUsuarioRoles().load();
             setCompanySelected(item.getGlAgencyId() != null ? item.getGlAgencyId().getGlCompanyId() : null);
             agencies = glAgencyFacade.findByGlCompanyId(getCompanySelected());
-            
-            
-        }
-        
-        
 
-       
+        }
 
         @Override
         public List<AdUser> findAll() {
@@ -224,21 +211,35 @@ public class AdUserController implements Serializable {
 
         @Override
         protected AdUser save(AdUser item) {
-            
+
             item = getActiveItem();
-            
-            System.out.println("save aduser: " + item+ " pass1: "+getPass1()+" pass2: "+getPass2()+" image: "+Arrays.toString(item.getImage()));
+
+            System.out.println("save aduser: " + item + " pass1: " + getPass1() + " pass2: " + getPass2() + " image: " + Arrays.toString(item.getImage()));
             try {
-                
+
                 adUserFacade.save(item);
                 setSelectedItem(item);
                 setPass1(item.getPassword());
                 setPass2(null);
-                
+
                 List<AdUserRoles> listaRolesActual = adUserRolesFacade.findByAdUser(item);
                 List<AdUserRoles> listaRolesFinal = getListaUsuarioRoles().getValue();
-                
-                
+
+                if (listaRolesActual != null && !listaRolesActual.isEmpty()) {
+                    for (AdUserRoles ur : listaRolesActual) {
+                        adUserRolesFacade.delete(ur);
+                    }
+                }
+
+                //buscar en lista final
+                if (listaRolesFinal != null && !listaRolesFinal.isEmpty()) {
+                    for (AdUserRoles f : listaRolesFinal) {
+                        f.setId(null);
+                        adUserRolesFacade.save(f, getActiveItem());
+                    }
+                }
+
+                /*
                 if(  listaRolesActual != null && !listaRolesActual.isEmpty()){
                     for (AdUserRoles ur : listaRolesActual) {
                         boolean find = false;
@@ -262,10 +263,7 @@ public class AdUserController implements Serializable {
                         }
                         
                     }
-                }
-                
-                
-                
+                }*/
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
                 return null;
@@ -285,19 +283,13 @@ public class AdUserController implements Serializable {
         protected void delete(List<AdUser> items) {
             try {
                 adUserFacade.delete(items.get(0));
-                
+
             } catch (Exception e) {
                 JsfUtils.messageError(null, e.getMessage(), null);
             }
 
             JsfUtils.messageInfo(null, "Usuario eliminado correctamente.", null);
         }
-        
-        
-        
-        
-
-       
 
     };
 
@@ -308,12 +300,11 @@ public class AdUserController implements Serializable {
     public void setListaUsuarios(DataView<AdUser> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-    
-    
+
     private DataList<AdUserRoles> listaUsuarioRoles = new DataList<AdUserRoles>() {
         @Override
         protected void initialize() {
-            
+
         }
 
         @Override
@@ -329,19 +320,15 @@ public class AdUserController implements Serializable {
         }
 
         @Override
-        protected void validateAddRow(AdUserRoles item) throws Exception{ 
-            if(  item.getAdRoleId() == null ){
-                
+        protected void validateAddRow(AdUserRoles item) throws Exception {
+            if (item.getAdRoleId() == null) {
+
                 JsfUtils.messageError(null, "No puede estar vacio el rol", null);
-                
-                throw  new Exception("Error rol nulo");
+
+                throw new Exception("Error rol nulo");
             }
         }
-        
-        
-        
-        
-        
+
     };
 
     public DataList<AdUserRoles> getListaUsuarioRoles() {
@@ -399,12 +386,10 @@ public class AdUserController implements Serializable {
     public void setCompanySelected(GlCompany companySelected) {
         this.companySelected = companySelected;
     }
-    
+
     public void onCompany() {
-        System.out.println("onCompany: "+getCompanySelected());
+        System.out.println("onCompany: " + getCompanySelected());
         agencies = glAgencyFacade.findByGlCompanyId(getCompanySelected());
     }
-    
-    
 
 }

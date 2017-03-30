@@ -378,7 +378,7 @@ public abstract class DataView<E> {
         deleteList.add(getSelectedItem());
         delete(deleteList);
         load();
-        setViewTypeActive(DataViewType.TABLE);
+        setViewTypeActive(getViewTypesAvailable().get(0));
 
     }
 

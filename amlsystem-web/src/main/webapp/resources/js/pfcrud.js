@@ -6,7 +6,10 @@ $(function() {
         $(this).css('min-height', alto+'px');
     });
     
+    //$( "#omega-menu-button" ).tooltip();
+    
   });
+    
 
 function handleSubmit(xhr, status, args, dialog) {
     var jqDialog = jQuery('#' + dialog.id);

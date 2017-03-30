@@ -7,6 +7,7 @@
         xmlns:ae="http://primefaces.org/aeopensolutions"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:o="http://omnifaces.org/ui"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
         contentType="text/html">
 
     <ui:insert name="metadata" />
@@ -21,7 +22,9 @@
             
             <h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
             
-            
+            <!--
+            <h:outputScript name="jquery-ui.js" library="js"></h:outputScript>
+            -->
 
             <h:outputStylesheet name="layout.css" library="css"></h:outputStylesheet>
             <h:outputScript name="pfcrud.js" library="js"></h:outputScript>
@@ -39,7 +42,7 @@
 
         <h:body id="bDocument" styleClass="main-body">
 
-
+            <p:tooltip position="bottom"/>
 
             <p:growl autoUpdate="true" > </p:growl>
             
@@ -48,7 +51,7 @@
                     <div class="wrapper">
 
     <div class="topbar clearfix">
-        <a id="omega-menu-button" href="#">
+        <a id="omega-menu-button" href="#" title="Ir al menú" pt:data-tooltip="Tooltip for an input">
             <span class="fa fa-bars"></span>
         </a>
         
@@ -124,9 +127,14 @@
                 </div>
                 
                 
+                
                 <h:form>
+                    
+                    <div id="codMenu" style="display: none;">#{template.currentMenu.id}</div>
+                    
                                 <div class="menu" >
-                                    <ae:menu model="#{template.model}" ></ae:menu>
+                                    <ae:menu model="#{template.model}" widgetVar="wvMenuTemplate" ></ae:menu>
+                                    
                                 </div>
                                     </h:form>
 
