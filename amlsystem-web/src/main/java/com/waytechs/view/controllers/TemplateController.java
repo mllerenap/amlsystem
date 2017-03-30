@@ -146,6 +146,8 @@ public class TemplateController extends AbstractController implements Serializab
         
         JsfUtils.sendRedirect(getCurrentMenu().getUrl());
         
+        JsfUtils.executeJS("Omega.verifyActiveMenu()");
+        
     }
 
     public void actualizarUsuario() {

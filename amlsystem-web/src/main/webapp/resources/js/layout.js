@@ -108,6 +108,30 @@ PrimeFaces.widget.Omega = PrimeFaces.widget.BaseWidget.extend({
         });
     },
     
+    verifyActiveMenu: function() {
+        $(this).toggleClass('active');
+            
+            if($this.isDesktop()) {
+                $this.wrapper.toggleClass('sidebar-inactive-l');
+                
+                if($this.wrapper.hasClass('sidebar-inactive-l')) {
+                    $this.wrapper.removeClass('sidebar-active-m');
+                }
+            }
+            else {
+                $this.wrapper.toggleClass('sidebar-active-m');
+                
+                if($this.wrapper.hasClass('sidebar-active-m')) {
+                    $this.wrapper.removeClass('sidebar-inactive-l');
+                }
+            }
+            
+            $this.topbarIcons.removeClass('topbar-icons-visible');
+            e.preventDefault();
+            
+            console.log("verifyActiveMenu .. executed");
+    },
+    
     activate: function(item) {
         var submenu = item.children('ul');
         item.addClass('active-menuitem');
