@@ -105,6 +105,11 @@ public class AdUserController implements Serializable {
     }
 
     public void setImage(Part image) {
+        
+        if( activeItem == null){
+            System.out.println("setImage es nulo: " + activeItem);
+            return;
+        }
         if (image != null) {
             try {
                 InputStream input = image.getInputStream();

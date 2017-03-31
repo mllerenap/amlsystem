@@ -43,7 +43,15 @@
                 <p:commandButton process="@this" rendered="#{value.enabledCancel}" value="Descartar" 
                                  icon="fa fa-ban" actionListener="#{value.actionCancel}" update="@parent:@parent" styleClass="gray-button"/> 
                 
+                <!--
+                <p:commandLink ajax="false">
+                    
+                    <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
+                    
+                    <p:dataExporter type="xls" target="dt_#{id}" fileName="carsssssss" /> 
+                </p:commandLink>-->
                 
+                <ui:insert name="extraButtons"></ui:insert>
                 
 
             </div>
@@ -168,19 +176,8 @@
         </h:panelGroup>
 
 
-
+        
         <h:panelGroup binding="#{pg_dataRow_id}" id="pg_dataRow_#{id}" layout="block" style="#{value.viewTypeActive eq 'ROW' ? 'display : block;' : 'display : none;'}">
-            
-            <!--
-            <div class="ui-g-12">
-            <div class="card">
-                <h1 class="centerText">Linear Chart</h1>
-            </div>
-                card-row-item
-            </div>
-            -->
-            
-            
             
             <h:panelGroup id="pgcont_row_#{id}" layout="block" >
             
@@ -195,13 +192,17 @@
                             </p:commandLink>
                     </div>    
                     <div class="ui-fluid">
+                        <!--
                             <ui:insert name="dataRow"></ui:insert>        
+                        -->
                     </div>
                 </div> 
                 
                 </h:panelGroup>
             
         </h:panelGroup>
+        
+        
 
 
 

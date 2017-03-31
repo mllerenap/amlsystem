@@ -75,36 +75,20 @@
                  selectionMode="#{selectionMode}" selection="#{selection}" filteredValue="#{filteredValue}" rowIndexVar="#{rowIndexVar}" reflow="true"> 
         
         
-
-        <f:facet name="{Exporters}">
-
-            <div style="float:right">
+        
+        <f:facet name="{Exporters}"> 
+            <div style="float:right;padding-top: 5px;">
+               
                 
                 <p:commandLink  process="#{id}" >
                     
                     <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
-
-                    <p:dataExporter type="xls" target="#{id}" fileName="carsssssss" />
+                        
+                    <p:dataExporter type="xls" target="#{id}" fileName="carsssssss" /> 
                     
-                    </p:commandLink>
-                <!--
-                <h:commandLink >
-                    <f:ajax execute="#{id} @this" ></f:ajax>
-                    
-                </h:commandLink>-->
+                </p:commandLink>
+                
             </div>
-
-
-            <!--
-          <h:commandLink>
-              <p:graphicImage name="/demo/images/pdf.png" width="24"/>
-              <p:dataExporter type="pdf" target="#{id}" fileName="cars"/>
-          </h:commandLink>
-
-          <h:commandLink>
-              <p:graphicImage name="/demo/images/csv.png" width="24"/>
-              <p:dataExporter type="csv" target="#{id}" fileName="cars" />
-          </h:commandLink>-->
 
         </f:facet>
 
@@ -114,9 +98,6 @@
         <ui:insert name="events">
 
         </ui:insert>
-
-
-
 
         <ae:context header="">
             <ui:insert >

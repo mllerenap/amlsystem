@@ -55,17 +55,27 @@
 
 
 
-        <h:form id="frmUsuarios" enctype="multipart/form-data" >
+        <h:form id="frmUsuarios" enctype="multipart/form-data" > 
 
 
             <ae:dataView id="#{adUser.listaUsuarios.id}" value="#{adUser.listaUsuarios}" ident="#{adUser.activeItem.id}"> 
 
                 <ui:define name="dataTable">
+                    
+                    
                     <p:column headerText="Usuario" filterBy="#{row.name}" > 
                         <h:outputText value="#{row.name}" />
                     </p:column>
 
                 </ui:define>
+                
+                <ui:define name="extraButtons">
+                    
+                
+                    
+                </ui:define>
+                
+                
 
                 <ui:define name="dataGrid">
                     <h:panelGrid columns="2" >
