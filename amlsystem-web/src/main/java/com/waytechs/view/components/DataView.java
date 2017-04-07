@@ -6,6 +6,20 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import com.waytechs.model.entities.AbstractEntityModel;
 import com.waytechs.view.utils.JsfUtils;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.jxls.common.Context;
+import org.jxls.util.JxlsHelper;
+import static org.omnifaces.util.Faces.getResourceAsStream;
 import org.primefaces.event.SelectEvent;
 
 public abstract class DataView<E> { 
@@ -456,6 +470,25 @@ public abstract class DataView<E> {
 
     protected void cancel() {
         throw new UnsupportedOperationException();
+    }
+    
+    /*
+    protected void exportExcel(List<E> items) {
+    }
+    */
+    
+    public void onExportExcel(ActionEvent action) throws IOException {
+        
+        System.out.println("onExportExcel........"+JsfUtils.getResponse().getOutputStream());
+        
+    List<E> list = getValue();
+        try(InputStream is = getResourceAsStream("object_collection_template.xls")) {
+            try (OutputStream os = JsfUtils.getResponse().getOutputStream()) {
+                Context context = new Context();
+                context.putVar("listVar", list);
+                JxlsHelper.getInstance().processTemplate(is, os, context);
+            }
+        }
     }
     
   

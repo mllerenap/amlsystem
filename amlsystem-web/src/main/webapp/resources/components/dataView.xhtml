@@ -117,12 +117,21 @@
         <p:spacer height="2"></p:spacer>                                                                                                                                                                                                                                             
 
         <o:methodParam name="methodRowSelect" value="#{value.onRowSelect}" />
+        
+        <o:methodParam name="onExportExcel" value="#{value.onExportExcel}" />
 
         <h:panelGroup id="pg_dataTable_#{id}" layout="block" style="#{value.viewTypeActive eq 'TABLE' ? 'display : block;' : 'display : none;'}">
 
 
             <ae:dataTable id="dt_#{id}" value="#{value.value}" var="row" selectionMode="single" selection="#{value.selectedItem}" rowKey="#{row.id}" widgetVar="wv_dt_#{id}" filteredValue="#{value.filteredValues}" auditable="#{auditable}">  
 
+                
+                <ui:define name="buttonExports">
+                    
+                    <p:commandLink  process="@this" actionListener="#{onExportExcel}">
+                        <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
+                    </p:commandLink>
+                </ui:define>
                 
                 <ui:insert name="dataTable"></ui:insert>
 

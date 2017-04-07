@@ -78,15 +78,9 @@
         
         <f:facet name="{Exporters}"> 
             <div style="float:right;padding-top: 5px;">
-               
+                <ui:insert name="buttonExports"></ui:insert>
                 
-                <p:commandLink  process="#{id}" >
-                    
-                    <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
-                        
-                    <p:dataExporter type="xls" target="#{id}" fileName="carsssssss" /> 
-                    
-                </p:commandLink>
+                
                 
             </div>
 
