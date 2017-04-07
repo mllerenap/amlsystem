@@ -16,7 +16,10 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.openxml4j.opc.internal.FileHelper;
 import org.jxls.common.Context;
 import org.jxls.util.JxlsHelper;
 import static org.omnifaces.util.Faces.getResourceAsStream;
@@ -479,17 +482,28 @@ public abstract class DataView<E> {
     
     public void onExportExcel(ActionEvent action) throws IOException {
         
-        System.out.println("onExportExcel........"+JsfUtils.getResponse().getOutputStream());
+        System.out.println("onExportExcel........");
         
-    List<E> list = getValue();
-        try(InputStream is = getResourceAsStream("object_collection_template.xls")) {
-            try (OutputStream os = JsfUtils.getResponse().getOutputStream()) {
+        List<E> list = getValue();
+        
+        JsfUtils.getSession().setAttribute("list", list);
+        
+        JsfUtils.getResponse().sendRedirect(JsfUtils.getRequest().getContextPath()+"/excelreport");
+        
+    /*
+        try(InputStream is =  FileHelper.class.getClassLoader().getResourceAsStream("object_collection_template.xls")) {
+            try (OutputStream os = externalContext.getResponseOutputStream()) {
                 Context context = new Context();
                 context.putVar("listVar", list);
+                System.out.println("is: "+is);
+                System.out.println("os: "+os);
                 JxlsHelper.getInstance().processTemplate(is, os, context);
             }
-        }
+        }*/
+        
     }
+    
+    
     
   
 
