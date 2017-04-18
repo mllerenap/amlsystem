@@ -128,7 +128,7 @@
                 
                 <ui:define name="buttonExports">
                     
-                    <p:commandLink  process="@this" actionListener="#{onExportExcel}">
+                    <p:commandLink  process="@this" actionListener="#{onExportExcel}" ajax="false">
                         <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
                     </p:commandLink>
                 </ui:define>
@@ -201,9 +201,9 @@
                             </p:commandLink>
                     </div>    
                     <div class="ui-fluid">
-                        <!--
+                        
                             <ui:insert name="dataRow"></ui:insert>        
-                        -->
+                        
                     </div>
                 </div> 
                 

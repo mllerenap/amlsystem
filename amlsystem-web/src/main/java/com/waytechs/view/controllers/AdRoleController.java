@@ -225,6 +225,10 @@ public class AdRoleController implements Serializable {
             setHasPermmissionEdit(s.isPermitted("1:8"));
             setHasPermmissionDelete(s.isPermitted("1:9"));
             setHasPermmissionSave(s.isPermitted("1:10"));
+            
+            setFileNameTemplate("reporte_roles_template.xls");
+            setFileNameResult("reporte_roles.xls");
+            
         }
 
         @Override

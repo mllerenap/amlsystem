@@ -69,6 +69,9 @@ public abstract class DataView<E> {
     protected List<E> filteredValues;
     
     private String searchKey;
+    
+    private String fileNameTemplate;
+    private String fileNameResult;
 
     public DataView() {
         init();
@@ -301,6 +304,23 @@ public abstract class DataView<E> {
     public void setHasPermmissionSave(boolean hasPermmissionSave) {
         this.hasPermmissionSave = hasPermmissionSave;
     }
+
+    public String getFileNameTemplate() {
+        return fileNameTemplate;
+    }
+
+    public void setFileNameTemplate(String fileNameTemplate) {
+        this.fileNameTemplate = fileNameTemplate;
+    }
+
+    public String getFileNameResult() {
+        return fileNameResult;
+    }
+
+    public void setFileNameResult(String fileNameResult) {
+        this.fileNameResult = fileNameResult;
+    }
+
     
     
     
@@ -487,6 +507,9 @@ public abstract class DataView<E> {
         List<E> list = getValue();
         
         JsfUtils.getSession().setAttribute("list", list);
+        
+        JsfUtils.getSession().setAttribute("fileNameResult", getFileNameResult());
+        JsfUtils.getSession().setAttribute("fileNameTemplate", getFileNameTemplate());
         
         JsfUtils.getResponse().sendRedirect(JsfUtils.getRequest().getContextPath()+"/excelreport");
         
