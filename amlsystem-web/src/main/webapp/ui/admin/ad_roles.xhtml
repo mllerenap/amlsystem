@@ -18,7 +18,7 @@
 
         <h:form id="frmRoles" >
 
-            <ae:dataView id="#{adRole.listaRoles.id}" value="#{adRole.listaRoles}" titleRow="Código: #{adRole.activeItem.id}"> 
+            <ae:dataView id="#{adRole.listaRoles.id}" value="#{adRole.listaRoles}" titleRow="Código: #{adRole.activeItem.id}" xls="true"> 
 
                 <ui:define name="dataTable">
                     <p:column headerText="Rol" filterBy="#{row.name}" > 

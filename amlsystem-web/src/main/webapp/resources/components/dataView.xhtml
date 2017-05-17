@@ -12,6 +12,7 @@
 
     <ae:default var="auditable" value="#{true}" />
     
+    <ae:default var="xls" value="#{false}" />
     
     <ae:default var="backButtonText" value="Ir a atras" />
     
@@ -128,7 +129,7 @@
                 
                 <ui:define name="buttonExports">
                     
-                    <p:commandLink  process="@this" actionListener="#{onExportExcel}" ajax="false">
+                    <p:commandLink  process="@this" actionListener="#{onExportExcel}" ajax="false" rendered="#{xls}">
                         <p:graphicImage name="ic_excel.png" width="16" height="16" library="images"/>
                     </p:commandLink>
                 </ui:define>
