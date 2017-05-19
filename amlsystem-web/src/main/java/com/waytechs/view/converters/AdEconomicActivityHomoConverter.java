@@ -11,11 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Inject;
 
-import com.waytechs.model.ejb.facades.AdRoleFacade;
-import com.waytechs.model.ejb.facades.GlCompanyFacade;
 import com.waytechs.model.entities.AdEconomicActivityHomo;
-import com.waytechs.model.entities.AdRole;
-import com.waytechs.model.entities.GlCompany;
 
 @ManagedBean
 @ApplicationScoped

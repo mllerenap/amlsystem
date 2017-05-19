@@ -66,6 +66,12 @@ public class AdCountry implements Serializable {
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    
+    @Size(max = 255)
+    @Column(name = "descnationality")
+    private String descnationality;
+    
+    
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -176,6 +182,16 @@ public class AdCountry implements Serializable {
     public void setIsactive(YesNo isactive) {
         this.isactive = isactive;
     }
+
+    public String getDescnationality() {
+        return descnationality;
+    }
+
+    public void setDescnationality(String descnationality) {
+        this.descnationality = descnationality;
+    }
+    
+    
 
     
 

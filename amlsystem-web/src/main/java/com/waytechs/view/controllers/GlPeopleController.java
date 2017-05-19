@@ -9,6 +9,7 @@ import com.waytechs.model.ejb.facades.AdCantonFacade;
 import com.waytechs.model.ejb.facades.AdCivilStatusFacade;
 import com.waytechs.model.ejb.facades.AdCountryFacade;
 import com.waytechs.model.ejb.facades.AdCreditActivitySubjectFacade;
+import com.waytechs.model.ejb.facades.AdEconomicActivityHomoFacade;
 import com.waytechs.model.ejb.facades.AdGenderFacade;
 import com.waytechs.model.ejb.facades.AdProvinceFacade;
 import java.io.Serializable;
@@ -29,6 +30,7 @@ import com.waytechs.model.entities.AdCanton;
 import com.waytechs.model.entities.AdCivilStatus;
 import com.waytechs.model.entities.AdCountry;
 import com.waytechs.model.entities.AdCreditActivitySubject;
+import com.waytechs.model.entities.AdEconomicActivityHomo;
 import com.waytechs.model.entities.AdGender;
 import com.waytechs.model.entities.AdProvince;
 import com.waytechs.model.entities.AdTypeCompany;
@@ -99,6 +101,13 @@ public class GlPeopleController implements Serializable {
     private List<AdProvince> listaProvincias;
     private List<AdCanton> listaCantones;
     
+    
+    private AdCountry adNacionalidadSelected;
+    private List<AdCountry> listaNacionalidades;
+    
+    private AdCountry adPaisNacimientoSelected;
+    private List<AdCountry> listaPaisesNacimiento;
+    
     @Inject 
     private AdCountryFacade adCountryFacade;
     
@@ -126,6 +135,11 @@ public class GlPeopleController implements Serializable {
     
     @Inject 
     private AdTypeEconomicActivityFacade adTypeEconomicActivityFacade;
+    
+    private List<AdEconomicActivityHomo> listaSubActividad;
+    
+    @Inject 
+    private AdEconomicActivityHomoFacade adEconomicActivityHomoFacade;
     
     
 
@@ -174,6 +188,10 @@ public class GlPeopleController implements Serializable {
         
         listaTiposPep = adTypePepFacade.findAll();
         
+        
+        listaNacionalidades = adCountryFacade.findAll();
+        
+        listaPaisesNacimiento = adCountryFacade.findAll();
     }
 
     public AdTypePeople getAdTypePeople() {
@@ -279,6 +297,7 @@ public class GlPeopleController implements Serializable {
             
              try {
                  
+                 getActiveItem().setAdTypePeopleId(getAdTypePeople());
                  
                  item = getActiveItem();
                  
@@ -457,6 +476,47 @@ public class GlPeopleController implements Serializable {
     public void setListaActividadEconomica(List<AdCreditActivitySubject> listaActividadEconomica) {
         this.listaActividadEconomica = listaActividadEconomica;
     }
+
+    public List<AdEconomicActivityHomo> getListaSubActividad() {
+        return listaSubActividad;
+    }
+
+    public void setListaSubActividad(List<AdEconomicActivityHomo> listaSubActividad) {
+        this.listaSubActividad = listaSubActividad;
+    }
+
+    public AdCountry getAdNacionalidadSelected() {
+        return adNacionalidadSelected;
+    }
+
+    public void setAdNacionalidadSelected(AdCountry adNacionalidadSelected) {
+        this.adNacionalidadSelected = adNacionalidadSelected;
+    }
+
+    public List<AdCountry> getListaNacionalidades() {
+        return listaNacionalidades;
+    }
+
+    public void setListaNacionalidades(List<AdCountry> listaNacionalidades) {
+        this.listaNacionalidades = listaNacionalidades;
+    }
+
+    public AdCountry getAdPaisNacimientoSelected() {
+        return adPaisNacimientoSelected;
+    }
+
+    public void setAdPaisNacimientoSelected(AdCountry adPaisNacimientoSelected) {
+        this.adPaisNacimientoSelected = adPaisNacimientoSelected;
+    }
+
+    public List<AdCountry> getListaPaisesNacimiento() {
+        return listaPaisesNacimiento;
+    }
+
+    public void setListaPaisesNacimiento(List<AdCountry> listaPaisesNacimiento) {
+        this.listaPaisesNacimiento = listaPaisesNacimiento;
+    }
+    
     
     
     
@@ -478,6 +538,18 @@ public class GlPeopleController implements Serializable {
         System.out.println("onChangeAdCountrySelected: "+event+" getAdProvinceSelected: "+province);
         
         listaCantones = adCantonFacade.findByAdProvinceId(province);
+        
+    }
+    
+    public void onChangeAdCreditActivitySubject(ValueChangeEvent event){
+        
+        AdCreditActivitySubject actividad =   (AdCreditActivitySubject) event.getNewValue(); 
+        
+        System.out.println("onChangeAdCreditActivitySubject: "+actividad);
+        
+        //listaCantones = adCantonFacade.findByAdProvinceId(province);
+        
+        listaSubActividad = adEconomicActivityHomoFacade.findByCodeAct(actividad.getCodcreditactivitysubject());
         
     }
     

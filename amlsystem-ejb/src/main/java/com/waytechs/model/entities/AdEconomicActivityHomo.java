@@ -48,7 +48,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AdEconomicActivityHomo.findByUpdated", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.updated = :updated")
     , @NamedQuery(name = "AdEconomicActivityHomo.findByUpdatedby", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.updatedby = :updatedby")
     , @NamedQuery(name = "AdEconomicActivityHomo.findByIsactive", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.isactive = :isactive")
-    , @NamedQuery(name = "AdEconomicActivityHomo.findByNivel", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.nivel = :nivel")})
+    , @NamedQuery(name = "AdEconomicActivityHomo.findByNivel", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.nivel = :nivel")
+    , @NamedQuery(name = "AdEconomicActivityHomo.findByCodeAct", query = "SELECT a FROM AdEconomicActivityHomo a WHERE a.codecoacthomo like :codecoacthomo and a.nivel = 3 and a.isactive = :isactive")
+})
 public class AdEconomicActivityHomo implements Serializable {
 
     private static final long serialVersionUID = 1L;

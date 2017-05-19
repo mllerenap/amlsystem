@@ -197,5 +197,9 @@ public class TemplateController extends AbstractController implements Serializab
     public MenuModel getModel() {
         return model;
     }
+    
+    public Date getCurrentDate(){
+        return new  Date();
+    }
 
 }

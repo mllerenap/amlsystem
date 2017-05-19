@@ -191,6 +191,17 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
     @JoinColumn(name = "gl_company_id", referencedColumnName = "id")
     @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
     private GlCompany glCompanyId; 
+    
+    
+    @JoinColumn(name = "ad_cuntry_nationality_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdCountry AdCountryNationalityId; 
+    
+    @JoinColumn(name = "ad_cuntry_natal_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdCountry AdCountryNatalId; 
+    
+    
 
     public GlPeople() {
     }
@@ -372,6 +383,24 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
     public void setIsespecial(BigInteger isespecial) {
         this.isespecial = isespecial;
     }
+
+    public AdCountry getAdCountryNationalityId() {
+        return AdCountryNationalityId;
+    }
+
+    public void setAdCountryNationalityId(AdCountry AdCountryNationalityId) {
+        this.AdCountryNationalityId = AdCountryNationalityId;
+    }
+
+    public AdCountry getAdCountryNatalId() {
+        return AdCountryNatalId;
+    }
+
+    public void setAdCountryNatalId(AdCountry AdCountryNatalId) {
+        this.AdCountryNatalId = AdCountryNatalId;
+    }
+    
+    
 
     @XmlTransient
     public List<GlAddress> getGlAddressList() {
