@@ -61,7 +61,7 @@
                                          valueChangeListener="#{glPeople.onChangeTypeId}" >
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaTiposIdentificacion}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
-                            <p:ajax event="change" update="pgDatos"></p:ajax>
+                            <p:ajax event="change" update="pgDatos tvDetalle:pgDatLaborales"></p:ajax>
                         </p:selectOneMenu>
 
                         <p:outputLabel for="itIdeRep" value="Identificación:"  ></p:outputLabel>
@@ -114,8 +114,9 @@
                         
                         
                         <p:outputLabel for="somCountryNac" value="#{glPeople.enabledCedula ? 'País de nacimiento:' : 'País de constitución:' }" ></p:outputLabel>
-                        <p:selectOneMenu id="somCountryNac" value="#{glPeople.adPaisNacimientoSelected}" converter="#{adCountryConverter}" 
-                                         effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}">
+                        <p:selectOneMenu id="somCountryNac" value="#{glPeople.activeItem.adCountryNatalId}" converter="#{adCountryConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}"
+                                         autoWidth="false">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaPaisesNacimiento}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
                             <p:ajax event="change" ></p:ajax>
@@ -123,15 +124,25 @@
                         
                         
                          <p:outputLabel for="somCountryNat" value="Nacionalidad:" rendered="#{glPeople.enabledCedula}"></p:outputLabel>
-                         <p:selectOneMenu id="somCountryNat" value="#{glPeople.adNacionalidadSelected}" converter="#{adCountryConverter}" 
-                                         effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}">
+                         <p:selectOneMenu id="somCountryNat" value="#{glPeople.activeItem.adCountryNationalityId}" converter="#{adCountryConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}"
+                                         autoWidth="false">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaNacionalidades}" var="item" itemLabel="#{item.descnationality.toUpperCase()}" itemValue="#{item}" /> 
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
 
                         
+                        <p:outputLabel for="itEmail" value="Correo:" ></p:outputLabel>
+                                <p:inputText id="itEmail" value="#{glPeople.activeItem.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             required="true"
+                                             validator="emailValidator"> 
+                                </p:inputText>
 
+                                <p:outputLabel for="itEmail2" value="Correo alterno:" ></p:outputLabel>
+                                <p:inputText id="itEmail2" value="#{glPeople.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             validator="emailValidator" required="false"> 
+                                </p:inputText>
 
 
                         <p:outputLabel for="somEstadoCivil" value="Estado civil:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
@@ -144,7 +155,8 @@
 
                         <p:outputLabel for="somTiposPep" value="Tipo PEP:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
                         <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" autoWidth="false"
-                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}">
+                                         effect="fade" filter="true" filterMatchMode="constains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}"
+                                         panelStyle="width: 50px;">
                             <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                             <f:selectItems value="#{glPeople.listaTiposPep}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
@@ -152,24 +164,7 @@
 
 
 
-                        <p:outputLabel for="somActEco" value="Actividad económica:"  ></p:outputLabel>
-                        <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" 
-                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false"
-                                         valueChangeListener="#{glPeople.onChangeAdCreditActivitySubject}">
-                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                            <f:selectItems value="#{glPeople.listaActividadEconomica}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
-                            <p:ajax event="change" update="somSubHomo"></p:ajax>
-                        </p:selectOneMenu>
                         
-                        
-                        <p:outputLabel for="somSubHomo" value="Sub actividad:"  rendered="#{glPeople.enabledRuc}"></p:outputLabel>
-                        <p:selectOneMenu id="somSubHomo" value="#{glPeople.activeItem.adEconomicActivityHomoId}" converter="#{adEconomicActivityHomoConverter}" 
-                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false"
-                                         rendered="#{glPeople.enabledRuc}">
-                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                            <f:selectItems value="#{glPeople.listaSubActividad}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
-                            <p:ajax event="change" ></p:ajax>
-                        </p:selectOneMenu>
 
 
 
@@ -182,11 +177,37 @@
 
                     <p:tabView id="tvDetalle" >
 
-                        <!--
-                        <p:tab title="#{glPeople.activeItem.adTypeIdeId.id.intValue() eq 1 ? 'Información del cliente' : (glPeople.activeItem.adTypeIdeId.id.intValue() eq 2 ? 'Información de la empresa' : 'Información')}">
-                        </p:tab>-->
+                        
+                        <p:tab title="Datos Laborales">
+                            
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatLaborales"> 
+                            
+                            <p:outputLabel for="somActEco" value="Actividad económica:"  ></p:outputLabel>
+                        <p:selectOneMenu id="somActEco" value="#{glPeople.activeItem.adCreditActivitySubjectId}" converter="#{adCreditActivitySubjectConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false"
+                                         valueChangeListener="#{glPeople.onChangeAdCreditActivitySubject}"
+                                         panelStyle="width: 50px;">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                            <f:selectItems value="#{glPeople.listaActividadEconomica}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                            <p:ajax event="change" update="somSubHomo"></p:ajax>
+                        </p:selectOneMenu>
+                        
+                        
+                        <p:outputLabel for="somSubHomo" value="Sub actividad:"  rendered="#{glPeople.enabledRuc}"></p:outputLabel>
+                        <p:selectOneMenu id="somSubHomo" value="#{glPeople.activeItem.adEconomicActivityHomoId}" converter="#{adEconomicActivityHomoConverter}" 
+                                         effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false"
+                                         rendered="#{glPeople.enabledRuc}"
+                                         panelStyle="width: 50px;">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                            <f:selectItems value="#{glPeople.listaSubActividad}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                            <p:ajax event="change" ></p:ajax>
+                        </p:selectOneMenu>
+                        
+                            </p:panelGrid>
+                            
+                        </p:tab>
 
-                        <p:tab title="Información de Contacto">
+                        <p:tab title="Domicilio">
 
                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgContacto"> 
 
@@ -221,16 +242,7 @@
 
 
 
-                                <p:outputLabel for="itEmail" value="Correo:" ></p:outputLabel>
-                                <p:inputText id="itEmail" value="#{glPeople.activeItem.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" 
-                                             required="true"
-                                             validator="emailValidator"> 
-                                </p:inputText>
-
-                                <p:outputLabel for="itEmail2" value="Correo alterno:" ></p:outputLabel>
-                                <p:inputText id="itEmail2" value="#{glPeople.activeItem.email2}" placeholder="Correo alterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
-                                             validator="emailValidator" required="false"> 
-                                </p:inputText>
+                               
 
 
                                 <p:outputLabel for="itTelefono" value="Teléfono:" ></p:outputLabel>
