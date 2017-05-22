@@ -160,15 +160,20 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
     @JoinColumn(name = "ad_canton_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdCanton adCantonId;
+    
     @JoinColumn(name = "ad_civil_status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdCivilStatus adCivilStatusId;
+    
     @JoinColumn(name = "ad_credit_activity_subject_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdCreditActivitySubject adCreditActivitySubjectId;
+    
     @JoinColumn(name = "ad_economic_activity_homo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdEconomicActivityHomo adEconomicActivityHomoId;
+    
+    
     @JoinColumn(name = "ad_gender_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdGender adGenderId;
@@ -200,6 +205,27 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
     @JoinColumn(name = "ad_cuntry_natal_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdCountry AdCountryNatalId; 
+    
+    @Column(name = "name_company_job")
+    private String nameCompanyJob;
+    
+    @JoinColumn(name = "ad_employment_situation_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdEmploymentSituation adEmploymentSituationId; 
+    
+    @JoinColumn(name = "ad_position_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdPosition adPositionId;
+    
+    
+    
+    @JoinColumn(name = "ad_credit_activity_subject_job_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdCreditActivitySubject adCreditActivitySubjectJobId;
+    
+    @JoinColumn(name = "ad_economic_activity_homo_job_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private AdEconomicActivityHomo adEconomicActivityHomoJobId;
     
     
 
@@ -516,6 +542,46 @@ public class GlPeople extends AbstractEntityModel implements Serializable {
 
     public void setGlCompanyId(GlCompany glCompanyId) {
         this.glCompanyId = glCompanyId;
+    }
+
+    public String getNameCompanyJob() {
+        return nameCompanyJob;
+    }
+
+    public void setNameCompanyJob(String nameCompanyJob) {
+        this.nameCompanyJob = nameCompanyJob;
+    }
+
+    public AdEmploymentSituation getAdEmploymentSituationId() {
+        return adEmploymentSituationId;
+    }
+
+    public void setAdEmploymentSituationId(AdEmploymentSituation adEmploymentSituationId) {
+        this.adEmploymentSituationId = adEmploymentSituationId;
+    }
+
+    public AdPosition getAdPositionId() {
+        return adPositionId;
+    }
+
+    public void setAdPositionId(AdPosition adPositionId) {
+        this.adPositionId = adPositionId;
+    }
+
+    public AdCreditActivitySubject getAdCreditActivitySubjectJobId() {
+        return adCreditActivitySubjectJobId;
+    }
+
+    public void setAdCreditActivitySubjectJobId(AdCreditActivitySubject adCreditActivitySubjectJobId) {
+        this.adCreditActivitySubjectJobId = adCreditActivitySubjectJobId;
+    } 
+
+    public AdEconomicActivityHomo getAdEconomicActivityHomoJobId() {
+        return adEconomicActivityHomoJobId;
+    }
+
+    public void setAdEconomicActivityHomoJobId(AdEconomicActivityHomo adEconomicActivityHomoJobId) {
+        this.adEconomicActivityHomoJobId = adEconomicActivityHomoJobId;
     }
     
     

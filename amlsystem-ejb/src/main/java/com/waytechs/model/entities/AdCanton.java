@@ -256,5 +256,5 @@ public class AdCanton implements Serializable {
     public String toString() {
         return "com.waytechs.model.entities.AdCanton[ id=" + id + " ]";
     }
-    
+     
 }

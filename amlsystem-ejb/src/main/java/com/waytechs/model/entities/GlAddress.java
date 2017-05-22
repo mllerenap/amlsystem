@@ -5,11 +5,14 @@
  */
 package com.waytechs.model.entities;
 
+import com.waytechs.model.converters.YesNoConverter;
+import com.waytechs.model.enums.YesNo;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -53,7 +56,8 @@ public class GlAddress implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
-    private Long id;
+    private BigInteger id;
+     
     @Size(max = 255)
     @Column(name = "mainstreet")
     private String mainstreet;
@@ -86,9 +90,15 @@ public class GlAddress implements Serializable {
     @Size(max = 255)
     @Column(name = "updatedby")
     private String updatedby;
-    @Size(max = 255)
+    
+    
+    @Basic(optional = false)
     @Column(name = "isactive")
-    private String isactive;
+    @Convert(converter = YesNoConverter.class)
+    private YesNo isactive;
+    
+    
+    
     @Column(name = "residencetimey")
     private BigInteger residencetimey;
     @Column(name = "residencetimem")
@@ -112,15 +122,15 @@ public class GlAddress implements Serializable {
     public GlAddress() {
     }
 
-    public GlAddress(Long id) {
+    public GlAddress(BigInteger id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -206,11 +216,11 @@ public class GlAddress implements Serializable {
         this.updatedby = updatedby;
     }
 
-    public String getIsactive() {
+    public YesNo getIsactive() {
         return isactive;
     }
 
-    public void setIsactive(String isactive) {
+    public void setIsactive(YesNo isactive) {
         this.isactive = isactive;
     }
 

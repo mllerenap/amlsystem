@@ -10,8 +10,12 @@ import com.waytechs.model.ejb.facades.AdCivilStatusFacade;
 import com.waytechs.model.ejb.facades.AdCountryFacade;
 import com.waytechs.model.ejb.facades.AdCreditActivitySubjectFacade;
 import com.waytechs.model.ejb.facades.AdEconomicActivityHomoFacade;
+import com.waytechs.model.ejb.facades.AdEmploymentSituationFacade;
 import com.waytechs.model.ejb.facades.AdGenderFacade;
+import com.waytechs.model.ejb.facades.AdPositionFacade;
 import com.waytechs.model.ejb.facades.AdProvinceFacade;
+import com.waytechs.model.ejb.facades.AdSectorAddressFacade;
+import com.waytechs.model.ejb.facades.AdTypeBuildingFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +29,27 @@ import com.waytechs.model.ejb.facades.AdTypeIdeFacade;
 import com.waytechs.model.ejb.facades.AdTypeOfficeFacade;
 import com.waytechs.model.ejb.facades.AdTypePeopleFacade;
 import com.waytechs.model.ejb.facades.AdTypePepFacade;
+import com.waytechs.model.ejb.facades.GlAddressFacade;
 import com.waytechs.model.ejb.facades.GlPeopleFacade;
 import com.waytechs.model.entities.AdCanton;
-import com.waytechs.model.entities.AdCivilStatus;
+import com.waytechs.model.entities.AdCivilStatus;  
 import com.waytechs.model.entities.AdCountry;
 import com.waytechs.model.entities.AdCreditActivitySubject;
 import com.waytechs.model.entities.AdEconomicActivityHomo;
+import com.waytechs.model.entities.AdEmploymentSituation;
 import com.waytechs.model.entities.AdGender;
+import com.waytechs.model.entities.AdPosition;
 import com.waytechs.model.entities.AdProvince;
+import com.waytechs.model.entities.AdSectorAddress;
+import com.waytechs.model.entities.AdTypeBuilding;
 import com.waytechs.model.entities.AdTypeCompany;
 import com.waytechs.model.entities.AdTypeEconomicActivity;
 import com.waytechs.model.entities.AdTypeIde;
 import com.waytechs.model.entities.AdTypeOffice;
 import com.waytechs.model.entities.AdTypePeople;
 import com.waytechs.model.entities.AdTypePep;
-import com.waytechs.model.entities.GlPeople;
+import com.waytechs.model.entities.GlAddress;
+import com.waytechs.model.entities.GlPeople; 
 import com.waytechs.view.components.DataView;
 import com.waytechs.view.components.DataViewType;
 import com.waytechs.view.utils.JsfUtils;
@@ -142,6 +152,72 @@ public class GlPeopleController implements Serializable {
     private AdEconomicActivityHomoFacade adEconomicActivityHomoFacade;
     
     
+    @Inject 
+    private AdEmploymentSituationFacade adEmploymentSituationFacade;
+    
+    private List<AdEmploymentSituation> listaSituacionLaboral;
+    
+    
+    @Inject 
+    private AdPositionFacade adPositionFacade;
+    
+    private List<AdPosition> listaCargos;
+    
+    
+    
+    private List<AdCreditActivitySubject> listaActividadEconomicaEmpresa;
+    
+    private List<AdEconomicActivityHomo> listaSubActividadEmpresa;
+    
+    
+    @Inject 
+    private GlAddressFacade glAddressFacade;
+    
+    private GlAddress glAddressDomicilio;
+    
+    
+    @Inject 
+    private AdSectorAddressFacade adSectorAddressFacade;
+    
+    private List<AdSectorAddress> listaSector;
+    
+    
+    @Inject 
+    private AdTypeBuildingFacade adTypeBuildingFacade;
+    
+    private List<AdTypeBuilding> listaTipoVivienda;
+    
+    private GlAddress glAddressEmpresa;
+    
+    private AdCountry adCountryJobSelected;
+    private AdProvince adProvinceJobSelected;
+    
+    private List<AdCountry> listaPaisesEmpresa;
+    private List<AdProvince> listaProvinciasEmpresa;
+    private List<AdCanton> listaCantonesEmpresa;
+    
+    private List<AdSectorAddress> listaSectorEmpresa;
+    
+    
+    
+    private GlAddress glAddressDomicilioCompania;
+    
+    private AdCountry adCountryCompaniaSelected;
+    private AdProvince adProvinceCompaniaSelected;
+    
+    private List<AdCountry> listaPaisesCompania;
+    private List<AdProvince> listaProvinciasCompania;
+    private List<AdCanton> listaCantonesCompania;
+    
+    private List<AdSectorAddress> listaSectorCompania;
+    
+    
+    
+    private GlPeople conyuge;
+    
+    private List<AdTypeIde> listaTiposIdentificacionConyuge;
+    
+    
 
     @PostConstruct
     public void initialize() {
@@ -180,6 +256,8 @@ public class GlPeopleController implements Serializable {
         
         listaTiposIdentificacion = adTypeIdeFacade.findAll();
         
+        listaTiposIdentificacionConyuge = adTypeIdeFacade.findAll();
+        
         listaGeneros = adGenderFacade.findAll();
         
         listaPaises = adCountryFacade.findAll();
@@ -192,6 +270,29 @@ public class GlPeopleController implements Serializable {
         listaNacionalidades = adCountryFacade.findAll();
         
         listaPaisesNacimiento = adCountryFacade.findAll();
+        
+        listaSituacionLaboral = adEmploymentSituationFacade.findAll();
+        
+        listaCargos = adPositionFacade.findAll();
+        
+        AdTypeEconomicActivity adTypeEconomicActivity1 = adTypeEconomicActivityFacade.find(new BigInteger("1"));
+        listaActividadEconomicaEmpresa  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity1);
+        
+        
+        listaSector = adSectorAddressFacade.findAll();
+        listaTipoVivienda = adTypeBuildingFacade.findAll();
+        
+        
+        listaPaisesEmpresa = adCountryFacade.findAll();
+        
+        listaSectorEmpresa = adSectorAddressFacade.findAll();
+        
+        
+        
+        listaPaisesCompania = adCountryFacade.findAll();
+        listaSectorCompania = adSectorAddressFacade.findAll();
+        
+        
     }
 
     public AdTypePeople getAdTypePeople() {
@@ -288,6 +389,16 @@ public class GlPeopleController implements Serializable {
             
             AdTypeEconomicActivity adTypeEconomicActivity2 = adTypeEconomicActivityFacade.find(new BigInteger("2"));
             listaActividadEconomica  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity2);
+            
+            //listaActividadEconomicaEmpresa = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity2);
+            
+            glAddressDomicilio = new GlAddress();
+            
+            glAddressEmpresa = new GlAddress();
+            
+            glAddressDomicilioCompania = new GlAddress();
+            
+            conyuge = new GlPeople();
             
             return getActiveItem();
         }
@@ -393,6 +504,7 @@ public class GlPeopleController implements Serializable {
                 
                 AdTypeEconomicActivity adTypeEconomicActivity1 = adTypeEconomicActivityFacade.find(new BigInteger("1"));
                 listaActividadEconomica  = adCreditActivitySubjectFacade.findByAdTypeEconomicActivityId(adTypeEconomicActivity1);
+                
                 
                 break;
             default:
@@ -516,6 +628,190 @@ public class GlPeopleController implements Serializable {
     public void setListaPaisesNacimiento(List<AdCountry> listaPaisesNacimiento) {
         this.listaPaisesNacimiento = listaPaisesNacimiento;
     }
+
+    public List<AdEmploymentSituation> getListaSituacionLaboral() {
+        return listaSituacionLaboral;
+    }
+
+    public void setListaSituacionLaboral(List<AdEmploymentSituation> listaSituacionLaboral) {
+        this.listaSituacionLaboral = listaSituacionLaboral;
+    }
+
+    public List<AdPosition> getListaCargos() {
+        return listaCargos;
+    }
+
+    public void setListaCargos(List<AdPosition> listaCargos) {
+        this.listaCargos = listaCargos;
+    }
+
+    public List<AdCreditActivitySubject> getListaActividadEconomicaEmpresa() {
+        return listaActividadEconomicaEmpresa;
+    }
+
+    public void setListaActividadEconomicaEmpresa(List<AdCreditActivitySubject> listaActividadEconomicaEmpresa) {
+        this.listaActividadEconomicaEmpresa = listaActividadEconomicaEmpresa;
+    }
+
+    public List<AdEconomicActivityHomo> getListaSubActividadEmpresa() {
+        return listaSubActividadEmpresa;
+    }
+
+    public void setListaSubActividadEmpresa(List<AdEconomicActivityHomo> listaSubActividadEmpresa) {
+        this.listaSubActividadEmpresa = listaSubActividadEmpresa;
+    }
+
+    public GlAddress getGlAddressDomicilio() {
+        return glAddressDomicilio;
+    }
+
+    public void setGlAddressDomicilio(GlAddress glAddressDomicilio) {
+        this.glAddressDomicilio = glAddressDomicilio; 
+    }
+
+    public List<AdSectorAddress> getListaSector() {
+        return listaSector;
+    }
+
+    public void setListaSector(List<AdSectorAddress> listaSector) {
+        this.listaSector = listaSector;
+    }
+
+    public List<AdTypeBuilding> getListaTipoVivienda() {
+        return listaTipoVivienda;
+    }
+
+    public void setListaTipoVivienda(List<AdTypeBuilding> listaTipoVivienda) {
+        this.listaTipoVivienda = listaTipoVivienda;
+    }
+
+    public GlAddress getGlAddressEmpresa() {
+        return glAddressEmpresa;
+    }
+
+    public void setGlAddressEmpresa(GlAddress glAddressEmpresa) {
+        this.glAddressEmpresa = glAddressEmpresa;
+    }
+
+    public AdCountry getAdCountryJobSelected() {
+        return adCountryJobSelected;
+    }
+
+    public void setAdCountryJobSelected(AdCountry adCountryJobSelected) {
+        this.adCountryJobSelected = adCountryJobSelected;
+    }
+
+    public AdProvince getAdProvinceJobSelected() {
+        return adProvinceJobSelected;
+    }
+
+    public void setAdProvinceJobSelected(AdProvince adProvinceJobSelected) {
+        this.adProvinceJobSelected = adProvinceJobSelected;
+    }
+
+    public List<AdCountry> getListaPaisesEmpresa() {
+        return listaPaisesEmpresa;
+    }
+
+    public void setListaPaisesEmpresa(List<AdCountry> listaPaisesEmpresa) {
+        this.listaPaisesEmpresa = listaPaisesEmpresa;
+    }
+
+    public List<AdProvince> getListaProvinciasEmpresa() {
+        return listaProvinciasEmpresa;
+    }
+
+    public void setListaProvinciasEmpresa(List<AdProvince> listaProvinciasEmpresa) {
+        this.listaProvinciasEmpresa = listaProvinciasEmpresa;
+    }
+
+    public List<AdCanton> getListaCantonesEmpresa() {
+        return listaCantonesEmpresa;
+    }
+
+    public void setListaCantonesEmpresa(List<AdCanton> listaCantonesEmpresa) {
+        this.listaCantonesEmpresa = listaCantonesEmpresa;
+    }
+
+    public List<AdSectorAddress> getListaSectorEmpresa() {
+        return listaSectorEmpresa;
+    }
+
+    public void setListaSectorEmpresa(List<AdSectorAddress> listaSectorEmpresa) {
+        this.listaSectorEmpresa = listaSectorEmpresa;
+    }
+
+    public AdCountry getAdCountryCompaniaSelected() {
+        return adCountryCompaniaSelected;
+    }
+
+    public void setAdCountryCompaniaSelected(AdCountry adCountryCompaniaSelected) {
+        this.adCountryCompaniaSelected = adCountryCompaniaSelected;
+    }
+
+    public AdProvince getAdProvinceCompaniaSelected() {
+        return adProvinceCompaniaSelected;
+    }
+
+    public void setAdProvinceCompaniaSelected(AdProvince adProvinceCompaniaSelected) {
+        this.adProvinceCompaniaSelected = adProvinceCompaniaSelected;
+    }
+
+    public List<AdCountry> getListaPaisesCompania() {
+        return listaPaisesCompania;
+    }
+
+    public void setListaPaisesCompania(List<AdCountry> listaPaisesCompania) {
+        this.listaPaisesCompania = listaPaisesCompania;
+    }
+
+    public List<AdProvince> getListaProvinciasCompania() {
+        return listaProvinciasCompania;
+    }
+
+    public void setListaProvinciasCompania(List<AdProvince> listaProvinciasCompania) {
+        this.listaProvinciasCompania = listaProvinciasCompania;
+    }
+
+    public List<AdCanton> getListaCantonesCompania() {
+        return listaCantonesCompania;
+    }
+
+    public void setListaCantonesCompania(List<AdCanton> listaCantonesCompania) {
+        this.listaCantonesCompania = listaCantonesCompania;
+    }
+
+    public List<AdSectorAddress> getListaSectorCompania() {
+        return listaSectorCompania;
+    }
+
+    public void setListaSectorCompania(List<AdSectorAddress> listaSectorCompania) {
+        this.listaSectorCompania = listaSectorCompania;
+    }
+
+    public GlAddress getGlAddressDomicilioCompania() {
+        return glAddressDomicilioCompania;
+    }
+
+    public void setGlAddressDomicilioCompania(GlAddress glAddressDomicilioCompania) {
+        this.glAddressDomicilioCompania = glAddressDomicilioCompania;
+    }
+
+    public GlPeople getConyuge() {
+        return conyuge;
+    }
+
+    public void setConyuge(GlPeople conyuge) {
+        this.conyuge = conyuge;
+    }
+
+    public List<AdTypeIde> getListaTiposIdentificacionConyuge() {
+        return listaTiposIdentificacionConyuge;
+    }
+
+    public void setListaTiposIdentificacionConyuge(List<AdTypeIde> listaTiposIdentificacionConyuge) {
+        this.listaTiposIdentificacionConyuge = listaTiposIdentificacionConyuge;
+    }
     
     
     
@@ -550,6 +846,57 @@ public class GlPeopleController implements Serializable {
         //listaCantones = adCantonFacade.findByAdProvinceId(province);
         
         listaSubActividad = adEconomicActivityHomoFacade.findByCodeAct(actividad.getCodcreditactivitysubject());
+        
+    }
+    
+    
+    public void onChangeAdCreditActivitySubjectJob(ValueChangeEvent event){
+        AdCreditActivitySubject actividad =   (AdCreditActivitySubject) event.getNewValue(); 
+        System.out.println("onChangeAdCreditActivitySubjectJob: "+actividad);
+        
+        listaSubActividadEmpresa = adEconomicActivityHomoFacade.findByCodeAct(actividad.getCodcreditactivitysubject());
+        
+    }
+    
+    
+    
+    public void onChangeAdCountryJob(ValueChangeEvent event){
+        
+        AdCountry country =   (AdCountry) event.getNewValue();
+        
+        System.out.println("onChangeAdCountryJob: "+event+" getAdCountrySelected: "+country);
+        
+        listaProvinciasEmpresa = adProvinceFacade.findByAdCountryId(country);
+        
+    }
+    
+    public void onChangeAdPronvinceJob(ValueChangeEvent event){
+        
+        AdProvince province =   (AdProvince) event.getNewValue();
+        
+        System.out.println("onChangeAdPronvinceJob: "+event+" getAdProvinceSelected: "+province);
+        
+        listaCantonesEmpresa = adCantonFacade.findByAdProvinceId(province);
+        
+    }
+    
+    public void onChangeAdCountryCompania(ValueChangeEvent event){
+        
+        AdCountry country =   (AdCountry) event.getNewValue();
+        
+        System.out.println("onChangeAdCountryCompania: "+event+" getAdCountrySelected: "+country);
+        
+        listaProvinciasCompania = adProvinceFacade.findByAdCountryId(country);
+        
+    }
+    
+    public void onChangeAdPronvinceCompania(ValueChangeEvent event){
+        
+        AdProvince province =   (AdProvince) event.getNewValue();
+        
+        System.out.println("onChangeAdPronvinceCompania: "+event+" getAdProvinceSelected: "+province);
+        
+        listaCantonesCompania = adCantonFacade.findByAdProvinceId(province);
         
     }
     
