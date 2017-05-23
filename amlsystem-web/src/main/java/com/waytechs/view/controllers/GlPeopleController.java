@@ -112,10 +112,9 @@ public class GlPeopleController implements Serializable {
     private List<AdCanton> listaCantones;
     
     
-    private AdCountry adNacionalidadSelected;
+    
     private List<AdCountry> listaNacionalidades;
     
-    private AdCountry adPaisNacimientoSelected;
     private List<AdCountry> listaPaisesNacimiento;
     
     @Inject 
@@ -128,6 +127,7 @@ public class GlPeopleController implements Serializable {
     private AdCantonFacade adCantonFacade;
     
     private List<AdCivilStatus> listaEstadoCivil;
+    
     @Inject 
     private AdCivilStatusFacade adCivilStatusFacade;
     
@@ -218,6 +218,30 @@ public class GlPeopleController implements Serializable {
     private List<AdTypeIde> listaTiposIdentificacionConyuge;
     
     
+    
+    private GlPeople repLegal;
+    private List<AdTypeIde> listaTiposIdentificacionRepLegal;
+    private List<AdGender> listaGenerosRepLegal;
+    private List<AdCountry> listaNacionalidadesRepLegal;
+    private List<AdCountry> listaPaisesNacimientoRepLegal;
+    private List<AdCivilStatus> listaEstadoCivilRepLegal;
+    
+    
+    
+    private GlAddress glAddressDomicilioRepLegal;
+    private AdCountry adCountryRepLegal;
+    private AdProvince adProvinceRepLegal;
+    private List<AdCountry> listaPaisesRepLegal;
+    private List<AdProvince> listaProvinciasRepLegal;
+    private List<AdCanton> listaCantonesRepLegal;
+    private List<AdSectorAddress> listaSectorRepLegal;
+    private List<AdTypeBuilding> listaTipoViviendaRepLegal;
+    
+    
+    
+    private GlPeople conyugeRepLegal;
+    private List<AdTypeIde> listaTiposIdentificacionConyugeRepLegal;
+    
 
     @PostConstruct
     public void initialize() {
@@ -255,21 +279,29 @@ public class GlPeopleController implements Serializable {
         
         
         listaTiposIdentificacion = adTypeIdeFacade.findAll();
-        
         listaTiposIdentificacionConyuge = adTypeIdeFacade.findAll();
+        listaTiposIdentificacionRepLegal = adTypeIdeFacade.findAll();
         
         listaGeneros = adGenderFacade.findAll();
+        
+        listaGenerosRepLegal = adGenderFacade.findAll();
         
         listaPaises = adCountryFacade.findAll();
         
         listaEstadoCivil = adCivilStatusFacade.findAll();
+        listaEstadoCivilRepLegal = adCivilStatusFacade.findAll();
         
         listaTiposPep = adTypePepFacade.findAll();
         
         
         listaNacionalidades = adCountryFacade.findAll();
-        
         listaPaisesNacimiento = adCountryFacade.findAll();
+        
+        
+        
+        
+        
+        
         
         listaSituacionLaboral = adEmploymentSituationFacade.findAll();
         
@@ -284,14 +316,20 @@ public class GlPeopleController implements Serializable {
         
         
         listaPaisesEmpresa = adCountryFacade.findAll();
-        
         listaSectorEmpresa = adSectorAddressFacade.findAll();
-        
-        
         
         listaPaisesCompania = adCountryFacade.findAll();
         listaSectorCompania = adSectorAddressFacade.findAll();
         
+        
+        listaNacionalidadesRepLegal = adCountryFacade.findAll();
+        listaPaisesNacimientoRepLegal = adCountryFacade.findAll();
+        listaPaisesRepLegal = adCountryFacade.findAll();
+        listaSectorRepLegal = adSectorAddressFacade.findAll();
+        listaTipoViviendaRepLegal = adTypeBuildingFacade.findAll();
+        
+        
+        listaTiposIdentificacionConyugeRepLegal = adTypeIdeFacade.findAll();
         
     }
 
@@ -399,6 +437,12 @@ public class GlPeopleController implements Serializable {
             glAddressDomicilioCompania = new GlAddress();
             
             conyuge = new GlPeople();
+            
+            repLegal =new GlPeople();
+            
+            glAddressDomicilioRepLegal = new GlAddress();
+            
+            conyugeRepLegal = new GlPeople();
             
             return getActiveItem();
         }
@@ -597,28 +641,12 @@ public class GlPeopleController implements Serializable {
         this.listaSubActividad = listaSubActividad;
     }
 
-    public AdCountry getAdNacionalidadSelected() {
-        return adNacionalidadSelected;
-    }
-
-    public void setAdNacionalidadSelected(AdCountry adNacionalidadSelected) {
-        this.adNacionalidadSelected = adNacionalidadSelected;
-    }
-
     public List<AdCountry> getListaNacionalidades() {
         return listaNacionalidades;
     }
 
     public void setListaNacionalidades(List<AdCountry> listaNacionalidades) {
         this.listaNacionalidades = listaNacionalidades;
-    }
-
-    public AdCountry getAdPaisNacimientoSelected() {
-        return adPaisNacimientoSelected;
-    }
-
-    public void setAdPaisNacimientoSelected(AdCountry adPaisNacimientoSelected) {
-        this.adPaisNacimientoSelected = adPaisNacimientoSelected;
     }
 
     public List<AdCountry> getListaPaisesNacimiento() {
@@ -812,6 +840,134 @@ public class GlPeopleController implements Serializable {
     public void setListaTiposIdentificacionConyuge(List<AdTypeIde> listaTiposIdentificacionConyuge) {
         this.listaTiposIdentificacionConyuge = listaTiposIdentificacionConyuge;
     }
+
+    public GlPeople getRepLegal() {
+        return repLegal;
+    }
+
+    public void setRepLegal(GlPeople repLegal) {
+        this.repLegal = repLegal;
+    }
+
+    public List<AdTypeIde> getListaTiposIdentificacionRepLegal() {
+        return listaTiposIdentificacionRepLegal;
+    }
+
+    public void setListaTiposIdentificacionRepLegal(List<AdTypeIde> listaTiposIdentificacionRepLegal) {
+        this.listaTiposIdentificacionRepLegal = listaTiposIdentificacionRepLegal;
+    }
+
+    public List<AdGender> getListaGenerosRepLegal() {
+        return listaGenerosRepLegal;
+    }
+
+    public void setListaGenerosRepLegal(List<AdGender> listaGenerosRepLegal) {
+        this.listaGenerosRepLegal = listaGenerosRepLegal;
+    }
+
+    public List<AdCountry> getListaNacionalidadesRepLegal() {
+        return listaNacionalidadesRepLegal;
+    }
+
+    public void setListaNacionalidadesRepLegal(List<AdCountry> listaNacionalidadesRepLegal) {
+        this.listaNacionalidadesRepLegal = listaNacionalidadesRepLegal;
+    }
+
+    public List<AdCountry> getListaPaisesNacimientoRepLegal() {
+        return listaPaisesNacimientoRepLegal;
+    }
+
+    public void setListaPaisesNacimientoRepLegal(List<AdCountry> listaPaisesNacimientoRepLegal) {
+        this.listaPaisesNacimientoRepLegal = listaPaisesNacimientoRepLegal;
+    }
+
+    public List<AdCivilStatus> getListaEstadoCivilRepLegal() {
+        return listaEstadoCivilRepLegal;
+    }
+
+    public void setListaEstadoCivilRepLegal(List<AdCivilStatus> listaEstadoCivilRepLegal) {
+        this.listaEstadoCivilRepLegal = listaEstadoCivilRepLegal;
+    }
+
+    public GlAddress getGlAddressDomicilioRepLegal() {
+        return glAddressDomicilioRepLegal;
+    }
+
+    public void setGlAddressDomicilioRepLegal(GlAddress glAddressDomicilioRepLegal) {
+        this.glAddressDomicilioRepLegal = glAddressDomicilioRepLegal;
+    }
+
+    public AdCountry getAdCountryRepLegal() {
+        return adCountryRepLegal;
+    }
+
+    public void setAdCountryRepLegal(AdCountry adCountryRepLegal) {
+        this.adCountryRepLegal = adCountryRepLegal;
+    }
+
+    public AdProvince getAdProvinceRepLegal() {
+        return adProvinceRepLegal;
+    }
+
+    public void setAdProvinceRepLegal(AdProvince adProvinceRepLegal) {
+        this.adProvinceRepLegal = adProvinceRepLegal;
+    }
+
+    public List<AdCountry> getListaPaisesRepLegal() {
+        return listaPaisesRepLegal;
+    }
+
+    public void setListaPaisesRepLegal(List<AdCountry> listaPaisesRepLegal) {
+        this.listaPaisesRepLegal = listaPaisesRepLegal;
+    }
+
+    public List<AdProvince> getListaProvinciasRepLegal() {
+        return listaProvinciasRepLegal;
+    }
+
+    public void setListaProvinciasRepLegal(List<AdProvince> listaProvinciasRepLegal) {
+        this.listaProvinciasRepLegal = listaProvinciasRepLegal;
+    }
+
+    public List<AdCanton> getListaCantonesRepLegal() {
+        return listaCantonesRepLegal;
+    }
+
+    public void setListaCantonesRepLegal(List<AdCanton> listaCantonesRepLegal) {
+        this.listaCantonesRepLegal = listaCantonesRepLegal;
+    }
+
+    public List<AdSectorAddress> getListaSectorRepLegal() {
+        return listaSectorRepLegal;
+    }
+
+    public void setListaSectorRepLegal(List<AdSectorAddress> listaSectorRepLegal) {
+        this.listaSectorRepLegal = listaSectorRepLegal;
+    }
+
+    public List<AdTypeBuilding> getListaTipoViviendaRepLegal() {
+        return listaTipoViviendaRepLegal;
+    }
+
+    public void setListaTipoViviendaRepLegal(List<AdTypeBuilding> listaTipoViviendaRepLegal) {
+        this.listaTipoViviendaRepLegal = listaTipoViviendaRepLegal;
+    }
+
+    public GlPeople getConyugeRepLegal() {
+        return conyugeRepLegal;
+    }
+
+    public void setConyugeRepLegal(GlPeople conyugeRepLegal) {
+        this.conyugeRepLegal = conyugeRepLegal;
+    }
+
+    public List<AdTypeIde> getListaTiposIdentificacionConyugeRepLegal() {
+        return listaTiposIdentificacionConyugeRepLegal;
+    }
+
+    public void setListaTiposIdentificacionConyugeRepLegal(List<AdTypeIde> listaTiposIdentificacionConyugeRepLegal) {
+        this.listaTiposIdentificacionConyugeRepLegal = listaTiposIdentificacionConyugeRepLegal;
+    }
     
     
     
@@ -897,6 +1053,28 @@ public class GlPeopleController implements Serializable {
         System.out.println("onChangeAdPronvinceCompania: "+event+" getAdProvinceSelected: "+province);
         
         listaCantonesCompania = adCantonFacade.findByAdProvinceId(province);
+        
+    }
+    
+    
+    
+    public void onChangeAdCountryRepLegal(ValueChangeEvent event){
+        
+        AdCountry country =   (AdCountry) event.getNewValue();
+        
+        System.out.println("onChangeAdCountryRepLegal: "+event+" getAdCountrySelected: "+country);
+        
+        listaProvinciasRepLegal = adProvinceFacade.findByAdCountryId(country);
+        
+    }
+    
+    public void onChangeAdPronvinceRepLegal(ValueChangeEvent event){
+        
+        AdProvince province =   (AdProvince) event.getNewValue();
+        
+        System.out.println("onChangeAdPronvinceRepLegal: "+event+" getAdProvinceSelected: "+province);
+        
+        listaCantonesRepLegal = adCantonFacade.findByAdProvinceId(province);
         
     }
     

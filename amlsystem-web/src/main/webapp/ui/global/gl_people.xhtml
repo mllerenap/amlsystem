@@ -196,8 +196,8 @@
 
 
                     <p:tabView id="tvDetalle" >
-                        
-                        
+
+
                         <p:tab title="Dirección de domicilio" rendered="#{glPeople.enabledCedula}">
 
                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgContacto"> 
@@ -235,19 +235,19 @@
                                 <p:outputLabel for="itCallePri" value="Calle principal:"  ></p:outputLabel>
                                 <p:inputText id="itCallePri" value="#{glPeople.glAddressDomicilio.mainstreet}" placeholder="Calle principal" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itNum" value="Número:"  ></p:outputLabel>
                                 <p:inputText id="itNum" value="#{glPeople.glAddressDomicilio.number}" 
                                              placeholder="Número de casa" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              maxlength="9">
-                                     <p:keyFilter mask="num"></p:keyFilter>
+                                    <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="1"></f:validateLength>
                                 </p:inputText>
-                                
-                                 <p:outputLabel for="itBlock" value="Manzana:"  ></p:outputLabel>
-                                 <p:inputText id="itBlock" value="#{glPeople.glAddressDomicilio.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
+
+                                <p:outputLabel for="itBlock" value="Manzana:"  ></p:outputLabel>
+                                <p:inputText id="itBlock" value="#{glPeople.glAddressDomicilio.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itCalleSec" value="Calle secundaria:"  ></p:outputLabel>
                                 <p:inputText id="itCalleSec" value="#{glPeople.glAddressDomicilio.crossstreet}" placeholder="Calle secundaria" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
@@ -267,8 +267,8 @@
                                     <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="10"></f:validateLength>
                                 </p:inputText>
-                                
-                                
+
+
                                 <p:outputLabel for="somSectorAdre" value="Sector:" ></p:outputLabel>
                                 <p:selectOneMenu id="somSectorAdre" value="#{glPeople.glAddressDomicilio.adSectorAddressId}" converter="#{adSectorAddressConverter}" 
                                                  effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
@@ -276,9 +276,9 @@
                                     <f:selectItems value="#{glPeople.listaSector}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
                                     <p:ajax event="change" ></p:ajax>
                                 </p:selectOneMenu>
-                                
-                                 <p:outputLabel for="somTypeBuild" value="Tipo de vivienda:" ></p:outputLabel>
-                                 <p:selectOneMenu id="somTypeBuild" value="#{glPeople.glAddressDomicilio.adTypeBuildingId}" converter="#{adTypeBuildingConverter}" 
+
+                                <p:outputLabel for="somTypeBuild" value="Tipo de vivienda:" ></p:outputLabel>
+                                <p:selectOneMenu id="somTypeBuild" value="#{glPeople.glAddressDomicilio.adTypeBuildingId}" converter="#{adTypeBuildingConverter}" 
                                                  effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
                                     <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                                     <f:selectItems value="#{glPeople.listaTipoVivienda}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
@@ -348,9 +348,9 @@
 
                         </p:tab>
 
-                        
-                        
-                        
+
+
+
                         <p:tab title="Domicilio de trabajo" rendered="#{glPeople.enabledCedula}">
 
                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDirEmpresa"> 
@@ -388,19 +388,19 @@
                                 <p:outputLabel for="itCallePriJob" value="Calle principal:"  ></p:outputLabel>
                                 <p:inputText id="itCallePriJob" value="#{glPeople.glAddressEmpresa.mainstreet}" placeholder="Calle principal" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itNumJob" value="Número:"  ></p:outputLabel>
                                 <p:inputText id="itNumJob" value="#{glPeople.glAddressEmpresa.number}" 
                                              placeholder="Número de casa" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              maxlength="9">
-                                     <p:keyFilter mask="num"></p:keyFilter>
+                                    <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="1"></f:validateLength>
                                 </p:inputText>
-                                
-                                 <p:outputLabel for="itBlockJob" value="Manzana:"  ></p:outputLabel>
-                                 <p:inputText id="itBlockJob" value="#{glPeople.glAddressEmpresa.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
+
+                                <p:outputLabel for="itBlockJob" value="Manzana:"  ></p:outputLabel>
+                                <p:inputText id="itBlockJob" value="#{glPeople.glAddressEmpresa.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itCalleSecJob" value="Calle secundaria:"  ></p:outputLabel>
                                 <p:inputText id="itCalleSecJob" value="#{glPeople.glAddressEmpresa.crossstreet}" placeholder="Calle secundaria" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
@@ -420,8 +420,8 @@
                                     <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="10"></f:validateLength>
                                 </p:inputText>
-                                
-                                
+
+
                                 <p:outputLabel for="somSectorAdreJob" value="Sector:" ></p:outputLabel>
                                 <p:selectOneMenu id="somSectorAdreJob" value="#{glPeople.glAddressEmpresa.adSectorAddressId}" converter="#{adSectorAddressConverter}" 
                                                  effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
@@ -433,9 +433,9 @@
                             </p:panelGrid>
 
                         </p:tab>
-                        
-                        
-                        
+
+
+
                         <p:tab title="Dirección de domicilio" rendered="#{glPeople.enabledRuc}">
 
                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDomicilioEmpresa"> 
@@ -473,19 +473,19 @@
                                 <p:outputLabel for="itCallePriCompania" value="Calle principal:"  ></p:outputLabel>
                                 <p:inputText id="itCallePriCompania" value="#{glPeople.glAddressDomicilioCompania.mainstreet}" placeholder="Calle principal" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itNumCompania" value="Número:"  ></p:outputLabel>
                                 <p:inputText id="itNumCompania" value="#{glPeople.glAddressDomicilioCompania.number}" 
                                              placeholder="Número de casa" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              maxlength="9">
-                                     <p:keyFilter mask="num"></p:keyFilter>
+                                    <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="1"></f:validateLength>
                                 </p:inputText>
-                                
-                                 <p:outputLabel for="itBlockCompania" value="Manzana:"  ></p:outputLabel>
-                                 <p:inputText id="itBlockCompania" value="#{glPeople.glAddressDomicilioCompania.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
+
+                                <p:outputLabel for="itBlockCompania" value="Manzana:"  ></p:outputLabel>
+                                <p:inputText id="itBlockCompania" value="#{glPeople.glAddressDomicilioCompania.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
-                                
+
                                 <p:outputLabel for="itCalleSecCompania" value="Calle secundaria:"  ></p:outputLabel>
                                 <p:inputText id="itCalleSecCompania" value="#{glPeople.glAddressDomicilioCompania.crossstreet}" placeholder="Calle secundaria" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              />
@@ -505,8 +505,8 @@
                                     <p:keyFilter mask="num"></p:keyFilter>
                                     <f:validateLength minimum="10"></f:validateLength>
                                 </p:inputText>
-                                
-                                
+
+
                                 <p:outputLabel for="somSectorAdreCompania" value="Sector:" ></p:outputLabel>
                                 <p:selectOneMenu id="somSectorAdreCompania" value="#{glPeople.glAddressDomicilioCompania.adSectorAddressId}" converter="#{adSectorAddressConverter}" 
                                                  effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
@@ -518,12 +518,12 @@
                             </p:panelGrid>
 
                         </p:tab>
-                        
-                        
-                        <p:tab title="Información del Cónyuge" rendered="#{glPeople.enabledCedula}">
-                            
-                            
-                             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatos">            
+
+
+                        <p:tab title="Información del cónyuge" rendered="#{glPeople.enabledCedula}">
+
+
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatos">            
 
                                 <p:outputLabel for="somTypeIdeCony" value="Tipo identificación:" ></p:outputLabel>
 
@@ -553,13 +553,249 @@
                                 <p:outputLabel for="itSnameCony" value="Segundo nombre:"  rendered="#{glPeople.enabledCedula}"> </p:outputLabel>
                                 <p:inputText id="itSnameCony" value="#{glPeople.conyuge.secondname}" placeholder="Segundo nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
                                              rendered="#{glPeople.enabledCedula}"/> 
-                        
-                             </p:panelGrid>
-                            
-                            
+
+                            </p:panelGrid>
+
+
                         </p:tab>
-                        
-                        
+
+
+
+                        <p:tab title="Representante legal" rendered="#{glPeople.enabledRuc}">
+
+
+
+                            <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatosRepLeg">            
+
+                                <p:outputLabel for="somTypeIdeRepLeg" value="Tipo identificación:" ></p:outputLabel>
+
+                                <p:selectOneMenu id="somTypeIdeRepLeg" value="#{glPeople.repLegal.adTypeIdeId}" converter="#{adTypeIdeConverter}" 
+                                                 effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false">
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaTiposIdentificacionRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="itIdeRepRepLeg" value="Identificación:"  ></p:outputLabel>
+                                <p:inputText id="itIdeRepRepLeg" value="#{glPeople.repLegal.ide}" placeholder="Identificación" readonly="#{not glPeople.listaSocios.enabledSave}" />
+
+                                <p:outputLabel for="itLnameRepLeg" value="Apellido paterno:"  ></p:outputLabel>
+                                <p:inputText id="itLnameRepLeg" value="#{glPeople.repLegal.lastname}" placeholder="Apellido paterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itSlnameRepLeg" value="Apellido materno"  ></p:outputLabel>
+                                <p:inputText id="itSlnameRepLeg" value="#{glPeople.repLegal.secondlastname}" placeholder="Apellido materno" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itFnameRepLeg" value="Primer nombre:"  ></p:outputLabel>
+                                <p:inputText id="itFnameRepLeg" value="#{glPeople.repLegal.firstname}" placeholder="Primer nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itSnameRepLeg" value="Segundo nombre:"  > </p:outputLabel>
+                                <p:inputText id="itSnameRepLeg" value="#{glPeople.repLegal.secondname}" placeholder="Segundo nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+
+                                <p:outputLabel for="somGeneroRepLeg" value="Género:"  ></p:outputLabel>
+                                <p:selectOneMenu id="somGeneroRepLeg" value="#{glPeople.repLegal.adGenderId}" converter="#{adGenderConverter}" 
+                                                 effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"
+                                                 >
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaGenerosRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="itFNacRepLeg" value="F. nacimiento:" ></p:outputLabel>
+                                <p:calendar id="itFNacRepLeg" value="#{glPeople.repLegal.datebirthday}" disabled="#{not glPeople.listaSocios.enabledSave}" showOn="both"  navigator="true"
+                                            maxdate="#{template.currentDate}"  pattern="dd/MM/yyyy"/>
+
+                                <p:outputLabel for="somCountryNacRepLeg" value="País de nacimiento:" ></p:outputLabel>
+                                <p:selectOneMenu id="somCountryNacRepLeg" value="#{glPeople.repLegal.adCountryNatalId}" converter="#{adCountryConverter}" 
+                                                 effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}"
+                                                 autoWidth="false">
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaPaisesNacimientoRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+
+                                <p:outputLabel for="somCountryNatRepLeg" value="Nacionalidad:" ></p:outputLabel>
+                                <p:selectOneMenu id="somCountryNatRepLeg" value="#{glPeople.repLegal.adCountryNationalityId}" converter="#{adCountryConverter}" 
+                                                 effect="fade" filter="true" filterMatchMode="contains" disabled="#{not glPeople.listaSocios.enabledSave}" 
+                                                 autoWidth="false">
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaNacionalidadesRepLegal}" var="item" itemLabel="#{item.descnationality.toUpperCase()}" itemValue="#{item}" /> 
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+
+                                <p:outputLabel for="itEmailRepLeg" value="Correo:" ></p:outputLabel>
+                                <p:inputText id="itEmailRepLeg" value="#{glPeople.repLegal.email1}" placeholder="Correo" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             required="true"
+                                             validator="emailValidator"> 
+                                </p:inputText>
+
+
+                                <p:outputLabel for="somEstadoCivilRepLeg" value="Estado civil:"  ></p:outputLabel>
+                                <p:selectOneMenu id="somEstadoCivilRepLeg" value="#{glPeople.repLegal.adCivilStatusId}" converter="#{adCivilStatusConverter}" 
+                                                 effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}" >
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaEstadoCivilRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+                            </p:panelGrid>    
+
+                            <br></br>
+                            
+                            
+                             <p:tabView id="tvRepLegal" >
+                                 <p:tab title="Dirección de domicilio" >
+                                     
+                                     
+
+
+                                <p:panelGrid columns="6" columnClasses="ui-grid-col-2,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" id="DirRepLegal"> 
+
+
+
+                                    <p:outputLabel for="somCountryRepLeg" value="País:" ></p:outputLabel>
+                                    <p:selectOneMenu id="somCountryRepLeg" value="#{glPeople.adCountryRepLegal}" converter="#{adCountryConverter}" 
+                                                     effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+                                                     valueChangeListener="#{glPeople.onChangeAdCountryRepLegal}" autoWidth="false">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{glPeople.listaPaisesRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                        <p:ajax event="change" update="somProvinceRepLeg somCantonRepLeg"></p:ajax>
+                                    </p:selectOneMenu>
+
+
+                                    <p:outputLabel for="somProvinceRepLeg" value="Provincia:" ></p:outputLabel>
+                                    <p:selectOneMenu id="somProvinceRepLeg" value="#{glPeople.adProvinceRepLegal}" converter="#{adProvinceConverter}" 
+                                                     effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}"
+                                                     valueChangeListener="#{glPeople.onChangeAdPronvinceRepLegal}" autoWidth="false"> 
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{glPeople.listaProvinciasRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                        <p:ajax event="change" update="somCantonRepLeg" ></p:ajax>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="somCantonRepLeg" value="Cantón:" ></p:outputLabel>
+                                    <p:selectOneMenu id="somCantonRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.adCantonId}" converter="#{adCantonConverter}" 
+                                                     effect="fade" filter="true" filterMatchMode="startsWith" disabled="#{not glPeople.listaSocios.enabledSave}" autoWidth="false"> 
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{glPeople.listaCantonesRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                        <p:ajax event="change" ></p:ajax>
+                                    </p:selectOneMenu>
+
+
+                                    <p:outputLabel for="itCallePriRepLeg" value="Calle principal:"  ></p:outputLabel>
+                                    <p:inputText id="itCallePriRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.mainstreet}" placeholder="Calle principal" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                                 />
+
+                                    <p:outputLabel for="itNumRepLeg" value="Número:"  ></p:outputLabel>
+                                    <p:inputText id="itNumRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.number}" 
+                                                 placeholder="Número de casa" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                                 maxlength="9">
+                                        <p:keyFilter mask="num"></p:keyFilter>
+                                        <f:validateLength minimum="1"></f:validateLength>
+                                    </p:inputText>
+
+                                    <p:outputLabel for="itBlockRepLeg" value="Manzana:"  ></p:outputLabel>
+                                    <p:inputText id="itBlockRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.block}" placeholder="Manzana" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                                 />
+
+                                    <p:outputLabel for="itCalleSecRepLeg" value="Calle secundaria:"  ></p:outputLabel>
+                                    <p:inputText id="itCalleSecRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.crossstreet}" placeholder="Calle secundaria" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                                 />
+
+
+
+                                    <p:outputLabel for="itTelefonoRepLeg" value="Teléfono:" ></p:outputLabel>
+                                    <p:inputText id="itTelefonoRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.telephone1}" placeholder="Teléfono"  maxlength="9"
+                                                 readonly="#{not glPeople.listaSocios.enabledSave}"> 
+                                        <p:keyFilter mask="num"></p:keyFilter>
+                                        <f:validateLength minimum="9"></f:validateLength>
+                                    </p:inputText>
+
+                                    <p:outputLabel for="itCelRepLeg" value="Celular:" ></p:outputLabel>
+                                    <p:inputText id="itCelRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.telephone2}" placeholder="Celular"  maxlength="10" 
+                                                 readonly="#{not glPeople.listaSocios.enabledSave}"> 
+                                        <p:keyFilter mask="num"></p:keyFilter>
+                                        <f:validateLength minimum="10"></f:validateLength>
+                                    </p:inputText>
+
+
+                                    <p:outputLabel for="somSectorAdreRepLeg" value="Sector:" ></p:outputLabel>
+                                    <p:selectOneMenu id="somSectorAdreRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.adSectorAddressId}" converter="#{adSectorAddressConverter}" 
+                                                     effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{glPeople.listaSectorRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                        <p:ajax event="change" ></p:ajax>
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="somTypeBuildRepLeg" value="Tipo de vivienda:" ></p:outputLabel>
+                                    <p:selectOneMenu id="somTypeBuildRepLeg" value="#{glPeople.glAddressDomicilioRepLegal.adTypeBuildingId}" converter="#{adTypeBuildingConverter}" 
+                                                     effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}"> 
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{glPeople.listaTipoViviendaRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" /> 
+                                        <p:ajax event="change" ></p:ajax>
+                                    </p:selectOneMenu>
+
+                                </p:panelGrid>
+                                     
+                                 </p:tab>
+                                 
+                                 
+                                 
+                                 <p:tab title="Información del cónyuge" >
+
+
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" id="pgDatosConyRepLegal">            
+
+                                <p:outputLabel for="somTypeIdeConyRepLegal" value="Tipo identificación:" ></p:outputLabel>
+
+                                <p:selectOneMenu id="somTypeIdeConyRepLegal" value="#{glPeople.conyugeRepLegal.adTypeIdeId}" converter="#{adTypeIdeConverter}" 
+                                                 effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}" >
+                                    <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                    <f:selectItems value="#{glPeople.listaTiposIdentificacionConyugeRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                                    <p:ajax event="change" ></p:ajax>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="itIdeRepConyRepLegal" value="Identificación:"  ></p:outputLabel>
+                                <p:inputText id="itIdeRepConyRepLegal" value="#{glPeople.conyugeRepLegal.ide}" placeholder="Identificación" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             />
+
+                                <p:outputLabel for="itLnameConyRepLegal" value="Apellido paterno:"  ></p:outputLabel>
+                                <p:inputText id="itLnameConyRepLegal" value="#{glPeople.conyugeRepLegal.lastname}" placeholder="Apellido paterno" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itSlnameConyRepLegal" value="Apellido materno"  ></p:outputLabel>
+                                <p:inputText id="itSlnameConyRepLegal" value="#{glPeople.conyugeRepLegal.secondlastname}" placeholder="Apellido materno" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itFnameConyRepLegal" value="Primer nombre:"  ></p:outputLabel>
+                                <p:inputText id="itFnameConyRepLegal" value="#{glPeople.conyugeRepLegal.firstname}" placeholder="Primer nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                                <p:outputLabel for="itSnameConyRepLegal" value="Segundo nombre:"  > </p:outputLabel>
+                                <p:inputText id="itSnameConyRepLegal" value="#{glPeople.conyugeRepLegal.secondname}" placeholder="Segundo nombre" readonly="#{not glPeople.listaSocios.enabledSave}" 
+                                             /> 
+
+                            </p:panelGrid>
+
+
+                        </p:tab>
+                                 
+                             </p:tabView>
+
+                            
+
+
+
+
+
+                        </p:tab>
+
+
                     </p:tabView>
 
 
