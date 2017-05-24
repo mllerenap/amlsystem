@@ -10,7 +10,7 @@ public class YesNoConverter implements AttributeConverter<YesNo, String> {
 
 	@Override
 	public String convertToDatabaseColumn(YesNo attribute) {
-		System.out.println("convertToDatabaseColumn: " + attribute);
+		//System.out.println("convertToDatabaseColumn: " + attribute);
 		switch (attribute) {
 		case SI:
 			return "Y";
@@ -23,7 +23,7 @@ public class YesNoConverter implements AttributeConverter<YesNo, String> {
 
 	@Override
 	public YesNo convertToEntityAttribute(String dbData) {
-		System.out.println("convertToEntityAttribute: " + dbData);
+		//System.out.println("convertToEntityAttribute: " + dbData);
 		if(dbData != null){
 			switch (dbData) {
 			case "Y":
