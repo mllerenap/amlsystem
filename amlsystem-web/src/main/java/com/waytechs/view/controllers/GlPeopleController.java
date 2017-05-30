@@ -6,6 +6,7 @@
 package com.waytechs.view.controllers;
 
 import com.waytechs.model.ejb.facades.AdCantonFacade;
+import com.waytechs.model.ejb.facades.AdCategoryPepFacade;
 import com.waytechs.model.ejb.facades.AdCivilStatusFacade;
 import com.waytechs.model.ejb.facades.AdCountryFacade;
 import com.waytechs.model.ejb.facades.AdCreditActivitySubjectFacade;
@@ -32,6 +33,7 @@ import com.waytechs.model.ejb.facades.AdTypePepFacade;
 import com.waytechs.model.ejb.facades.GlAddressFacade;
 import com.waytechs.model.ejb.facades.GlPeopleFacade;
 import com.waytechs.model.entities.AdCanton;
+import com.waytechs.model.entities.AdCategoryPep;
 import com.waytechs.model.entities.AdCivilStatus;  
 import com.waytechs.model.entities.AdCountry;
 import com.waytechs.model.entities.AdCreditActivitySubject;
@@ -242,6 +244,12 @@ public class GlPeopleController implements Serializable {
     private GlPeople conyugeRepLegal;
     private List<AdTypeIde> listaTiposIdentificacionConyugeRepLegal;
     
+    
+    
+    @Inject 
+    private AdCategoryPepFacade adCategoryPepFacade;
+    private List<AdCategoryPep> listaCategoriaPep;
+    
 
     @PostConstruct
     public void initialize() {
@@ -291,7 +299,7 @@ public class GlPeopleController implements Serializable {
         listaEstadoCivil = adCivilStatusFacade.findAll();
         listaEstadoCivilRepLegal = adCivilStatusFacade.findAll();
         
-        listaTiposPep = adTypePepFacade.findAll();
+        //listaTiposPep = adTypePepFacade.findAll();
         
         
         listaNacionalidades = adCountryFacade.findAll();
@@ -330,6 +338,9 @@ public class GlPeopleController implements Serializable {
         
         
         listaTiposIdentificacionConyugeRepLegal = adTypeIdeFacade.findAll();
+        
+        
+        listaCategoriaPep = adCategoryPepFacade.findAll();
         
     }
 
@@ -968,6 +979,14 @@ public class GlPeopleController implements Serializable {
     public void setListaTiposIdentificacionConyugeRepLegal(List<AdTypeIde> listaTiposIdentificacionConyugeRepLegal) {
         this.listaTiposIdentificacionConyugeRepLegal = listaTiposIdentificacionConyugeRepLegal;
     }
+
+    public List<AdCategoryPep> getListaCategoriaPep() {
+        return listaCategoriaPep;
+    }
+
+    public void setListaCategoriaPep(List<AdCategoryPep> listaCategoriaPep) {
+        this.listaCategoriaPep = listaCategoriaPep;
+    }
     
     
     
@@ -1075,6 +1094,17 @@ public class GlPeopleController implements Serializable {
         System.out.println("onChangeAdPronvinceRepLegal: "+event+" getAdProvinceSelected: "+province);
         
         listaCantonesRepLegal = adCantonFacade.findByAdProvinceId(province);
+        
+    }
+    
+    
+    public void onChangeAdCategoryPep(ValueChangeEvent event){
+        
+        AdCategoryPep adCategoryPep =   (AdCategoryPep) event.getNewValue();
+        
+        System.out.println("onChangeAdCategoryPep: "+event+" getAdProvinceSelected: "+adCategoryPep);
+        
+        listaTiposPep = adTypePepFacade.findByAdCategoryPepId(adCategoryPep);
         
     }
     

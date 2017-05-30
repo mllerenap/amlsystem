@@ -47,7 +47,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AdTypePep.findByCreatedby", query = "SELECT a FROM AdTypePep a WHERE a.createdby = :createdby")
     , @NamedQuery(name = "AdTypePep.findByUpdated", query = "SELECT a FROM AdTypePep a WHERE a.updated = :updated")
     , @NamedQuery(name = "AdTypePep.findByUpdatedby", query = "SELECT a FROM AdTypePep a WHERE a.updatedby = :updatedby")
-    , @NamedQuery(name = "AdTypePep.findByIsactive", query = "SELECT a FROM AdTypePep a WHERE a.isactive = :isactive")})
+    , @NamedQuery(name = "AdTypePep.findByIsactive", query = "SELECT a FROM AdTypePep a WHERE a.isactive = :isactive")
+    , @NamedQuery(name = "AdTypePep.findByAdCategoryPepId", query = "SELECT a FROM AdTypePep a WHERE a.adCategoryPepId = :adCategoryPepId and a.isactive = :isactive")    
+        
+
+})
 public class AdTypePep implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,6 +96,7 @@ public class AdTypePep implements Serializable {
     @JoinColumn(name = "ad_category_pep_id", referencedColumnName = "id")
     @ManyToOne
     private AdCategoryPep adCategoryPepId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adTypePepId")
     private List<GlPeople> glPeopleList;
 

@@ -152,15 +152,8 @@
                             <f:selectItems value="#{glPeople.listaEstadoCivil}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
-
-                        <p:outputLabel for="somTiposPep" value="Tipo PEP:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
-                        <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" autoWidth="false"
-                                         effect="fade" filter="true" filterMatchMode="constains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}"
-                                         panelStyle="width: 50px;">
-                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                            <f:selectItems value="#{glPeople.listaTiposPep}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
-                            <p:ajax event="change" ></p:ajax>
-                        </p:selectOneMenu>
+                        
+                       
 
 
                         <p:outputLabel for="somActEco" value="Actividad económica cliente:"  ></p:outputLabel>
@@ -184,6 +177,24 @@
                             <f:selectItems value="#{glPeople.listaSubActividad}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
                             <p:ajax event="change" ></p:ajax>
                         </p:selectOneMenu>
+                        
+                          <p:outputLabel for="somCategoriaPep" value="Categoría PEP:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                         <p:selectOneMenu id="somCategoriaPep" converter="#{adCategoryPepConverter}" autoWidth="false"
+                                         effect="fade" filter="true" filterMatchMode="constains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}"
+                                         panelStyle="width: 50px;" valueChangeListener="#{glPeople.onChangeAdCategoryPep}">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                            <f:selectItems value="#{glPeople.listaCategoriaPep}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                            <p:ajax event="change" update="somTiposPep"></p:ajax>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="somTiposPep" value="PEP:"  rendered="#{glPeople.enabledCedula}"></p:outputLabel>
+                        <p:selectOneMenu id="somTiposPep" value="#{glPeople.activeItem.adTypePepId}" converter="#{adTypePepConverter}" autoWidth="false"
+                                         effect="fade" filter="true" filterMatchMode="constains" disabled="#{not glPeople.listaSocios.enabledSave}" rendered="#{glPeople.enabledCedula}"
+                                         panelStyle="width: 50px;">
+                            <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                            <f:selectItems value="#{glPeople.listaTiposPep}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
+                            <p:ajax event="change" ></p:ajax>
+                        </p:selectOneMenu>
 
 
 
@@ -191,8 +202,6 @@
 
                     </p:panelGrid>    
 
-
-                    <br></br>
 
 
                     <p:tabView id="tvDetalle" >
@@ -645,9 +654,6 @@
                                 </p:selectOneMenu>
 
                             </p:panelGrid>    
-
-                            <br></br>
-                            
                             
                              <p:tabView id="tvRepLegal" >
                                  <p:tab title="Dirección de domicilio" >
@@ -757,7 +763,7 @@
                                                  effect="fade" disabled="#{not glPeople.listaSocios.enabledSave}" >
                                     <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                                     <f:selectItems value="#{glPeople.listaTiposIdentificacionConyugeRepLegal}" var="item" itemLabel="#{item.name.toUpperCase()}" itemValue="#{item}" />
-                                    <p:ajax event="change" ></p:ajax>
+                                    <p:ajax event="change" ></p:ajax> 
                                 </p:selectOneMenu>
 
                                 <p:outputLabel for="itIdeRepConyRepLegal" value="Identificación:"  ></p:outputLabel>

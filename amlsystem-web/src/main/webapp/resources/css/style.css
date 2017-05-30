@@ -433,10 +433,13 @@ button.ui-button.ui-state-default.gray-button {
     -webkit-border-radius: 2px;
     border-radius: 2px;
     background: #ffffff;
-    padding: 16px;
-    margin-bottom: 16px;
+    /*padding: 16px;*/
+    /*margin-bottom: 16px;*/
     box-sizing: border-box;
     position: relative;
+    padding-top: 16px;
+    padding-right: 16px;
+    padding-left: 16px;
 }
 
 /*
